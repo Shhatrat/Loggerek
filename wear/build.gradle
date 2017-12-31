@@ -3,10 +3,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 26
-
-
     defaultConfig {
-        applicationId "com.shhatrat.boilerplate_kkmvp"
+        applicationId 'com.shhatrat.loggerek'
         minSdkVersion 25
         targetSdkVersion 26
         versionCode 1
@@ -17,6 +15,8 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    productFlavors {
     }
 }
 
@@ -37,7 +37,6 @@ dependencies {
     compile 'io.reactivex.rxjava2:rxjava:2.1.7'
     compile 'io.reactivex.rxjava2:rxkotlin:2.2.0'
     implementation project(':shared-classess')
-
     //koin (di)
     compile 'org.koin:koin-core:0.6.1'
     compile 'org.koin:koin-android:0.6.1'

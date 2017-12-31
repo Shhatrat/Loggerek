@@ -6,7 +6,7 @@ apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion 27
     defaultConfig {
-        applicationId "com.shhatrat.boilerplate_kkmvp"
+        applicationId 'com.shhatrat.loggerek'
         minSdkVersion 16
         targetSdkVersion 27
         versionCode 1
@@ -18,6 +18,8 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    productFlavors {
     }
 }
 
@@ -54,6 +56,8 @@ dependencies {
     compile "com.squareup.retrofit2:converter-gson:$RETROFIT_VERSION"
     compile "com.squareup.retrofit2:adapter-rxjava2:$RETROFIT_VERSION"
     compile 'com.squareup.okhttp3:logging-interceptor:3.8.1'
+    compile 'se.akerfeldt:okhttp-signpost:1.1.0'
+    compile 'oauth.signpost:signpost-core:1.2.1.2'
 
     //koin (di)
     compile 'org.koin:koin-core:0.6.1'
@@ -74,7 +78,6 @@ dependencies {
     // Optional
     kapt 'nz.bradcampbell:paperparcel-compiler:2.0.4'
     compile 'com.squareup.picasso:picasso:2.5.2'
-
 
     //wear
     implementation 'com.google.android.gms:play-services-wearable:11.8.0'
