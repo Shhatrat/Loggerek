@@ -1,0 +1,62 @@
+package com.shhatrat.loggerek.api
+
+/**
+ * Contains constants and utility methods for interacting with the OpenCaching API.
+ * This object provides base URLs, consumer credentials, and specific endpoint paths.
+ */
+internal object OpencachingApi {
+
+    /**
+     * The base URL for all OpenCaching API requests.
+     */
+    internal const val baseUrl = "https://opencaching.pl/okapi/"
+
+    /**
+     * The consumer key used for OAuth authentication with the OpenCaching API.
+     */
+    internal const val consumerKey = "XXXXXXXXXX"
+
+    /**
+     * The consumer secret used for OAuth authentication with the OpenCaching API.
+     */
+    internal const val consumerSecret = "XXXXXXXXXX"
+
+    // Private constants defining endpoint parts
+    private const val geocachePart = "services/caches/geocache"
+    private const val userPart = "services/users/user"
+    private const val accessTokenPart = "services/oauth/access_token"
+    private const val requestTokenPart = "services/oauth/request_token"
+
+    /**
+     * Provides methods for building URLs to specific API endpoints.
+     */
+    internal object Url {
+        /**
+         * Returns the full URL for the geocache endpoint.
+         *
+         * @return A [String] representing the geocache endpoint URL.
+         */
+        fun geocache() = "$baseUrl$geocachePart"
+
+        /**
+         * Returns the full URL for the access token endpoint.
+         *
+         * @return A [String] representing the access token endpoint URL.
+         */
+        fun accessToken() = "$baseUrl$accessTokenPart"
+
+        /**
+         * Returns the full URL for the request token endpoint.
+         *
+         * @return A [String] representing the request token endpoint URL.
+         */
+        fun requestToken() = "$baseUrl$requestTokenPart"
+
+        /**
+         * Returns the full URL for the user endpoint.
+         *
+         * @return A [String] representing the user endpoint URL.
+         */
+        fun user() = "$baseUrl$userPart"
+    }
+}
