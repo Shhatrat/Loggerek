@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    id("io.gitlab.arturbosch.detekt") version "1.23.7"
 }
 
 kotlin {
