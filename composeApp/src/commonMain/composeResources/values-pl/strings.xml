@@ -3,4 +3,6 @@
     <string name="intro_message">Zacznij wygodnie logować kesze</string>
     <string name="intro_button_login">Zaloguj się</string>
     <string name="intro_button_sing_up">Stwórz konto</string>
+    <string name="destination_intro">Intro</string>
+    <string name="destination_main">Main</string>
 </resources>

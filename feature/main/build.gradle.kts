@@ -55,7 +55,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.shhatrat.loggerek.intro"
+    namespace = "com.shhatrat.loggerek.main"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
