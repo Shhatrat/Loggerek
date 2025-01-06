@@ -59,6 +59,7 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.koin.android)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -70,10 +71,21 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(projects.shared)
+            implementation("io.coil-kt.coil3:coil-compose:3.0.4")
+            implementation("io.coil-kt.coil3:coil-svg:3.0.4")
+            implementation("io.coil-kt.coil3:coil-network-ktor3:3.0.4")
+            implementation("org.jetbrains.compose.material3:material3-window-size-class:1.7.3")
+            implementation(libs.koin.compose)
+            implementation(projects.repository)
+            implementation(projects.api)
+            implementation("com.russhwolf:multiplatform-settings:1.3.0")
+            implementation(projects.di)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)
+            implementation("org.jetbrains.compose.ui:ui-tooling-preview:1.7.0")
+            implementation("io.ktor:ktor-client-java:3.0.0")
         }
     }
 }
