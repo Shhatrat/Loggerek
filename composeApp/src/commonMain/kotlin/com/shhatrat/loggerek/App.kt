@@ -14,7 +14,6 @@ import com.shhatrat.loggerek.repository.di.repositoryModule
 import org.koin.compose.KoinApplication
 import org.koin.core.KoinApplication
 
-
 @Composable
 fun App(additionalKoinConfig: KoinApplication.() -> Unit = { }) {
     MaterialTheme(typography = getTypography()) {
@@ -29,21 +28,15 @@ fun App(additionalKoinConfig: KoinApplication.() -> Unit = { }) {
 }
 
 @Composable
-private fun content() {
-    var showContent by remember { mutableStateOf(false) }
-    Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-        Button(onClick = { showContent = !showContent }) {
-            Text("Click me!")
-        }
-        AnimatedVisibility(showContent) {
-            val greeting = remember { Greeting().greet() }
-            Column(
-                Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Image(painterResource(Res.drawable.compose_multiplatform), null)
-                Text("Compose: $greeting")
-            }
+fun AppNavigation(modifier: Modifier){
+    val navController = rememberNavController()
+    NavHost(
+        navController = navController,
+        startDestination = AppDestinations.INTRO.name,
+        modifier = modifier
+    ) {
+        AppDestinations.entries.forEach { entry ->
+            composable(entry.name) { entry.openAction() }
         }
     }
 }
