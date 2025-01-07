@@ -1,9 +1,9 @@
-package com.shhatrat.loggerek.intro
+package com.shhatrat.loggerek.intro.authorizate
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 
 @Composable
-fun IntroScreen() {
-    Text("Hello")
+fun AuthorizeScreen() {
+    Text("Auth")
 }

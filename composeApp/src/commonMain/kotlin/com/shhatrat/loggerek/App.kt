@@ -1,25 +1,40 @@
 package com.shhatrat.loggerek
 
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.shhatrat.loggerek.AppDestinations.*
+import com.shhatrat.loggerek.account.di.accountModule
 import com.shhatrat.loggerek.api.di.apiModule
 import com.shhatrat.loggerek.base.getTypography
 import com.shhatrat.loggerek.di.PlatformSpecificModule
-import com.shhatrat.loggerek.intro.IntroScreen
+import com.shhatrat.loggerek.di.viewModelModule
+import com.shhatrat.loggerek.intro.MainScreen
+import com.shhatrat.loggerek.intro.authorizate.AuthorizeScreen
+import com.shhatrat.loggerek.intro.splash.IntroScreen
+import com.shhatrat.loggerek.intro.splash.IntroViewModel
 import com.shhatrat.loggerek.repository.di.repositoryModule
 import org.koin.compose.KoinApplication
+import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.KoinApplication
+import org.koin.core.parameter.parametersOf
 
 @Composable
 fun App(additionalKoinConfig: KoinApplication.() -> Unit = { }) {
     MaterialTheme(typography = getTypography()) {
         KoinApplication(application = {
             additionalKoinConfig.invoke(this)
-            modules(repositoryModule, apiModule).modules(PlatformSpecificModule().getModules())
+            modules(repositoryModule, apiModule, accountModule, viewModelModule).modules(
+                PlatformSpecificModule().getModules()
+            )
         }
         ) {
             AppNavigation(modifier = Modifier)
@@ -28,15 +43,43 @@ fun App(additionalKoinConfig: KoinApplication.() -> Unit = { }) {
 }
 
 @Composable
-fun AppNavigation(modifier: Modifier){
+fun AppNavigation(modifier: Modifier) {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = AppDestinations.INTRO.name,
+        startDestination = INTRO.name,
         modifier = modifier
     ) {
-        AppDestinations.entries.forEach { entry ->
-            composable(entry.name) { entry.openAction() }
+        entries.forEach {
+            when (it) {
+                INTRO -> composable(it.name) {
+                    PrepareIntroScreen(
+                        navigateToMain = { navController.nav(MAIN) },
+                        navigateToAuth = { navController.nav(AUTH) })
+                }
+                MAIN -> composable(it.name) { PrepareMainScreen() }
+                AUTH -> composable(it.name) { PrepareAuthScreen() }
+            }
         }
     }
+}
+
+private fun NavController.nav(appDestinations: AppDestinations){
+    navigate(appDestinations.name)}
+
+@Composable
+fun PrepareIntroScreen(navigateToMain: () -> Unit, navigateToAuth: () -> Unit) {
+    val vm: IntroViewModel = koinViewModel { parametersOf(navigateToMain, navigateToAuth) }
+    LaunchedEffect(Unit) { vm.onStart() }
+    IntroScreen(vm.state.collectAsState().value)
+}
+
+@Composable
+fun PrepareMainScreen() {
+    MainScreen()
+}
+
+@Composable
+fun PrepareAuthScreen() {
+    AuthorizeScreen()
 }

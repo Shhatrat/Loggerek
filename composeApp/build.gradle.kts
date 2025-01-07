@@ -81,7 +81,12 @@ kotlin {
             implementation("com.russhwolf:multiplatform-settings:1.3.0")
             implementation(projects.di)
             implementation(projects.feature.intro)
+            implementation(projects.feature.main)
+            implementation(projects.feature.base)
+            implementation(projects.manager.account)
             implementation(libs.navigation.compose)
+            implementation(libs.koin.compose.viewmodel)
+            implementation(libs.koin.compose.viewmodel.navigation)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)

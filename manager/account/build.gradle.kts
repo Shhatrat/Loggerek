@@ -50,14 +50,14 @@ kotlin {
             implementation(compose.material)
             implementation(compose.ui)
             implementation(compose.components.resources)
-            implementation(projects.feature.base)
-            implementation(projects.manager.account)
+            implementation(projects.repository)
+            implementation(projects.api)
         }
     }
 }
 
 android {
-    namespace = "com.shhatrat.loggerek.intro"
+    namespace = "com.shhatrat.loggerek.account"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
