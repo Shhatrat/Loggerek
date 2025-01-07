@@ -12,5 +12,5 @@ val viewModelModule = module {
         IntroViewModel(navigateToMain, navigateToAuth, get())
     }
     viewModel { (navigateToMain: () -> Unit) -> AuthViewModel(navigateToMain, get()) }
-    viewModel { MainViewModel(get(), get()) }
+    viewModel { (navigateToIntro: () -> Unit) -> MainViewModel(navigateToIntro, get(), get()) }
 }

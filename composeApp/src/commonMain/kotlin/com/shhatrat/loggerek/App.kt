@@ -57,7 +57,7 @@ fun AppNavigation(modifier: Modifier) {
                         navigateToMain = { navController.nav(MAIN) },
                         navigateToAuth = { navController.nav(AUTH) })
                 }
-                MAIN -> composable(it.name) { PrepareMainScreen() }
+                MAIN -> composable(it.name) { PrepareMainScreen( navigateToIntro = { navController.nav(INTRO) }) }
                 AUTH -> composable(it.name) {
                     PrepareAuthScreen(
                         navigateToMain = { navController.nav(MAIN) })
@@ -79,8 +79,8 @@ fun PrepareIntroScreen(navigateToMain: () -> Unit, navigateToAuth: () -> Unit) {
 }
 
 @Composable
-fun PrepareMainScreen() {
-    val vm: MainViewModel = koinViewModel()
+fun PrepareMainScreen(navigateToIntro: () -> Unit) {
+    val vm: MainViewModel = koinViewModel{ parametersOf(navigateToIntro) }
     LaunchedEffect(Unit) { vm.onStart() }
     MainScreen(vm.state.collectAsState().value)
 }

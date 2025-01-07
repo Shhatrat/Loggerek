@@ -14,6 +14,7 @@ data class MainUiState(
 )
 
 class MainViewModel(
+    private val navigateToIntroScreen: () -> Unit,
     private val api: Api,
     private val repository: Repository,
 ) : BaseViewModel<MainUiState>(MainUiState()) {
@@ -30,6 +31,7 @@ class MainViewModel(
                 copy(removeData = {
                     repository.token.remove()
                     repository.tokenSecret.remove()
+                    navigateToIntroScreen()
                 })
             }
         }
