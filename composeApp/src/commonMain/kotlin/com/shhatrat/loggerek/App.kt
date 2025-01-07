@@ -1,13 +1,11 @@
 package com.shhatrat.loggerek
 
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -17,10 +15,12 @@ import com.shhatrat.loggerek.api.di.apiModule
 import com.shhatrat.loggerek.base.getTypography
 import com.shhatrat.loggerek.di.PlatformSpecificModule
 import com.shhatrat.loggerek.di.viewModelModule
-import com.shhatrat.loggerek.intro.MainScreen
+import com.shhatrat.loggerek.main.MainScreen
+import com.shhatrat.loggerek.intro.authorizate.AuthViewModel
 import com.shhatrat.loggerek.intro.authorizate.AuthorizeScreen
 import com.shhatrat.loggerek.intro.splash.IntroScreen
 import com.shhatrat.loggerek.intro.splash.IntroViewModel
+import com.shhatrat.loggerek.main.MainViewModel
 import com.shhatrat.loggerek.repository.di.repositoryModule
 import org.koin.compose.KoinApplication
 import org.koin.compose.viewmodel.koinViewModel
@@ -58,14 +58,18 @@ fun AppNavigation(modifier: Modifier) {
                         navigateToAuth = { navController.nav(AUTH) })
                 }
                 MAIN -> composable(it.name) { PrepareMainScreen() }
-                AUTH -> composable(it.name) { PrepareAuthScreen() }
+                AUTH -> composable(it.name) {
+                    PrepareAuthScreen(
+                        navigateToMain = { navController.nav(MAIN) })
+                }
             }
         }
     }
 }
 
-private fun NavController.nav(appDestinations: AppDestinations){
-    navigate(appDestinations.name)}
+private fun NavController.nav(appDestinations: AppDestinations) {
+    navigate(appDestinations.name)
+}
 
 @Composable
 fun PrepareIntroScreen(navigateToMain: () -> Unit, navigateToAuth: () -> Unit) {
@@ -76,10 +80,14 @@ fun PrepareIntroScreen(navigateToMain: () -> Unit, navigateToAuth: () -> Unit) {
 
 @Composable
 fun PrepareMainScreen() {
-    MainScreen()
+    val vm: MainViewModel = koinViewModel()
+    LaunchedEffect(Unit) { vm.onStart() }
+    MainScreen(vm.state.collectAsState().value)
 }
 
 @Composable
-fun PrepareAuthScreen() {
-    AuthorizeScreen()
+fun PrepareAuthScreen(navigateToMain: () -> Unit) {
+    val vm: AuthViewModel = koinViewModel { parametersOf(navigateToMain) }
+    LaunchedEffect(Unit) { vm.onStart() }
+    AuthorizeScreen(vm.state.collectAsState().value)
 }

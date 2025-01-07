@@ -14,8 +14,10 @@ class AccountManagerImpl(
 
     override suspend fun isUserLogged() = isTokenSaved() && canDownloadUsername()
 
-    private fun isTokenSaved() = repository.token.get().isNullOrBlank().not() &&
-            repository.tokenSecret.get().isNullOrBlank().not()
+    private fun isTokenSaved(): Boolean {
+        return repository.token.get().isNullOrBlank().not() &&
+                repository.tokenSecret.get().isNullOrBlank().not()
+    }
 
     private suspend fun canDownloadUsername() =
         repository.token.get()

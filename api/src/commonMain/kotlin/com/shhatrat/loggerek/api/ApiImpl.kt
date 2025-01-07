@@ -9,16 +9,18 @@ import com.shhatrat.loggerek.api.oauth.OAuthParams.generateOAuthNonce
 import com.shhatrat.loggerek.api.oauth.OAuthParams.getRequestTokenParams
 import com.shhatrat.loggerek.api.oauth.model.OAuthRequestTokenResponse
 import io.ktor.client.*
+import io.ktor.client.call.body
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import kotlinx.datetime.Clock
+import kotlinx.serialization.Serializable
 
 class ApiImpl(private val client: HttpClient) : Api {
 
     private suspend fun sendOAuthRequest(
         url: String,
         oauthParams: Map<String, String>,
-        tokenSecret: String? = null
+        tokenSecret: String? = ""
     ): String {
         val signature = generateSignature(
             method = "GET",
@@ -79,6 +81,9 @@ class ApiImpl(private val client: HttpClient) : Api {
                 append("Authorization", buildOAuthHeader(signedParams.filter { it.key.startsWith("oauth") }))
             }
         }
-        return response.bodyAsText()
+        return response.body<User>().username
     }
+
+    @Serializable
+    data class User(val username: String)
 }

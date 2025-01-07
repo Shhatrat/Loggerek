@@ -5,9 +5,11 @@ import com.shhatrat.loggerek.api.ApiImpl
 import io.ktor.client.HttpClient
 import io.ktor.client.HttpClientConfig
 import io.ktor.client.engine.HttpClientEngineFactory
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
+import io.ktor.serialization.kotlinx.json.json
 import org.koin.dsl.module
 
 val apiModule = module {
@@ -24,6 +26,9 @@ val apiModule = module {
 }
 
 private fun HttpClientConfig<*>.setupLogger() {
+    install(ContentNegotiation) {
+        json()
+    }
     install(Logging) {
         logger = object : Logger {
             override fun log(message: String) {
