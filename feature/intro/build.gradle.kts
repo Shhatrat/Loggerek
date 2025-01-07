@@ -52,6 +52,7 @@ kotlin {
             implementation(compose.components.resources)
             implementation(projects.feature.base)
             implementation(projects.manager.account)
+            implementation("org.jetbrains.compose.material3:material3-window-size-class:1.7.3")
         }
     }
 }

@@ -1,6 +1,8 @@
 package com.shhatrat.loggerek
 
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.lightColors
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -12,6 +14,8 @@ import androidx.navigation.compose.rememberNavController
 import com.shhatrat.loggerek.AppDestinations.*
 import com.shhatrat.loggerek.account.di.accountModule
 import com.shhatrat.loggerek.api.di.apiModule
+import com.shhatrat.loggerek.base.Color
+import com.shhatrat.loggerek.base.WindowSizeCallback
 import com.shhatrat.loggerek.base.getTypography
 import com.shhatrat.loggerek.di.PlatformSpecificModule
 import com.shhatrat.loggerek.di.viewModelModule
@@ -23,18 +27,29 @@ import com.shhatrat.loggerek.intro.splash.IntroViewModel
 import com.shhatrat.loggerek.main.MainViewModel
 import com.shhatrat.loggerek.repository.di.repositoryModule
 import org.koin.compose.KoinApplication
+import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.KoinApplication
 import org.koin.core.parameter.parametersOf
+import org.koin.dsl.module
 
 @Composable
-fun App(additionalKoinConfig: KoinApplication.() -> Unit = { }) {
-    MaterialTheme(typography = getTypography()) {
+fun App(
+    calculateWindowSizeClass: WindowSizeCallback,
+    additionalKoinConfig: KoinApplication.() -> Unit = { }
+) {
+    MaterialTheme(
+        colors = Color.LightColorScheme,
+        typography = getTypography()) {
         KoinApplication(application = {
             additionalKoinConfig.invoke(this)
             modules(repositoryModule, apiModule, accountModule, viewModelModule).modules(
                 PlatformSpecificModule().getModules()
-            )
+            ).modules(module {
+                single<WindowSizeCallback> {
+                    { calculateWindowSizeClass() }
+                }
+            })
         }
         ) {
             AppNavigation(modifier = Modifier)
@@ -57,7 +72,15 @@ fun AppNavigation(modifier: Modifier) {
                         navigateToMain = { navController.nav(MAIN) },
                         navigateToAuth = { navController.nav(AUTH) })
                 }
-                MAIN -> composable(it.name) { PrepareMainScreen( navigateToIntro = { navController.nav(INTRO) }) }
+
+                MAIN -> composable(it.name) {
+                    PrepareMainScreen(navigateToIntro = {
+                        navController.nav(
+                            INTRO
+                        )
+                    })
+                }
+
                 AUTH -> composable(it.name) {
                     PrepareAuthScreen(
                         navigateToMain = { navController.nav(MAIN) })
@@ -75,12 +98,12 @@ private fun NavController.nav(appDestinations: AppDestinations) {
 fun PrepareIntroScreen(navigateToMain: () -> Unit, navigateToAuth: () -> Unit) {
     val vm: IntroViewModel = koinViewModel { parametersOf(navigateToMain, navigateToAuth) }
     LaunchedEffect(Unit) { vm.onStart() }
-    IntroScreen(vm.state.collectAsState().value)
+    IntroScreen(koinInject<WindowSizeCallback>(), vm.state.collectAsState().value)
 }
 
 @Composable
 fun PrepareMainScreen(navigateToIntro: () -> Unit) {
-    val vm: MainViewModel = koinViewModel{ parametersOf(navigateToIntro) }
+    val vm: MainViewModel = koinViewModel { parametersOf(navigateToIntro) }
     LaunchedEffect(Unit) { vm.onStart() }
     MainScreen(vm.state.collectAsState().value)
 }

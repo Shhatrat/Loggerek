@@ -51,6 +51,7 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             api(libs.androidx.lifecycle.viewmodel)
+            api("org.jetbrains.compose.material3:material3-window-size-class:1.7.3")
         }
     }
 }
