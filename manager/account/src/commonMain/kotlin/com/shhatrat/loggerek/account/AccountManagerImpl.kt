@@ -12,8 +12,15 @@ class AccountManagerImpl(
     private val repository: Repository
 ) : AccountManager {
 
-    override fun isUserLogged() = repository.token.get().isNullOrBlank().not() &&
-                repository.tokenSecret.get().isNullOrBlank().not()
+    override suspend fun isUserLogged() = isTokenSaved() && canDownloadUsername()
+
+    private fun isTokenSaved() = repository.token.get().isNullOrBlank().not() &&
+            repository.tokenSecret.get().isNullOrBlank().not()
+
+    private suspend fun canDownloadUsername() =
+        repository.token.get()
+            ?.let { token -> repository.tokenSecret.get()
+                ?.let { tokenSecret -> api.getLoggedUserNickname(token, tokenSecret).isNotEmpty() } } == true
 
     override suspend fun startAuthorizationProcess(): AccountManager.ProcessResponse {
 

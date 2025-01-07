@@ -10,7 +10,7 @@ interface AccountManager{
         suspend fun pastePinAction(pin: String): FinishCallback
     }
 
-    fun isUserLogged() : Boolean
+    suspend fun isUserLogged() : Boolean
 
     suspend fun startAuthorizationProcess(): ProcessResponse
 }

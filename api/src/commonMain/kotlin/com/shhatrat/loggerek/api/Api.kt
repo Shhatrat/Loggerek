@@ -35,4 +35,6 @@ interface Api {
      * @throws Exception if the request fails or the response cannot be parsed.
      */
     suspend fun cache(cacheId: String): String
+
+    suspend fun getLoggedUserNickname(token: String, tokenSecret: String): String
 }
