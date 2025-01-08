@@ -5,5 +5,4 @@
     <string name="AuthDescription">Zaraz rozpocznie się autoryzacja, Twoje konto Opencaching zostanie połączone z aplikacją. W każdej chwili można je odłączyć.</string>
     <string name="AuthStep1Description">Skopiuj link do przeglądarki, lub przyciśnij przycisk by otworzyć link w domyślnej przeglądarce</string>
     <string name="AuthStep2Description">Wklej pin ze strony Opencaching i kliknij przycisk</string>
-    <string name="AuthStep3Description">Sukces! Udało się połączyć konto.</string>
 </resources>

@@ -29,11 +29,15 @@ class AuthViewModel(
         )
     }
 
-    suspend fun withSuspendErrorHandling(action: suspend () -> Unit) {
-        try {
+    private suspend fun <T>withSuspendErrorHandling(error: Error? = null,
+                                                    onError: (() -> Unit)? = null,
+                                                    action: suspend () -> T): T {
+        return try {
             action()
         } catch (e: Exception) {
-            updateUiState { copy(error = Error(e.message!!)) }
+            updateUiState { copy(error = error?:Error(e.message!!)) }
+            onError?.invoke()
+            throw e
         }
     }
 
@@ -47,29 +51,49 @@ class AuthViewModel(
 
     override fun onStart() {
         super.onStart()
-        updateUiState { copy(startButton = { withErrorHandling { startAction() } }) }
+        setupStartState()
+    }
+
+    private fun setupStartState(){
+        updateUiState { copy(startButton = { withErrorHandling { startAction() } },
+            loader = loader.copy(false),
+            pastePinAction = null,
+            browserLink = null,
+            openBrowserAction = null) }
     }
 
     private fun startAction() {
+        val error = Error("blad")
         viewModelScope.launch {
-            val response = withLoader { accountManager.startAuthorizationProcess() }
-            response.url
+            val response =
+                withSuspendErrorHandling(
+                    error = error,
+                    onError = { setupStartState() }) {
+                    withLoader {
+                        accountManager.startAuthorizationProcess() }.apply {
+                    }
+                }
             updateUiState {
                 copy(
                     loader = loader.copy(false),
                     openBrowserAction = { openUrl(response.url) },
                     browserLink = response.url,
+                    startButton = null,
                     pastePinAction = {
                         viewModelScope.launch {
-                            withLoader { response.pastePinAction(it) }
-                            updateUiState {
-                                copy(
-                                    openBrowserAction = null,
-                                    browserLink = null,
-                                    pastePinAction = null
-                                )
+                            withSuspendErrorHandling(
+                                error = error,
+                                onError = { setupStartState() }) {
+                                withLoader { response.pastePinAction(it) }
+                                updateUiState {
+                                    copy(
+                                        openBrowserAction = null,
+                                        browserLink = null,
+                                        pastePinAction = null
+                                    )
+                                }
+                                navigateToMain()
                             }
-                            navigateToMain()
                         }
                     }
                 )

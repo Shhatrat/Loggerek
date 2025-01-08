@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.shhatrat.loggerek.account.AccountManager
 import com.shhatrat.loggerek.base.BaseViewModel
 import com.shhatrat.loggerek.base.Loader
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 data class IntroUiState(
@@ -32,8 +33,10 @@ class IntroViewModel(
     }
 
     private suspend fun checkIsReadyToMainOrSetupButton() {
-        if (withLoader { accountManager.isUserLogged() })
+        if (withLoader { accountManager.isUserLogged() }) {
+            withLoader { delay(500) }
             navigateToMainScreen()
+        }
         else {
             updateUiState { copy(buttonAction = { navigateToAuthScreen() }) }
         }

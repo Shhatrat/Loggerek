@@ -1,5 +1,6 @@
 package com.shhatrat.loggerek.intro.splash
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -93,6 +94,9 @@ private fun ExpandedScreenLayout(introUiState: IntroUiState){
                 horizontalAlignment = Alignment.CenterHorizontally
             ){
                 Header(Modifier.padding(16.dp), text = Res.string.appName.get())
+                AnimatedVisibility(introUiState.loader.active) {
+                    CircularIndeterminateProgressBar()
+                }
                 Text(modifier = Modifier.padding(16.dp), text = Res.string.introDescription.get())
                 if (introUiState.buttonAction != null) {
                     Button(onClick = {
@@ -100,9 +104,6 @@ private fun ExpandedScreenLayout(introUiState: IntroUiState){
                     }, content = { Text(Res.string.introStartButton.get()) })
             }
         }
-
-            if (introUiState.loader.active)
-                CircularIndeterminateProgressBar(modifier = Modifier.align(Alignment.Center))
         }
     }
 
