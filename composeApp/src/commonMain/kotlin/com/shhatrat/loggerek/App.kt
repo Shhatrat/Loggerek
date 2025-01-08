@@ -1,8 +1,6 @@
 package com.shhatrat.loggerek
 
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.lightColors
-import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -14,7 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import com.shhatrat.loggerek.AppDestinations.*
 import com.shhatrat.loggerek.account.di.accountModule
 import com.shhatrat.loggerek.api.di.apiModule
-import com.shhatrat.loggerek.base.Color
+import com.shhatrat.loggerek.base.LoggerekColor
 import com.shhatrat.loggerek.base.WindowSizeCallback
 import com.shhatrat.loggerek.base.getTypography
 import com.shhatrat.loggerek.di.PlatformSpecificModule
@@ -39,22 +37,26 @@ fun App(
     additionalKoinConfig: KoinApplication.() -> Unit = { }
 ) {
     MaterialTheme(
-        colors = Color.LightColorScheme,
+        colors = LoggerekColor.lightColorScheme,
         typography = getTypography()) {
         KoinApplication(application = {
             additionalKoinConfig.invoke(this)
-            modules(repositoryModule, apiModule, accountModule, viewModelModule).modules(
-                PlatformSpecificModule().getModules()
-            ).modules(module {
-                single<WindowSizeCallback> {
-                    { calculateWindowSizeClass() }
-                }
-            })
+            setupModules(calculateWindowSizeClass)
         }
         ) {
             AppNavigation(modifier = Modifier)
         }
     }
+}
+
+private fun KoinApplication.setupModules(calculateWindowSizeClass: WindowSizeCallback) {
+    modules(repositoryModule, apiModule, accountModule, viewModelModule).modules(
+        PlatformSpecificModule().getModules()
+    ).modules(module {
+        single<WindowSizeCallback> {
+            { calculateWindowSizeClass() }
+        }
+    })
 }
 
 @Composable

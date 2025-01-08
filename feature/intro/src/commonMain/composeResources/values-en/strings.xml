@@ -1,0 +1,5 @@
+<resources>
+    <string name="appName">Loggerek</string>
+    <string name="introDescription">Uprość swoje geocacherskie życie!</string>
+    <string name="introStartButton">Rozpocznij...</string>
+</resources>
