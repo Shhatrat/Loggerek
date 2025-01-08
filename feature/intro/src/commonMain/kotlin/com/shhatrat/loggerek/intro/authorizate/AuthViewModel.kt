@@ -31,13 +31,12 @@ class AuthViewModel(
 
     private suspend fun <T>withSuspendErrorHandling(error: Error? = null,
                                                     onError: (() -> Unit)? = null,
-                                                    action: suspend () -> T): T {
-        return try {
+                                                    action: suspend () -> T) {
+        try {
             action()
         } catch (e: Exception) {
             updateUiState { copy(error = error?:Error(e.message!!)) }
             onError?.invoke()
-            throw e
         }
     }
 
@@ -65,39 +64,39 @@ class AuthViewModel(
     private fun startAction() {
         val error = Error("blad")
         viewModelScope.launch {
-            val response =
                 withSuspendErrorHandling(
                     error = error,
                     onError = { setupStartState() }) {
-                    withLoader {
-                        accountManager.startAuthorizationProcess() }.apply {
-                    }
-                }
-            updateUiState {
-                copy(
-                    loader = loader.copy(false),
-                    openBrowserAction = { openUrl(response.url) },
-                    browserLink = response.url,
-                    startButton = null,
-                    pastePinAction = {
-                        viewModelScope.launch {
-                            withSuspendErrorHandling(
-                                error = error,
-                                onError = { setupStartState() }) {
-                                withLoader { response.pastePinAction(it) }
-                                updateUiState {
-                                    copy(
-                                        openBrowserAction = null,
-                                        browserLink = null,
-                                        pastePinAction = null
-                                    )
+                    val response = withLoader {
+                        accountManager.startAuthorizationProcess() }
+                    updateUiState {
+                        copy(
+                            loader = loader.copy(false),
+                            openBrowserAction = { openUrl(response.url) },
+                            browserLink = response.url,
+                            startButton = null,
+                            pastePinAction = {
+                                viewModelScope.launch {
+                                    withSuspendErrorHandling(
+                                        error = error,
+                                        onError = { setupStartState() }) {
+                                        withLoader { response.pastePinAction(it) }
+                                        updateUiState {
+                                            copy(
+                                                openBrowserAction = null,
+                                                browserLink = null,
+                                                pastePinAction = null
+                                            )
+                                        }
+                                        navigateToMain()
+                                    }
                                 }
-                                navigateToMain()
+
                             }
-                        }
+                        )
                     }
-                )
-            }
+
+                }
         }
     }
 

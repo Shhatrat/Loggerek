@@ -54,6 +54,12 @@ kotlin {
             implementation(projects.manager.account)
             implementation("org.jetbrains.compose.material3:material3-window-size-class:1.7.3")
         }
+        commonTest.dependencies {
+            implementation(kotlin("test")) // Wspólny framework do testów
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
+
+        //            implementation(libs.kotlin.test)
+        }
     }
 }
 

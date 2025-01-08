@@ -44,7 +44,6 @@ import com.shhatrat.loggerek.base.WindowSizeCallback
 import com.shhatrat.loggerek.base.get
 import com.shhatrat.loggerek.intro.splash.CircularIndeterminateProgressBar
 import loggerek.feature.intro.generated.resources.AuthDescription
-import loggerek.feature.intro.generated.resources.AuthStep1Description
 import loggerek.feature.intro.generated.resources.AuthStep2Description
 import loggerek.feature.intro.generated.resources.Res
 import loggerek.feature.intro.generated.resources.introStartButton
