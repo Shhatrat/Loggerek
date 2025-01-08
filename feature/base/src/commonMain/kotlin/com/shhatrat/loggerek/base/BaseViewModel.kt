@@ -1,13 +1,17 @@
 package com.shhatrat.loggerek.base
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 
 data class Loader(val active: Boolean = false)
+
+class Error(val descriptionText: String = "", val retry: Retry? = null)
+
+data class Retry(val description: String? = null,
+                     val action: (() -> Unit)? = null)
 
 open class BaseViewModel<T>(initialState: T) : ViewModel() {
 

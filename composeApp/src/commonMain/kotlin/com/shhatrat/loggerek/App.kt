@@ -114,5 +114,5 @@ fun PrepareMainScreen(navigateToIntro: () -> Unit) {
 fun PrepareAuthScreen(navigateToMain: () -> Unit) {
     val vm: AuthViewModel = koinViewModel { parametersOf(navigateToMain) }
     LaunchedEffect(Unit) { vm.onStart() }
-    AuthorizeScreen(vm.state.collectAsState().value)
+    AuthorizeScreen(koinInject<WindowSizeCallback>(), vm.state.collectAsState().value)
 }

@@ -33,6 +33,7 @@ import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun IntroScreen(calculateWindowSizeClass: WindowSizeCallback, introUiState: IntroUiState) {
+
     Crossfade(targetState = (calculateWindowSizeClass.invoke().widthSizeClass)) { screenClass ->
         when (screenClass) {
             WindowWidthSizeClass.Compact, WindowWidthSizeClass.Medium -> CompactScreenLayout(introUiState)
@@ -42,7 +43,7 @@ fun IntroScreen(calculateWindowSizeClass: WindowSizeCallback, introUiState: Intr
 }
 
 @Composable
-fun CompactScreenLayout(introUiState: IntroUiState){
+private fun CompactScreenLayout(introUiState: IntroUiState){
     Box(
         modifier = Modifier.background(MaterialTheme.colors.background)
     ) {
@@ -75,7 +76,7 @@ fun CompactScreenLayout(introUiState: IntroUiState){
 }
 
 @Composable
-fun ExpandedScreenLayout(introUiState: IntroUiState){
+private fun ExpandedScreenLayout(introUiState: IntroUiState){
     Row {
         Box(modifier = Modifier.fillMaxSize().weight(1f).background(MaterialTheme.colors.background)){
             Box(modifier = Modifier.fillMaxSize()) {
@@ -108,9 +109,10 @@ fun ExpandedScreenLayout(introUiState: IntroUiState){
 }
 
 @Composable
-fun CircularIndeterminateProgressBar(modifier: Modifier = Modifier) {
+fun CircularIndeterminateProgressBar(modifier: Modifier = Modifier, color: Color? = null) {
     CircularProgressIndicator(
         modifier = modifier.size(48.dp),
+        color = color?:MaterialTheme.colors.primary,
         strokeWidth = 4.dp
     )
 }

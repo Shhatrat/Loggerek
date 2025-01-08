@@ -24,7 +24,7 @@ object LoggerekColor {
 //        surface = CustomSurface,
 //        onSurface = CustomOnSurface,
 //        error = Color(0xFFB00020),
-//        onError = Color(0xFFFFFFFF)
+        onError = Color(0xFFB71C1C),
         primary = BlackButton,       // Przyciski
         onPrimary = WhiteText,       // Tekst na przyciskach
         background = YellowBackground, // Główne tło aplikacji
