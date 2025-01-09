@@ -41,8 +41,8 @@ import androidx.compose.ui.unit.dp
 import com.shhatrat.loggerek.base.composable.SnackBarHelper
 import com.shhatrat.loggerek.base.composable.SnackBarHelper.ProvideSnackBar
 import com.shhatrat.loggerek.base.WindowSizeCallback
+import com.shhatrat.loggerek.base.composable.CircularIndeterminateProgressBar
 import com.shhatrat.loggerek.base.get
-import com.shhatrat.loggerek.intro.splash.CircularIndeterminateProgressBar
 import loggerek.feature.intro.generated.resources.AuthDescription
 import loggerek.feature.intro.generated.resources.AuthStep2Description
 import loggerek.feature.intro.generated.resources.Res
