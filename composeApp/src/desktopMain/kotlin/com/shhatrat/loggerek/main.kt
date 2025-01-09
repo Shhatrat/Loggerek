@@ -18,6 +18,6 @@ fun main() = application {
         title = Res.string.app_name.get(),
         state = rememberWindowState(width = 800.dp, height = 800.dp)
     ) {
-        App()
+        App(calculateWindowSizeClass = { calculateWindowSizeClass() })
     }
 }
