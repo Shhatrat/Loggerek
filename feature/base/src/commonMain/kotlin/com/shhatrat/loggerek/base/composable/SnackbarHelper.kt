@@ -1,4 +1,4 @@
-package com.shhatrat.loggerek.base
+package com.shhatrat.loggerek.base.composable
 
 import androidx.compose.material.Snackbar
 import androidx.compose.material.SnackbarHost
@@ -6,7 +6,7 @@ import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.SnackbarResult
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import org.jetbrains.compose.resources.StringResource
+import com.shhatrat.loggerek.base.Error
 
 object SnackBarHelper {
 

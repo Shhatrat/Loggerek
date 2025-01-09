@@ -21,9 +21,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
-import com.shhatrat.loggerek.base.Header
+import com.shhatrat.loggerek.base.composable.Header
 import com.shhatrat.loggerek.base.WindowSizeCallback
+import com.shhatrat.loggerek.base.composable.CircularIndeterminateProgressBar
 import com.shhatrat.loggerek.base.get
 import loggerek.feature.intro.generated.resources.Res
 import loggerek.feature.intro.generated.resources.appName
@@ -107,13 +109,4 @@ private fun ExpandedScreenLayout(introUiState: IntroUiState){
         }
     }
 
-}
-
-@Composable
-fun CircularIndeterminateProgressBar(modifier: Modifier = Modifier, color: Color? = null) {
-    CircularProgressIndicator(
-        modifier = modifier.size(48.dp),
-        color = color?:MaterialTheme.colors.primary,
-        strokeWidth = 4.dp
-    )
 }

@@ -1,4 +1,4 @@
-package com.shhatrat.loggerek.base
+package com.shhatrat.loggerek.base.composable
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable

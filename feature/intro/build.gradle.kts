@@ -53,12 +53,17 @@ kotlin {
             implementation(projects.feature.base)
             implementation(projects.manager.account)
             implementation("org.jetbrains.compose.material3:material3-window-size-class:1.7.3")
+            @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
+            implementation(compose.uiTest)
+        }
+        jvmTest.dependencies {
+            implementation(compose.desktop.currentOs)
         }
         commonTest.dependencies {
             implementation(kotlin("test")) // Wspólny framework do testów
             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
-
-        //            implementation(libs.kotlin.test)
+            @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
+            implementation(compose.uiTest)
         }
     }
 }

@@ -38,8 +38,8 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.shhatrat.loggerek.base.SnackBarHelper
-import com.shhatrat.loggerek.base.SnackBarHelper.ProvideSnackBar
+import com.shhatrat.loggerek.base.composable.SnackBarHelper
+import com.shhatrat.loggerek.base.composable.SnackBarHelper.ProvideSnackBar
 import com.shhatrat.loggerek.base.WindowSizeCallback
 import com.shhatrat.loggerek.base.get
 import com.shhatrat.loggerek.intro.splash.CircularIndeterminateProgressBar
