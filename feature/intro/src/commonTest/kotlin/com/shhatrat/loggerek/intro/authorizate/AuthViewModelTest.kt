@@ -36,7 +36,7 @@ class AuthViewModelTest {
     }
 
     @Test
-    fun `initial state is set correctly`() = runTest {
+    fun `initial_state_is_set_correctly`() = runTest {
         viewModel.onStart()
         val state = viewModel.state.value
 
@@ -49,7 +49,7 @@ class AuthViewModelTest {
     }
 
     @Test
-    fun `startAction updates state on success`() = runTest {
+    fun `startAction_updates_state_on_success`() = runTest {
         viewModel.onStart()
 
         // Simulate start button click
@@ -65,7 +65,7 @@ class AuthViewModelTest {
     }
 
     @Test
-    fun `pastePinAction updates state on success`() = runTest {
+    fun `pastePinAction_updates_state_on_success`() = runTest {
         viewModel.onStart()
 
         // Simulate start button click
@@ -84,7 +84,7 @@ class AuthViewModelTest {
     }
 
     @Test
-    fun `pastePinAction handles error and resets state`() = runTest {
+    fun `pastePinAction_handles_error_and_resets_state`() = runTest {
         fakeAccountManager.onPastePinAction = { throw RuntimeException("Invalid PIN") }
         viewModel.onStart()
 
@@ -105,7 +105,7 @@ class AuthViewModelTest {
     }
 
     @Test
-    fun `loader activates during start button click`() = runTest {
+    fun `loader_activates_during_start_button_click`() = runTest {
         fakeAccountManager.onPastePinAction = { throw RuntimeException("Invalid PIN") }
         fakeAccountManager.startAuthorizationDelay = 1000L
         viewModel.onStart()
