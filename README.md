@@ -15,6 +15,34 @@
 
 
 --- 
+### Testing
+
+#### ViewModel unit tests
+
+`com.shhatrat.loggerek.intro.authorizate.AuthViewModelTest`
+Click the green run icon in the gutter next to the `AuthViewModelTest` class
+
+
+#### Ui testing
+
+`com.shhatrat.loggerek.introIntroScreenTest`
+```android
+./gradlew :feature:intro:connectedAndroidTest
+```
+
+```ios
+./gradlew :feature:intro:iosSimulatorArm64Test
+```
+
+```desktop
+./gradlew :feature:intro:desktopTest
+```
+
+```wasm
+./gradlew :feature:intro:wasmJsTest
+```
+
+--- 
 
 This is a Kotlin Multiplatform project targeting Android, iOS, Web, Desktop, Server.
 
