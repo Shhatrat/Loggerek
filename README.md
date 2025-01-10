@@ -26,19 +26,24 @@ Click the green run icon in the gutter next to the `AuthViewModelTest` class
 #### Ui testing
 
 `com.shhatrat.loggerek.introIntroScreenTest`
-```android
+
+android
+```
 ./gradlew :feature:intro:connectedAndroidTest
 ```
 
-```ios
+ios
+```
 ./gradlew :feature:intro:iosSimulatorArm64Test
 ```
 
-```desktop
+desktop
+```
 ./gradlew :feature:intro:desktopTest
 ```
 
-```wasm
+wasm
+```
 ./gradlew :feature:intro:wasmJsTest
 ```
 
