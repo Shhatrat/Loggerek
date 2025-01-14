@@ -10,6 +10,7 @@ plugins {
     id("io.gitlab.arturbosch.detekt") version "1.23.7"
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    id("io.github.takahirom.roborazzi")
 }
 
 kotlin {
@@ -59,9 +60,15 @@ kotlin {
             @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
             implementation(compose.uiTest)
         }
+        androidInstrumentedTest.dependencies {
+            implementation(libs.robolectric)
+            implementation(libs.espresso.core)
+            implementation(libs.ui.test.junit4)
+        }
         jvmTest.dependencies {
             implementation(compose.desktop.currentOs)
-        }
+            implementation("io.github.takahirom.roborazzi:roborazzi-compose-desktop:1.39.0")
+            implementation(kotlin("test"))        }
         commonTest.dependencies {
             implementation(kotlin("test")) // Wspólny framework do testów
             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
@@ -78,13 +85,25 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
+
     defaultConfig {
         minSdk = libs.versions.android.minSdk.get().toInt()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 }
 
-dependencies{
+dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4-android:1.7.6")
     debugImplementation("androidx.compose.ui:ui-test-manifest:1.7.6")
+    implementation(libs.roborazzi)
+    api(libs.robolectric)
+    api(libs.roborazziRule)
+    api(libs.roborazziCompose)
+
 }
