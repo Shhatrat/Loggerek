@@ -14,12 +14,12 @@ internal object OpencachingApi {
     /**
      * The consumer key used for OAuth authentication with the OpenCaching API.
      */
-    internal const val consumerKey = "XXXXXXXXXX"
+    internal const val consumerKey = "dEmyvudTJYeYMkZTFwug"
 
     /**
      * The consumer secret used for OAuth authentication with the OpenCaching API.
      */
-    internal const val consumerSecret = "XXXXXXXXXX"
+    internal const val consumerSecret = "T5aX8PAvfQcGbwWBG5ZnMGyf7R7vJPFAfy6pY22g"
 
     // Private constants defining endpoint parts
     private const val geocachePart = "services/caches/geocache"
