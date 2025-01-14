@@ -50,7 +50,7 @@ kotlin {
             implementation(compose.material)
             implementation(compose.ui)
             implementation(compose.components.resources)
-            implementation(projects.feature.base)
+            implementation(projects.base)
             implementation(projects.manager.account)
             implementation(projects.api)
             implementation(projects.repository)

@@ -12,7 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import com.shhatrat.loggerek.AppDestinations.*
 import com.shhatrat.loggerek.account.di.accountModule
 import com.shhatrat.loggerek.api.di.apiModule
-import com.shhatrat.loggerek.base.LoggerekColor
+import com.shhatrat.loggerek.base.color.LoggerekColor
 import com.shhatrat.loggerek.base.WindowSizeCallback
 import com.shhatrat.loggerek.base.getTypography
 import com.shhatrat.loggerek.di.PlatformSpecificModule
