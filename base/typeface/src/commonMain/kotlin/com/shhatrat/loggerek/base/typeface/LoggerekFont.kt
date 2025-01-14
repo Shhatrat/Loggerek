@@ -1,29 +1,30 @@
-package com.shhatrat.loggerek.base
+package com.shhatrat.loggerek.base.typeface
 
 import androidx.compose.material.Typography
 import androidx.compose.runtime.Composable
+
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import loggerek.composeapp.generated.resources.Montserrat_Black
-import loggerek.composeapp.generated.resources.Montserrat_BlackItalic
-import loggerek.composeapp.generated.resources.Montserrat_Bold
-import loggerek.composeapp.generated.resources.Montserrat_BoldItalic
-import loggerek.composeapp.generated.resources.Montserrat_ExtraBold
-import loggerek.composeapp.generated.resources.Montserrat_ExtraBoldItalic
-import loggerek.composeapp.generated.resources.Montserrat_ExtraLight
-import loggerek.composeapp.generated.resources.Montserrat_ExtraLightItalic
-import loggerek.composeapp.generated.resources.Montserrat_Italic
-import loggerek.composeapp.generated.resources.Montserrat_Light
-import loggerek.composeapp.generated.resources.Montserrat_LightItalic
-import loggerek.composeapp.generated.resources.Montserrat_Medium
-import loggerek.composeapp.generated.resources.Montserrat_MediumItalic
-import loggerek.composeapp.generated.resources.Montserrat_Regular
-import loggerek.composeapp.generated.resources.Montserrat_SemiBold
-import loggerek.composeapp.generated.resources.Montserrat_SemiBoldItalic
-import loggerek.composeapp.generated.resources.Montserrat_Thin
-import loggerek.composeapp.generated.resources.Montserrat_ThinItalic
-import loggerek.composeapp.generated.resources.Res
+import loggerek.base.typeface.generated.resources.Montserrat_Black
+import loggerek.base.typeface.generated.resources.Montserrat_BlackItalic
+import loggerek.base.typeface.generated.resources.Montserrat_Bold
+import loggerek.base.typeface.generated.resources.Montserrat_BoldItalic
+import loggerek.base.typeface.generated.resources.Montserrat_ExtraBold
+import loggerek.base.typeface.generated.resources.Montserrat_ExtraBoldItalic
+import loggerek.base.typeface.generated.resources.Montserrat_ExtraLight
+import loggerek.base.typeface.generated.resources.Montserrat_ExtraLightItalic
+import loggerek.base.typeface.generated.resources.Montserrat_Italic
+import loggerek.base.typeface.generated.resources.Montserrat_Light
+import loggerek.base.typeface.generated.resources.Montserrat_LightItalic
+import loggerek.base.typeface.generated.resources.Montserrat_Medium
+import loggerek.base.typeface.generated.resources.Montserrat_MediumItalic
+import loggerek.base.typeface.generated.resources.Montserrat_Regular
+import loggerek.base.typeface.generated.resources.Montserrat_SemiBold
+import loggerek.base.typeface.generated.resources.Montserrat_SemiBoldItalic
+import loggerek.base.typeface.generated.resources.Montserrat_Thin
+import loggerek.base.typeface.generated.resources.Montserrat_ThinItalic
+import loggerek.base.typeface.generated.resources.Res
 import org.jetbrains.compose.resources.Font
 
 @Composable

@@ -83,7 +83,6 @@ kotlin {
             implementation(projects.feature.intro)
             implementation(projects.feature.main)
             implementation(projects.base)
-            implementation(projects.base.color)
             implementation(projects.manager.account)
             implementation(libs.navigation.compose)
             implementation(libs.koin.compose.viewmodel)

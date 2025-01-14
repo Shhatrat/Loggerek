@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.github.takahirom.roborazzi.RoborazziOptions
 import com.shhatrat.loggerek.base.Loader
+import com.shhatrat.loggerek.base.LoggerekTheme
 import com.shhatrat.loggerek.base.color.LoggerekColor
 import com.shhatrat.loggerek.intro.splash.IntroScreen
 import com.shhatrat.loggerek.intro.splash.IntroUiState
@@ -25,8 +26,7 @@ class IntroScreenRoborazziTest {
     @Test
     fun introScreen() = runDesktopComposeUiTest {
         setContent {
-            //TODO add valid MaterialTheme
-            MaterialTheme(colors = LoggerekColor.lightColorScheme) {
+            LoggerekTheme {
                 IntroScreen(
                     calculateWindowSizeClass = { WindowSizeClass.calculateFromSize(DpSize(200.dp, 300.dp)) },
                     introUiState = IntroUiState(

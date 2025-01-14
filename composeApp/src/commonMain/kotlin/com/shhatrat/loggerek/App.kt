@@ -12,9 +12,8 @@ import androidx.navigation.compose.rememberNavController
 import com.shhatrat.loggerek.AppDestinations.*
 import com.shhatrat.loggerek.account.di.accountModule
 import com.shhatrat.loggerek.api.di.apiModule
-import com.shhatrat.loggerek.base.color.LoggerekColor
+import com.shhatrat.loggerek.base.LoggerekTheme
 import com.shhatrat.loggerek.base.WindowSizeCallback
-import com.shhatrat.loggerek.base.getTypography
 import com.shhatrat.loggerek.di.PlatformSpecificModule
 import com.shhatrat.loggerek.di.viewModelModule
 import com.shhatrat.loggerek.main.MainScreen
@@ -36,9 +35,7 @@ fun App(
     calculateWindowSizeClass: WindowSizeCallback,
     additionalKoinConfig: KoinApplication.() -> Unit = { }
 ) {
-    MaterialTheme(
-        colors = LoggerekColor.lightColorScheme,
-        typography = getTypography()) {
+    LoggerekTheme {
         KoinApplication(application = {
             additionalKoinConfig.invoke(this)
             setupModules(calculateWindowSizeClass)

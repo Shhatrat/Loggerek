@@ -49,17 +49,13 @@ kotlin {
             implementation(compose.foundation)
             implementation(compose.material)
             implementation(compose.ui)
-            implementation(projects.base.color)
-            implementation(projects.base.typeface)
             implementation(compose.components.resources)
-            api(libs.androidx.lifecycle.viewmodel)
-            api("org.jetbrains.compose.material3:material3-window-size-class:1.7.3")
         }
     }
 }
 
 android {
-    namespace = "com.shhatrat.loggerek.base"
+    namespace = "com.shhatrat.loggerek.base.typeface"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
