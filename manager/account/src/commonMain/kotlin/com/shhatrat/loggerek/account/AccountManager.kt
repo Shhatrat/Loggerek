@@ -1,5 +1,7 @@
 package com.shhatrat.loggerek.account
 
+import com.shhatrat.loggerek.api.model.FullUser
+
 /**
  * Interface representing the account management operations.
  */
@@ -41,4 +43,6 @@ interface AccountManager {
      * @return A [ProcessResponse] containing the details of the process.
      */
     suspend fun startAuthorizationProcess(): ProcessResponse
+
+    suspend fun getFullUserData(): FullUser
 }

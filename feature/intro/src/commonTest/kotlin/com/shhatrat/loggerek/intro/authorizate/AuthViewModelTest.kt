@@ -1,6 +1,6 @@
 package com.shhatrat.loggerek.intro.authorizate
 
-import FakeAccountManager
+import com.shhatrat.loggerek.account.FakeAccountManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.*

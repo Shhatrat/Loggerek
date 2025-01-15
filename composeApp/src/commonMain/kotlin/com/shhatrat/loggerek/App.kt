@@ -104,7 +104,7 @@ fun PrepareIntroScreen(navigateToMain: () -> Unit, navigateToAuth: () -> Unit) {
 fun PrepareMainScreen(navigateToIntro: () -> Unit) {
     val vm: MainViewModel = koinViewModel { parametersOf(navigateToIntro) }
     LaunchedEffect(Unit) { vm.onStart() }
-    MainScreen(vm.state.collectAsState().value)
+    MainScreen(koinInject<WindowSizeCallback>(), vm.state.collectAsState().value)
 }
 
 @Composable

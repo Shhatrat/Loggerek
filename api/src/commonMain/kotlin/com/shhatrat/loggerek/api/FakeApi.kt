@@ -1,5 +1,7 @@
 package com.shhatrat.loggerek.api
 
+import com.shhatrat.loggerek.api.model.FullUser
+import com.shhatrat.loggerek.api.model.UserName
 import com.shhatrat.loggerek.api.oauth.model.OAuthAccessTokenResponse
 import com.shhatrat.loggerek.api.oauth.model.OAuthRequestTokenResponse
 
@@ -21,7 +23,11 @@ class FakeApi: Api {
         return "{\"code\":\"OP1111\",\"name\":\"FakeName\",\"location\":\"52.111111|16.111111\",\"status\":\"Available\",\"type\":\"Traditional\"}\n"
     }
 
-    override suspend fun getLoggedUserNickname(token: String, tokenSecret: String): String {
-        return "FakeUser"
+    override suspend fun getLoggedUserNickname(token: String, tokenSecret: String): UserName {
+        return UserName("FakeUserName")
+    }
+
+    override suspend fun getLoggedUserData(token: String, tokenSecret: String): FullUser {
+        return FullUser.mock()
     }
 }

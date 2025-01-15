@@ -1,0 +1,7 @@
+<resources>
+    <string name="cachesFound">Znalezionych keszy:</string>
+    <string name="cachesNotFound">Nieznalezionych keszy:</string>
+    <string name="cachesHidden">Ukrytych keszy:</string>
+    <string name="recommendationsGiven">Przyznanych rekomendacji:</string>
+    <string name="recommendationsLeft">Rekomendacji do przydzielenia:</string>
+</resources>

@@ -1,6 +1,7 @@
 package com.shhatrat.loggerek.account
 
 import com.shhatrat.loggerek.api.Api
+import com.shhatrat.loggerek.api.model.FullUser
 import com.shhatrat.loggerek.repository.Repository
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelAndJoin
@@ -22,7 +23,7 @@ class AccountManagerImpl(
     private suspend fun canDownloadUsername() =
         repository.token.get()
             ?.let { token -> repository.tokenSecret.get()
-                ?.let { tokenSecret -> api.getLoggedUserNickname(token, tokenSecret).isNotEmpty() } } == true
+                ?.let { tokenSecret -> api.getLoggedUserNickname(token, tokenSecret).username.isNotEmpty() } } == true
 
     override suspend fun startAuthorizationProcess(): AccountManager.ProcessResponse {
 
@@ -51,5 +52,9 @@ class AccountManagerImpl(
                 }
             }
         }
+    }
+
+    override suspend fun getFullUserData(): FullUser {
+        return api.getLoggedUserData(repository.token.get()!!, repository.tokenSecret.get()!!)
     }
 }

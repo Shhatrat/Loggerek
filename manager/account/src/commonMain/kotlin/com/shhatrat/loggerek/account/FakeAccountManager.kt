@@ -1,4 +1,7 @@
+package com.shhatrat.loggerek.account
+
 import com.shhatrat.loggerek.account.AccountManager
+import com.shhatrat.loggerek.api.model.FullUser
 import kotlinx.coroutines.delay
 
 /**
@@ -63,5 +66,9 @@ class FakeAccountManager(
                 return onPastePinAction(pin)
             }
         }
+    }
+
+    override suspend fun getFullUserData(): FullUser {
+        return FullUser.mock()
     }
 }

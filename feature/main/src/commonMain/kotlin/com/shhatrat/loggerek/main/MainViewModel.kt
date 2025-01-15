@@ -22,11 +22,6 @@ class MainViewModel(
     override fun onStart() {
         super.onStart()
         viewModelScope.launch {
-            val nickName =
-                api.getLoggedUserNickname(repository.token.get()!!, repository.tokenSecret.get()!!)
-            updateUiState { copy(nickName = nickName) }
-        }
-        viewModelScope.launch {
             updateUiState {
                 copy(removeData = {
                     repository.token.remove()

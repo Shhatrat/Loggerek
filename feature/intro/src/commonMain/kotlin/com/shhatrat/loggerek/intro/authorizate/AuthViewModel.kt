@@ -5,6 +5,8 @@ import com.shhatrat.loggerek.account.AccountManager
 import com.shhatrat.loggerek.base.BaseViewModel
 import com.shhatrat.loggerek.base.Error
 import com.shhatrat.loggerek.base.Loader
+import com.shhatrat.loggerek.base.error.ErrorHandlingUtil
+import com.shhatrat.loggerek.base.loader.LoaderHandlingUtil
 import kotlinx.coroutines.launch
 
 data class AuthUiState(
@@ -21,32 +23,9 @@ class AuthViewModel(
     private val accountManager: AccountManager
 ) : BaseViewModel<AuthUiState>(AuthUiState()) {
 
-    private suspend fun <T> withLoader(delayMs: Long = 0L, action: suspend () -> T): T {
-        return actionWithLoader(
-            loaderAction = { updateUiState { copy(loader = Loader(it)) } },
-            action = action,
-            delayMs = delayMs
-        )
-    }
+    private val loaderHandlingUtil = LoaderHandlingUtil { loaderAction -> updateUiState { copy(loader = Loader(loaderAction)) }  }
 
-    private suspend fun <T>withSuspendErrorHandling(error: Error? = null,
-                                                    onError: (() -> Unit)? = null,
-                                                    action: suspend () -> T) {
-        try {
-            action()
-        } catch (e: Exception) {
-            updateUiState { copy(error = error?:Error(e.message!!)) }
-            onError?.invoke()
-        }
-    }
-
-    private fun withErrorHandling(action: () -> Unit) {
-        try {
-            action()
-        } catch (e: Exception) {
-            updateUiState { copy(error = Error(e.message!!)) }
-        }
-    }
+    private val errorHandlingUtil = ErrorHandlingUtil { error -> updateUiState { copy(error = error) } }
 
     override fun onStart() {
         super.onStart()
@@ -54,7 +33,7 @@ class AuthViewModel(
     }
 
     private fun setupStartState(){
-        updateUiState { copy(startButton = { withErrorHandling { startAction() } },
+        updateUiState { copy(startButton = { errorHandlingUtil.withErrorHandling { startAction() } },
             loader = loader.copy(false),
             pastePinAction = null,
             browserLink = null,
@@ -64,10 +43,10 @@ class AuthViewModel(
     private fun startAction() {
         val error = Error("blad")
         viewModelScope.launch {
-                withSuspendErrorHandling(
+                errorHandlingUtil.withSuspendErrorHandling(
                     error = error,
                     onError = { setupStartState() }) {
-                    val response = withLoader {
+                    val response = loaderHandlingUtil.withLoader {
                         accountManager.startAuthorizationProcess() }
                     updateUiState {
                         copy(
@@ -77,10 +56,10 @@ class AuthViewModel(
                             startButton = null,
                             pastePinAction = {
                                 viewModelScope.launch {
-                                    withSuspendErrorHandling(
+                                    errorHandlingUtil.withSuspendErrorHandling(
                                         error = error,
                                         onError = { setupStartState() }) {
-                                        withLoader { response.pastePinAction(it) }
+                                        loaderHandlingUtil.withLoader { response.pastePinAction(it) }
                                         updateUiState {
                                             copy(
                                                 openBrowserAction = null,

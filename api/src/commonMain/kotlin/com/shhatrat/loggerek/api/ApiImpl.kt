@@ -1,5 +1,7 @@
 package com.shhatrat.loggerek.api
 
+import com.shhatrat.loggerek.api.model.FullUser
+import com.shhatrat.loggerek.api.model.UserName
 import com.shhatrat.loggerek.api.oauth.model.OAuthAccessTokenResponse
 import com.shhatrat.loggerek.api.oauth.OAuthLogic
 import com.shhatrat.loggerek.api.oauth.OAuthLogic.buildOAuthHeader
@@ -64,26 +66,13 @@ class ApiImpl(private val client: HttpClient) : Api {
         }.bodyAsText()
     }
 
-    override suspend fun getLoggedUserNickname(token: String, tokenSecret: String): String {
-        val p = mapOf(
-            "oauth_consumer_key" to OpencachingApi.consumerKey,
-            "oauth_nonce" to generateOAuthNonce(),
-            "oauth_signature_method" to "HMAC-SHA1",
-            "oauth_timestamp" to (Clock.System.now().toEpochMilliseconds()).toString(),
-            "oauth_version" to "1.0",
-            "oauth_token" to token,
-            "fields" to "username"
-        )
-        val signature = generateSignature("GET", OpencachingApi.Url.user(), p, OpencachingApi.consumerSecret, tokenSecret)
-        val signedParams = p + ("oauth_signature" to signature)
-        val response: HttpResponse = client.get("${OpencachingApi.Url.user()}?fields=username") {
-            headers {
-                append("Authorization", buildOAuthHeader(signedParams.filter { it.key.startsWith("oauth") }))
-            }
-        }
-        return response.body<User>().username
+    override suspend fun getLoggedUserNickname(token: String, tokenSecret: String): UserName {
+        val params = listOf(UserParam.USERNAME)
+        return getUser(client, token, tokenSecret, params)
     }
 
-    @Serializable
-    data class User(val username: String)
+    override suspend fun getLoggedUserData(token: String, tokenSecret: String): FullUser {
+        val params = listOf(UserParam.USERNAME, UserParam.CACHES_FOUND, UserParam.CACHES_NOT_FOUND, UserParam.RECOMMENDATIONS_LEFT, UserParam.CACHES_HIDDEN, UserParam.RECOMMENDATIONS_GIVEN)
+        return getUser(client, token, tokenSecret, params)
+    }
 }
