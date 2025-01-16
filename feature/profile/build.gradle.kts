@@ -72,6 +72,9 @@ kotlin {
             implementation(libs.espresso.core)
             implementation(libs.ui.test.junit4)
         }
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+        }
         jvmTest.dependencies {
             implementation(compose.desktop.currentOs)
             implementation("io.github.takahirom.roborazzi:roborazzi-compose-desktop:1.39.0")
