@@ -77,6 +77,10 @@ kotlin {
             implementation("io.github.takahirom.roborazzi:roborazzi-compose-desktop:1.39.0")
             implementation(kotlin("test"))
         }
+        iosTest.dependencies {
+            implementation("io.github.takahirom.roborazzi:roborazzi-compose-ios:1.39.0")
+            implementation(kotlin("test"))
+        }
         commonTest.dependencies {
             implementation(kotlin("test")) // Wspólny framework do testów
             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
