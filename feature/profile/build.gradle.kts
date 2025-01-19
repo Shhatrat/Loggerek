@@ -67,13 +67,25 @@ kotlin {
             @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
             implementation(compose.uiTest)
         }
-        androidInstrumentedTest.dependencies {
+        androidUnitTest.dependencies {
             implementation(libs.robolectric)
             implementation(libs.espresso.core)
             implementation(libs.ui.test.junit4)
+            implementation("androidx.compose.ui:ui-test-junit4-android:1.7.6")
+            implementation("androidx.compose.ui:ui-test-manifest:1.7.6")
+            implementation("androidx.compose.ui:ui-test-junit4-android")
+            implementation("io.github.takahirom.roborazzi:roborazzi-compose:1.39.0")
+            implementation("io.github.takahirom.roborazzi:roborazzi-junit-rule:1.39.0")
+            implementation("io.github.takahirom.roborazzi:roborazzi:1.39.0")
+
         }
         commonTest.dependencies {
             implementation(kotlin("test"))
+        }
+        androidInstrumentedTest.dependencies {
+            implementation("io.github.takahirom.roborazzi:roborazzi-compose:1.39.0")
+            implementation("io.github.takahirom.roborazzi:roborazzi-junit-rule:1.39.0")
+            implementation("io.github.takahirom.roborazzi:roborazzi:1.39.0")
         }
         jvmTest.dependencies {
             implementation(compose.desktop.currentOs)
