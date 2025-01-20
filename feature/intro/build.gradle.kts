@@ -67,7 +67,6 @@ kotlin {
             implementation(compose.uiTest)
         }
         androidInstrumentedTest.dependencies {
-            implementation(libs.robolectric)
             implementation(libs.espresso.core)
             implementation(libs.ui.test.junit4)
         }
@@ -109,7 +108,6 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4-android:1.7.6")
     debugImplementation("androidx.compose.ui:ui-test-manifest:1.7.6")
     implementation(libs.roborazzi)
-    api(libs.robolectric)
     api(libs.roborazziRule)
     api(libs.roborazziCompose)
 
