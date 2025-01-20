@@ -35,6 +35,7 @@ class ProfileViewModel(
                     val user = accountManager.getFullUserData()
                     updateUiState { copy(user = user) }
                 }
+
             }
         }
     }

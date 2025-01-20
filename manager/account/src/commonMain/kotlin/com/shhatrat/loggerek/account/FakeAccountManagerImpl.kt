@@ -1,6 +1,5 @@
 package com.shhatrat.loggerek.account
 
-import com.shhatrat.loggerek.account.AccountManager
 import com.shhatrat.loggerek.api.model.FullUser
 import kotlinx.coroutines.delay
 
@@ -15,7 +14,7 @@ import kotlinx.coroutines.delay
  * @property startAuthorizationDelay The delay (in milliseconds) before the `startAuthorizationProcess` method completes.
  * @property pastePinDelay The delay (in milliseconds) before the `pastePinAction` completes.
  */
-class FakeAccountManager(
+class FakeAccountManagerImpl(
     private var isLogged: Boolean = false,
     private var responseUrl: String = "http://example.com",
     var onPastePinAction: suspend (String) -> AccountManager.FinishCallback = { AccountManager.FinishCallback },

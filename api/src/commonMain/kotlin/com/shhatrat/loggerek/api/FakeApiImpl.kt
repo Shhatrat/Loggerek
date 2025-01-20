@@ -5,7 +5,7 @@ import com.shhatrat.loggerek.api.model.UserName
 import com.shhatrat.loggerek.api.oauth.model.OAuthAccessTokenResponse
 import com.shhatrat.loggerek.api.oauth.model.OAuthRequestTokenResponse
 
-class FakeApi: Api {
+class FakeApiImpl: Api {
 
     override suspend fun requestToken(): OAuthRequestTokenResponse {
         return OAuthRequestTokenResponse(token = "fakeToken", tokenSecret = "fakeTokenSecret", url = "https://FakeUrl.com")

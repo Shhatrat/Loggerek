@@ -2,6 +2,7 @@ package com.shhatrat.loggerek.api.di
 
 import com.shhatrat.loggerek.api.Api
 import com.shhatrat.loggerek.api.ApiImpl
+import com.shhatrat.loggerek.api.FakeApiImpl
 import io.ktor.client.HttpClient
 import io.ktor.client.HttpClientConfig
 import io.ktor.client.engine.HttpClientEngineFactory
@@ -23,6 +24,10 @@ val apiModule = module {
         } ?: HttpClient{ setupLogger() })
     }
     single<Api> { ApiImpl(get()) }
+}
+
+val fakeApiModule = module {
+    single<Api> { FakeApiImpl() }
 }
 
 private fun HttpClientConfig<*>.setupLogger() {

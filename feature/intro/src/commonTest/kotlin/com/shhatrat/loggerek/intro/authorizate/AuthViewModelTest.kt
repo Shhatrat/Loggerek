@@ -1,6 +1,6 @@
 package com.shhatrat.loggerek.intro.authorizate
 
-import com.shhatrat.loggerek.account.FakeAccountManager
+import com.shhatrat.loggerek.account.FakeAccountManagerImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.*
@@ -16,7 +16,7 @@ import kotlin.test.assertTrue
 @OptIn(ExperimentalCoroutinesApi::class)
 class AuthViewModelTest {
 
-    private lateinit var fakeAccountManager: FakeAccountManager
+    private lateinit var fakeAccountManager: FakeAccountManagerImpl
     private lateinit var viewModel: AuthViewModel
 
     private val testDispatcher = StandardTestDispatcher()
@@ -25,7 +25,7 @@ class AuthViewModelTest {
     fun setup() {
         Dispatchers.setMain(testDispatcher)
 
-        fakeAccountManager = FakeAccountManager(
+        fakeAccountManager = FakeAccountManagerImpl(
             isLogged = false,
             responseUrl = "http://example.com"
         )

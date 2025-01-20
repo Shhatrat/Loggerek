@@ -1,6 +1,6 @@
 package com.shhatrat.loggerek.repository
 
-class FakeRepository : Repository {
+class FakeRepositoryImpl : Repository {
 
     private val fakeStorage = mutableMapOf<String, String?>()
 
