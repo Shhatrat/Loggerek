@@ -33,8 +33,8 @@ import loggerek.feature.intro.generated.resources.introLogo
 import loggerek.feature.intro.generated.resources.introStartButton
 import org.jetbrains.compose.resources.painterResource
 
-object IntroScreenTestTag{
-    val button = "com.shhatrat.loggerek.intro.splash.IntroScreenTestTag.button"
+object IntroScreenTestTag {
+    const val buttonTag = "com.shhatrat.loggerek.intro.splash.IntroScreenTestTag.button"
 }
 
 @Composable
@@ -42,14 +42,17 @@ fun IntroScreen(calculateWindowSizeClass: WindowSizeCallback, introUiState: Intr
 
     Crossfade(targetState = (calculateWindowSizeClass.invoke().widthSizeClass)) { screenClass ->
         when (screenClass) {
-            WindowWidthSizeClass.Compact, WindowWidthSizeClass.Medium -> CompactScreenLayout(introUiState)
+            WindowWidthSizeClass.Compact, WindowWidthSizeClass.Medium -> CompactScreenLayout(
+                introUiState
+            )
+
             WindowWidthSizeClass.Expanded -> ExpandedScreenLayout(introUiState)
         }
     }
 }
 
 @Composable
-private fun CompactScreenLayout(introUiState: IntroUiState){
+private fun CompactScreenLayout(introUiState: IntroUiState) {
     Box(
         modifier = Modifier.background(MaterialTheme.colors.background)
     ) {
@@ -63,15 +66,18 @@ private fun CompactScreenLayout(introUiState: IntroUiState){
                 )
             }
             if (introUiState.buttonAction != null) {
-                Box(modifier = Modifier.fillMaxWidth(),
+                Box(
+                    modifier = Modifier.fillMaxWidth(),
                 ) {
                     Text(
                         modifier = Modifier.align(Alignment.Center),
-                        text = Res.string.introDescription.get())
+                        text = Res.string.introDescription.get()
+                    )
                 }
                 Box(modifier = Modifier.fillMaxWidth()) {
                     Button(
-                        modifier = Modifier.testTag(IntroScreenTestTag.button).align(Alignment.Center).padding(bottom = 16.dp),
+                        modifier = Modifier.testTag(IntroScreenTestTag.buttonTag)
+                            .align(Alignment.Center).padding(bottom = 16.dp),
                         onClick = { introUiState.buttonAction.invoke() },
                         content = { Text(Res.string.introStartButton.get()) })
                 }
@@ -83,9 +89,11 @@ private fun CompactScreenLayout(introUiState: IntroUiState){
 }
 
 @Composable
-private fun ExpandedScreenLayout(introUiState: IntroUiState){
+private fun ExpandedScreenLayout(introUiState: IntroUiState) {
     Row {
-        Box(modifier = Modifier.fillMaxSize().weight(1f).background(MaterialTheme.colors.background)){
+        Box(
+            modifier = Modifier.fillMaxSize().weight(1f).background(MaterialTheme.colors.background)
+        ) {
             Box(modifier = Modifier.fillMaxSize()) {
                 Image(
                     modifier = Modifier.size(500.dp).align(Alignment.Center),
@@ -94,11 +102,12 @@ private fun ExpandedScreenLayout(introUiState: IntroUiState){
                 )
             }
         }
-        Box(modifier = Modifier.fillMaxSize().weight(1f).background(Color.White)){
-            Column(modifier = Modifier.align(Alignment.Center),
+        Box(modifier = Modifier.fillMaxSize().weight(1f).background(Color.White)) {
+            Column(
+                modifier = Modifier.align(Alignment.Center),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
-            ){
+            ) {
                 Header(Modifier.padding(16.dp), text = Res.string.appName.get())
                 AnimatedVisibility(introUiState.loader.active) {
                     CircularIndeterminateProgressBar()
@@ -106,13 +115,12 @@ private fun ExpandedScreenLayout(introUiState: IntroUiState){
                 Text(modifier = Modifier.padding(16.dp), text = Res.string.introDescription.get())
                 if (introUiState.buttonAction != null) {
                     Button(
-                        modifier = Modifier.testTag(IntroScreenTestTag.button),
+                        modifier = Modifier.testTag(IntroScreenTestTag.buttonTag),
                         onClick = {
-                        introUiState.buttonAction.invoke()
-                    }, content = { Text(Res.string.introStartButton.get()) })
+                            introUiState.buttonAction.invoke()
+                        }, content = { Text(Res.string.introStartButton.get()) })
+                }
             }
         }
-        }
     }
-
 }
