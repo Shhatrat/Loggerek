@@ -15,8 +15,8 @@ import kotlinx.coroutines.delay
  * @property pastePinDelay The delay (in milliseconds) before the `pastePinAction` completes.
  */
 class FakeAccountManagerImpl(
-    private var isLogged: Boolean = false,
-    private var responseUrl: String = "http://example.com",
+    var isLogged: Boolean = false,
+    var responseUrl: String = "http://example.com",
     var onPastePinAction: suspend (String) -> AccountManager.FinishCallback = { AccountManager.FinishCallback },
     var isUserLoggedDelay: Long = 0L,
     var startAuthorizationDelay: Long = 0L,

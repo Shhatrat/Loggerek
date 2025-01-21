@@ -75,7 +75,6 @@ fun AppNavigation(modifier: Modifier, navController: NavHostController = remembe
                             navController.nav(MAIN)
                         },
                         navigateToAuth = {
-                            navController.graph.nodes.forEach { key, value -> println(value.route) }
                             navController.nav(AUTH)
                         })
                 }
