@@ -20,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.shhatrat.loggerek.base.WindowSizeCallback
 import com.shhatrat.loggerek.base.composable.CircularIndeterminateProgressBar
@@ -31,6 +32,10 @@ import loggerek.feature.intro.generated.resources.introDescription
 import loggerek.feature.intro.generated.resources.introLogo
 import loggerek.feature.intro.generated.resources.introStartButton
 import org.jetbrains.compose.resources.painterResource
+
+object IntroScreenTestTag{
+    val button = "com.shhatrat.loggerek.intro.splash.IntroScreenTestTag.button"
+}
 
 @Composable
 fun IntroScreen(calculateWindowSizeClass: WindowSizeCallback, introUiState: IntroUiState) {
@@ -58,14 +63,15 @@ private fun CompactScreenLayout(introUiState: IntroUiState){
                 )
             }
             if (introUiState.buttonAction != null) {
-                Box(modifier = Modifier.fillMaxWidth()) {
+                Box(modifier = Modifier.fillMaxWidth(),
+                ) {
                     Text(
                         modifier = Modifier.align(Alignment.Center),
                         text = Res.string.introDescription.get())
                 }
                 Box(modifier = Modifier.fillMaxWidth()) {
                     Button(
-                        modifier = Modifier.align(Alignment.Center).padding(bottom = 16.dp),
+                        modifier = Modifier.testTag(IntroScreenTestTag.button).align(Alignment.Center).padding(bottom = 16.dp),
                         onClick = { introUiState.buttonAction.invoke() },
                         content = { Text(Res.string.introStartButton.get()) })
                 }
@@ -99,7 +105,9 @@ private fun ExpandedScreenLayout(introUiState: IntroUiState){
                 }
                 Text(modifier = Modifier.padding(16.dp), text = Res.string.introDescription.get())
                 if (introUiState.buttonAction != null) {
-                    Button(onClick = {
+                    Button(
+                        modifier = Modifier.testTag(IntroScreenTestTag.button),
+                        onClick = {
                         introUiState.buttonAction.invoke()
                     }, content = { Text(Res.string.introStartButton.get()) })
             }
