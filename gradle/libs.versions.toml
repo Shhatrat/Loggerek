@@ -20,6 +20,7 @@ robolectric = "4.14.1"
 espresso-core = "3.6.1"
 roborazzi = "1.37.0"
 uiToolingPreview = "1.7.3"
+navigationTesting = "2.8.5"
 
 
 [libraries]
@@ -52,6 +53,7 @@ roborazzi = { module = "io.github.takahirom.roborazzi:roborazzi", version.ref = 
 roborazziCompose = { module = "io.github.takahirom.roborazzi:roborazzi-compose", version.ref = "roborazzi" }
 roborazziRule = { module = "io.github.takahirom.roborazzi:roborazzi-junit-rule", version.ref = "roborazzi" }
 ui-tooling-preview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "uiToolingPreview" }
+androidx-navigation-testing = { group = "androidx.navigation", name = "navigation-testing", version.ref = "navigationTesting" }
 
 
 [plugins]

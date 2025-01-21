@@ -1,3 +1,4 @@
+import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
@@ -79,7 +80,7 @@ kotlin {
             implementation(projects.api)
             implementation(libs.multiplatform.settings)
             implementation(projects.di)
-            implementation(projects.feature.intro)
+            api(projects.feature.intro)
             implementation(projects.feature.main)
             implementation(projects.feature.profile)
             implementation(projects.base)
@@ -87,6 +88,14 @@ kotlin {
             implementation(libs.navigation.compose)
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.koin.compose.viewmodel.navigation)
+        }
+        commonTest.dependencies {
+            @OptIn(ExperimentalComposeLibrary::class)
+            implementation(compose.uiTest)
+            implementation(kotlin("test"))
+//            implementation(libs.androidx.navigation.testing)
+//            implementation("androidx.navigation:navigation-testing:2.8.0-alpha10")
+
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
@@ -105,6 +114,7 @@ android {
         applicationId = "com.shhatrat.loggerek"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         versionCode = 1
         versionName = "1.0"
     }
@@ -122,6 +132,11 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
@@ -138,4 +153,13 @@ compose.desktop {
             packageVersion = "1.0.0"
         }
     }
+}
+
+dependencies {
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4-android:1.7.6")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.7.6")
+    implementation(libs.roborazzi)
+    api(libs.roborazziRule)
+    api(libs.roborazziCompose)
+
 }

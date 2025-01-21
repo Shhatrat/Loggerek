@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Button
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
@@ -21,11 +20,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
-import com.shhatrat.loggerek.base.composable.Header
 import com.shhatrat.loggerek.base.WindowSizeCallback
 import com.shhatrat.loggerek.base.composable.CircularIndeterminateProgressBar
+import com.shhatrat.loggerek.base.composable.Header
 import com.shhatrat.loggerek.base.get
 import loggerek.feature.intro.generated.resources.Res
 import loggerek.feature.intro.generated.resources.appName

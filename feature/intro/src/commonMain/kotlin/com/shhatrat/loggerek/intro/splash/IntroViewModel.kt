@@ -8,7 +8,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 data class IntroUiState(
-    val loader: Loader = Loader(),
+    val loader: Loader = Loader(true),
     val buttonAction: (() -> Unit)? = null
 )
 
@@ -38,7 +38,10 @@ class IntroViewModel(
             navigateToMainScreen()
         }
         else {
-            updateUiState { copy(buttonAction = { navigateToAuthScreen() }) }
+            updateUiState { copy(buttonAction = {
+                navigateToAuthScreen()
+            })
+            }
         }
     }
 }
