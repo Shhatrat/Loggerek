@@ -55,6 +55,7 @@ kotlin {
             implementation(compose.material3AdaptiveNavigationSuite)
             implementation(projects.api)
             implementation(projects.feature.profile)
+            implementation(projects.feature.settings)
             implementation(libs.koin.compose.viewmodel)
             implementation("org.jetbrains.compose.material3.adaptive:adaptive-navigation:1.0.0-alpha03")
             implementation(projects.repository)

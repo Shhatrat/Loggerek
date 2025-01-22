@@ -4,21 +4,19 @@ import androidx.lifecycle.viewModelScope
 import com.shhatrat.loggerek.api.Api
 import com.shhatrat.loggerek.base.BaseViewModel
 import com.shhatrat.loggerek.base.Loader
+import com.shhatrat.loggerek.base.MoveToIntro
 import com.shhatrat.loggerek.repository.Repository
 import kotlinx.coroutines.launch
 
 data class MainUiState(
     val nickName: String = "",
     val loader: Loader = Loader(),
-    val removeData: () -> Unit = {},
-    val navigationTabs: List<NavigationHeader> = listOf()
+    val navigationTabs: List<NavigationHeader> = listOf(),
+    val moveToIntro: MoveToIntro = {}
 )
 
-class MainViewModel(
-    private val navigateToIntroScreen: () -> Unit,
-    private val api: Api,
-    private val repository: Repository,
-) : BaseViewModel<MainUiState>(MainUiState()) {
+class MainViewModel(private val moveToIntroAction: MoveToIntro) :
+    BaseViewModel<MainUiState>(MainUiState()) {
 
     override fun onStart() {
         super.onStart()
@@ -26,11 +24,8 @@ class MainViewModel(
             updateUiState {
                 copy(
                     navigationTabs = provideNavigationHeaders(),
-                    removeData = {
-                    repository.token.remove()
-                    repository.tokenSecret.remove()
-                    navigateToIntroScreen()
-                })
+                    moveToIntro = moveToIntroAction
+                )
             }
         }
     }

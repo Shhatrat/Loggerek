@@ -67,6 +67,9 @@ class FakeAccountManagerImpl(
         }
     }
 
+    override fun logout() {
+    }
+
     override suspend fun getFullUserData(): FullUser {
         return FullUser.mock()
     }

@@ -54,6 +54,11 @@ class AccountManagerImpl(
         }
     }
 
+    override fun logout() {
+        repository.token.remove()
+        repository.tokenSecret.remove()
+    }
+
     override suspend fun getFullUserData(): FullUser {
         return api.getLoggedUserData(repository.token.get()!!, repository.tokenSecret.get()!!)
     }

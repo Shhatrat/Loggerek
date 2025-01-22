@@ -4,6 +4,7 @@ import com.shhatrat.loggerek.intro.authorizate.AuthViewModel
 import com.shhatrat.loggerek.intro.splash.IntroViewModel
 import com.shhatrat.loggerek.main.MainViewModel
 import com.shhatrat.loggerek.profile.ProfileViewModel
+import com.shhatrat.loggerek.settings.SettingsViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
@@ -13,6 +14,7 @@ val viewModelModule = module {
         IntroViewModel(navigateToMain, navigateToAuth, get())
     }
     viewModel { (navigateToMain: () -> Unit) -> AuthViewModel(navigateToMain, get()) }
-    viewModel { (navigateToIntro: () -> Unit) -> MainViewModel(navigateToIntro, get(), get()) }
+    viewModel { (navigateToIntro: () -> Unit) -> MainViewModel(navigateToIntro) }
     viewModel { ProfileViewModel(get()) }
+    viewModel { (navigateToMain: () -> Unit) -> SettingsViewModel(navigateToMain, get()) }
 }

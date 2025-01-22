@@ -45,4 +45,6 @@ interface AccountManager {
     suspend fun startAuthorizationProcess(): ProcessResponse
 
     suspend fun getFullUserData(): FullUser
+
+    fun logout()
 }

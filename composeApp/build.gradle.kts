@@ -83,6 +83,7 @@ kotlin {
             api(projects.feature.intro)
             implementation(projects.feature.main)
             implementation(projects.feature.profile)
+            implementation(projects.feature.settings)
             implementation(projects.base)
             implementation(projects.manager.account)
             implementation(libs.navigation.compose)

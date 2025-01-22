@@ -4,8 +4,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteColors
-import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteDefaults
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -15,17 +13,21 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.shhatrat.loggerek.base.MoveToIntro
 import com.shhatrat.loggerek.base.WindowSizeCallback
 import com.shhatrat.loggerek.base.get
-import com.shhatrat.loggerek.main.NavigationHeader.*
+import com.shhatrat.loggerek.main.NavigationHeader.LOG
+import com.shhatrat.loggerek.main.NavigationHeader.PROFILE
+import com.shhatrat.loggerek.main.NavigationHeader.SETTINGS
+import com.shhatrat.loggerek.main.NavigationHeader.WATCH
 import com.shhatrat.loggerek.profile.ProfileScreen
 import com.shhatrat.loggerek.profile.ProfileViewModel
-import loggerek.feature.main.generated.resources.Res
-import loggerek.feature.main.generated.resources.logoo
+import com.shhatrat.loggerek.settings.SettingsViewModel
+import com.shhatrat.loggerek.settings.SettinsScreen
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.parameter.parametersOf
 
 @Composable
 fun MainScreen(calculateWindowSizeClass: WindowSizeCallback, mainUiState: MainUiState) {
@@ -47,17 +49,18 @@ fun MainScreen(calculateWindowSizeClass: WindowSizeCallback, mainUiState: MainUi
                 }
             }
         ) {
-            handleChangeScreen(calculateWindowSizeClass, currentScreen)
+            handleChangeScreen(calculateWindowSizeClass, currentScreen, mainUiState.moveToIntro)
         }
     }
 }
 
 @Composable
-private fun handleChangeScreen(calculateWindowSizeClass: WindowSizeCallback, navigationHeader: NavigationHeader){
+private fun handleChangeScreen(calculateWindowSizeClass: WindowSizeCallback, navigationHeader: NavigationHeader,
+                               moveToMain: MoveToIntro){
     when(navigationHeader){
         PROFILE -> { openProfileScreen(calculateWindowSizeClass) }
         LOG -> {}
-        SETTINGS -> {}
+        SETTINGS -> { openSettingsScreen(calculateWindowSizeClass, moveToMain) }
         WATCH -> {}
     }
 }
@@ -67,5 +70,12 @@ private fun openProfileScreen(calculateWindowSizeClass: WindowSizeCallback){
     val vm: ProfileViewModel = koinViewModel()
     LaunchedEffect(Unit) { vm.onStart() }
     ProfileScreen(calculateWindowSizeClass, vm.state.collectAsState().value)
+}
+
+@Composable
+private fun openSettingsScreen(calculateWindowSizeClass: WindowSizeCallback, moveToIntro: MoveToIntro){
+    val vm: SettingsViewModel = koinViewModel { parametersOf(moveToIntro) }
+    LaunchedEffect(Unit) { vm.onStart() }
+    SettinsScreen(calculateWindowSizeClass, vm.state.collectAsState().value)
 }
 
