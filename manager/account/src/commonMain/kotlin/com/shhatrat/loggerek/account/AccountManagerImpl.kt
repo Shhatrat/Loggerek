@@ -60,6 +60,7 @@ class AccountManagerImpl(
     }
 
     override suspend fun getFullUserData(): FullUser {
-        return api.getLoggedUserData(repository.token.get()!!, repository.tokenSecret.get()!!)
+        val t = repository.safeTokenAndTokenSecret()
+        return api.getLoggedUserData(t.token, t.tokenSecret)
     }
 }

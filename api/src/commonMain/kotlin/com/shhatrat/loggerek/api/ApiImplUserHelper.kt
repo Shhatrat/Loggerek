@@ -1,5 +1,6 @@
 package com.shhatrat.loggerek.api
 
+import com.shhatrat.loggerek.api.model.UserParam
 import com.shhatrat.loggerek.api.oauth.OAuthLogic.buildOAuthHeader
 import com.shhatrat.loggerek.api.oauth.OAuthLogic.generateSignature
 import com.shhatrat.loggerek.api.oauth.OAuthParams.generateOAuthNonce
@@ -33,13 +34,4 @@ internal suspend inline fun <reified T>ApiImpl.getUser(client: HttpClient, token
 
 private fun getUserNameFields(params: Collection<UserParam>): String{
     return params.joinToString(separator = "%7C", prefix = "", postfix = "") { it.apiName }
-}
-
-enum class UserParam(val apiName: String) {
-    USERNAME("username"),
-    CACHES_FOUND("caches_found"),
-    CACHES_NOT_FOUND("caches_notfound"),
-    CACHES_HIDDEN("caches_hidden"),
-    RECOMMENDATIONS_GIVEN("rcmds_given"),
-    RECOMMENDATIONS_LEFT("rcmds_left"),
 }

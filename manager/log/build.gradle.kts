@@ -50,22 +50,14 @@ kotlin {
             implementation(compose.material)
             implementation(compose.ui)
             implementation(compose.components.resources)
-            implementation(projects.base)
-            implementation(projects.manager.account)
-            implementation(compose.material3AdaptiveNavigationSuite)
-            implementation(projects.api)
-            implementation(projects.feature.profile)
-            implementation(projects.feature.log)
-            implementation(projects.feature.settings)
-            implementation(libs.koin.compose.viewmodel)
-            implementation("org.jetbrains.compose.material3.adaptive:adaptive-navigation:1.0.0-alpha03")
             implementation(projects.repository)
+            implementation(projects.api)
         }
     }
 }
 
 android {
-    namespace = "com.shhatrat.loggerek.main"
+    namespace = "com.shhatrat.loggerek.manager.log"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11

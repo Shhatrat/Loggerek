@@ -2,6 +2,7 @@ package com.shhatrat.loggerek.di
 
 import com.shhatrat.loggerek.intro.authorizate.AuthViewModel
 import com.shhatrat.loggerek.intro.splash.IntroViewModel
+import com.shhatrat.loggerek.log.LogViewModel
 import com.shhatrat.loggerek.main.MainViewModel
 import com.shhatrat.loggerek.profile.ProfileViewModel
 import com.shhatrat.loggerek.settings.SettingsViewModel
@@ -17,4 +18,5 @@ val viewModelModule = module {
     viewModel { (navigateToIntro: () -> Unit) -> MainViewModel(navigateToIntro) }
     viewModel { ProfileViewModel(get()) }
     viewModel { (navigateToMain: () -> Unit) -> SettingsViewModel(navigateToMain, get()) }
+    viewModel { (cache: String) -> LogViewModel(cache) }
 }

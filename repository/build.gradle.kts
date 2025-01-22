@@ -44,7 +44,8 @@ kotlin {
         commonMain.dependencies {
             implementation(libs.koin.compose)
             implementation(projects.di)
-            implementation("com.russhwolf:multiplatform-settings:1.3.0")
+            implementation(projects.base)
+            implementation(libs.multiplatform.settings)
         }
     }
 }

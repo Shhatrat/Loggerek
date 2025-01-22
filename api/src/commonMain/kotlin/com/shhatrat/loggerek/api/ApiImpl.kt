@@ -2,6 +2,7 @@ package com.shhatrat.loggerek.api
 
 import com.shhatrat.loggerek.api.model.FullUser
 import com.shhatrat.loggerek.api.model.UserName
+import com.shhatrat.loggerek.api.model.UserParam
 import com.shhatrat.loggerek.api.oauth.model.OAuthAccessTokenResponse
 import com.shhatrat.loggerek.api.oauth.OAuthLogic
 import com.shhatrat.loggerek.api.oauth.OAuthLogic.buildOAuthHeader

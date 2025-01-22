@@ -17,6 +17,8 @@ import androidx.compose.ui.unit.dp
 import com.shhatrat.loggerek.base.MoveToIntro
 import com.shhatrat.loggerek.base.WindowSizeCallback
 import com.shhatrat.loggerek.base.get
+import com.shhatrat.loggerek.log.LogScreen
+import com.shhatrat.loggerek.log.LogViewModel
 import com.shhatrat.loggerek.main.NavigationHeader.LOG
 import com.shhatrat.loggerek.main.NavigationHeader.PROFILE
 import com.shhatrat.loggerek.main.NavigationHeader.SETTINGS
@@ -59,7 +61,7 @@ private fun handleChangeScreen(calculateWindowSizeClass: WindowSizeCallback, nav
                                moveToMain: MoveToIntro){
     when(navigationHeader){
         PROFILE -> { openProfileScreen(calculateWindowSizeClass) }
-        LOG -> {}
+        LOG -> { openLogScreen(calculateWindowSizeClass) }
         SETTINGS -> { openSettingsScreen(calculateWindowSizeClass, moveToMain) }
         WATCH -> {}
     }
@@ -70,6 +72,13 @@ private fun openProfileScreen(calculateWindowSizeClass: WindowSizeCallback){
     val vm: ProfileViewModel = koinViewModel()
     LaunchedEffect(Unit) { vm.onStart() }
     ProfileScreen(calculateWindowSizeClass, vm.state.collectAsState().value)
+}
+
+@Composable
+private fun openLogScreen(calculateWindowSizeClass: WindowSizeCallback){
+    val vm: LogViewModel = koinViewModel { parametersOf("OP0001") }
+    LaunchedEffect(Unit) { vm.onStart() }
+    LogScreen(calculateWindowSizeClass, vm.state.collectAsState().value)
 }
 
 @Composable
