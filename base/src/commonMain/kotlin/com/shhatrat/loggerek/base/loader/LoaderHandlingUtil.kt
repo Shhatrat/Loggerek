@@ -4,10 +4,14 @@ import kotlinx.coroutines.delay
 
 class LoaderHandlingUtil(val loaderAction: (Boolean) -> Unit) : HasLoaderHandling{
     override suspend fun <T> withLoader(delayMs: Long, action: suspend () -> T): T {
-        loaderAction(true)
-        delay(delayMs)
-        val result = action()
-        loaderAction(false)
-        return result
+        try {
+            loaderAction(true)
+            delay(delayMs)
+            val result = action()
+            return result
+        }
+        finally {
+            loaderAction(false)
+        }
     }
 }
