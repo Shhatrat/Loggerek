@@ -27,6 +27,7 @@ import com.shhatrat.loggerek.intro.splash.IntroViewModel
 import com.shhatrat.loggerek.main.MainScreen
 import com.shhatrat.loggerek.main.MainViewModel
 import com.shhatrat.loggerek.repository.di.fakeRepositoryModule
+import com.shhatrat.loggerek.repository.di.repositoryModule
 import org.koin.compose.KoinApplication
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
@@ -51,7 +52,7 @@ fun App(
 }
 
 private fun KoinApplication.setupModules(calculateWindowSizeClass: WindowSizeCallback) {
-    modules(fakeRepositoryModule, apiModule, accountModule, viewModelModule).modules(
+    modules(repositoryModule, apiModule, accountModule, viewModelModule).modules(
         PlatformSpecificModule().getModules()
     ).modules(module {
         single<WindowSizeCallback> {

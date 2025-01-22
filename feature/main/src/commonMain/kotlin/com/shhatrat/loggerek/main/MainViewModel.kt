@@ -10,7 +10,8 @@ import kotlinx.coroutines.launch
 data class MainUiState(
     val nickName: String = "",
     val loader: Loader = Loader(),
-    val removeData: () -> Unit = {}
+    val removeData: () -> Unit = {},
+    val navigationTabs: List<NavigationHeader> = listOf()
 )
 
 class MainViewModel(
@@ -23,7 +24,9 @@ class MainViewModel(
         super.onStart()
         viewModelScope.launch {
             updateUiState {
-                copy(removeData = {
+                copy(
+                    navigationTabs = provideNavigationHeaders(),
+                    removeData = {
                     repository.token.remove()
                     repository.tokenSecret.remove()
                     navigateToIntroScreen()
@@ -31,4 +34,6 @@ class MainViewModel(
             }
         }
     }
+
+    private fun provideNavigationHeaders() = NavigationHeader.values().asList()
 }
