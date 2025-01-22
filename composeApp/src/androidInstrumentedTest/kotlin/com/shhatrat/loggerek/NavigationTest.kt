@@ -47,7 +47,6 @@ class NavigationTest {
                 AppNavigation(modifier = Modifier, navController = navController)
             }
         }
-//        onNodeWithText("Rozpocznij...").performClick()
         onNodeWithTag(IntroScreenTestTag.buttonTag).performClick()
         waitForIdle()
         assert(navController!!.currentDestination?.route == AppDestinations.AUTH.name)
