@@ -16,7 +16,8 @@
 
 --- 
 ### Testing
-
+#### Navigation
+module `composeApp`, target `androidInstrumentedTest`, run with `connectedAndroidTest`
 #### ViewModel unit tests
 
 `com.shhatrat.loggerek.intro.authorizate.AuthViewModelTest`
