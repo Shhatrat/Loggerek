@@ -1,6 +1,7 @@
 package com.shhatrat.loggerek.api
 
 import com.shhatrat.loggerek.api.model.FullUser
+import com.shhatrat.loggerek.api.model.Geocache
 import com.shhatrat.loggerek.api.model.UserName
 import com.shhatrat.loggerek.api.oauth.model.OAuthAccessTokenResponse
 import com.shhatrat.loggerek.api.oauth.model.OAuthRequestTokenResponse
@@ -41,4 +42,6 @@ interface Api {
     suspend fun getLoggedUserNickname(token: String, tokenSecret: String): UserName
 
     suspend fun getLoggedUserData(token: String, tokenSecret: String): FullUser
+
+    suspend fun getFullCache(token: String, tokenSecret: String): Geocache
 }

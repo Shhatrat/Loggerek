@@ -1,6 +1,7 @@
 package com.shhatrat.loggerek.api
 
 import com.shhatrat.loggerek.api.model.FullUser
+import com.shhatrat.loggerek.api.model.Geocache
 import com.shhatrat.loggerek.api.model.UserName
 import com.shhatrat.loggerek.api.oauth.model.OAuthAccessTokenResponse
 import com.shhatrat.loggerek.api.oauth.model.OAuthRequestTokenResponse
@@ -29,5 +30,9 @@ class FakeApiImpl: Api {
 
     override suspend fun getLoggedUserData(token: String, tokenSecret: String): FullUser {
         return FullUser.mock()
+    }
+
+    override suspend fun getFullCache(token: String, tokenSecret: String): Geocache {
+        TODO("Not yet implemented")
     }
 }

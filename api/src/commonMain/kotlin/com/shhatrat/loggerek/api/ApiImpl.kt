@@ -1,8 +1,10 @@
 package com.shhatrat.loggerek.api
 
 import com.shhatrat.loggerek.api.model.FullUser
+import com.shhatrat.loggerek.api.model.Geocache
+import com.shhatrat.loggerek.api.model.OpencachingParam
+import com.shhatrat.loggerek.api.model.OpencachingParam.Companion.parseForApiNotFormatted
 import com.shhatrat.loggerek.api.model.UserName
-import com.shhatrat.loggerek.api.model.UserParam
 import com.shhatrat.loggerek.api.oauth.model.OAuthAccessTokenResponse
 import com.shhatrat.loggerek.api.oauth.OAuthLogic
 import com.shhatrat.loggerek.api.oauth.OAuthLogic.buildOAuthHeader
@@ -61,19 +63,24 @@ class ApiImpl(private val client: HttpClient) : Api {
     }
 
     override suspend fun cache(cacheId: String): String {
-        return client.get(OpencachingApi.Url.geocache()) {
+        val g =  client.get(OpencachingApi.Url.geocache()) {
             parameter("consumer_key", OpencachingApi.consumerKey)
             parameter("cache_code", cacheId)
-        }.bodyAsText()
+            parameter("fields", parseForApiNotFormatted(OpencachingParam.Geocache.getAll()))
+        }.body<Geocache>()
+        return g.name
     }
 
     override suspend fun getLoggedUserNickname(token: String, tokenSecret: String): UserName {
-        val params = listOf(UserParam.USERNAME)
+        val params = listOf(OpencachingParam.User.USERNAME)
         return getUser(client, token, tokenSecret, params)
     }
 
     override suspend fun getLoggedUserData(token: String, tokenSecret: String): FullUser {
-        val params = listOf(UserParam.USERNAME, UserParam.CACHES_FOUND, UserParam.CACHES_NOT_FOUND, UserParam.RECOMMENDATIONS_LEFT, UserParam.CACHES_HIDDEN, UserParam.RECOMMENDATIONS_GIVEN)
-        return getUser(client, token, tokenSecret, params)
+        return getUser(client, token, tokenSecret, OpencachingParam.User.getAll())
+    }
+
+    override suspend fun getFullCache(token: String, tokenSecret: String): Geocache {
+        return getCache(client, token, tokenSecret, OpencachingParam.Geocache.getAll())
     }
 }
