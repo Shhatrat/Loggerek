@@ -32,7 +32,11 @@ class FakeApiImpl: Api {
         return FullUser.mock()
     }
 
-    override suspend fun getFullCache(token: String, tokenSecret: String): Geocache {
+    override suspend fun getFullCache(
+        cacheId: String,
+        token: String,
+        tokenSecret: String
+    ): Geocache {
         TODO("Not yet implemented")
     }
 }

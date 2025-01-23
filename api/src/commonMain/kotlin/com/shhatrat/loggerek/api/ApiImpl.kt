@@ -80,7 +80,7 @@ class ApiImpl(private val client: HttpClient) : Api {
         return getUser(client, token, tokenSecret, OpencachingParam.User.getAll())
     }
 
-    override suspend fun getFullCache(token: String, tokenSecret: String): Geocache {
-        return getCache(client, token, tokenSecret, OpencachingParam.Geocache.getAll())
+    override suspend fun getFullCache(cacheId: String, token: String, tokenSecret: String): Geocache {
+        return getCache(client, token, tokenSecret, cacheId)
     }
 }
