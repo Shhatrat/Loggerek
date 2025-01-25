@@ -9,7 +9,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 
-val loaderTestTag = "com.shhatrat.loggerek.base.composable.loaderTestTag"
+const val loaderTestTag = "com.shhatrat.loggerek.base.composable.loaderTestTag"
 
 @Composable
 fun CircularIndeterminateProgressBar(modifier: Modifier = Modifier, color: Color? = null) {

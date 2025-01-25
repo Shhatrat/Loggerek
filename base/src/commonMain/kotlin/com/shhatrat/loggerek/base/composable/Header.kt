@@ -1,15 +1,26 @@
 package com.shhatrat.loggerek.base.composable
 
+import androidx.compose.desktop.ui.tooling.preview.Preview
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
+import com.shhatrat.loggerek.base.LoggerekTheme
+
+const val headerTestTag = "com.shhatrat.loggerek.base.composable.headerTestTag"
+
 
 private val headerTextStyle = TextStyle(
     fontSize = 28.sp,
@@ -24,6 +35,16 @@ private val headerTextStyle = TextStyle(
 
 
 @Composable
-fun Header(modifier: Modifier, text: String) {
-    Text(modifier = modifier, text = text, style = headerTextStyle, textAlign = TextAlign.Center)
+fun Header(modifier: Modifier = Modifier, text: String) {
+    Text(modifier = modifier.testTag(headerTestTag), text = text, style = headerTextStyle, textAlign = TextAlign.Center)
+}
+
+@Preview
+@Composable
+private fun HeaderPreview(){
+    Column {
+        LoggerekTheme {
+            Header(text = "Hello header")
+        }
+    }
 }
