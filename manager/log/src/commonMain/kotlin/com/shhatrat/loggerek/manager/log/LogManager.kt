@@ -1,7 +1,9 @@
 package com.shhatrat.loggerek.manager.log
 
+import com.shhatrat.loggerek.api.model.Geocache
+
 
 interface LogManager {
 
-    fun getCache(id: String)
+    suspend fun getCache(id: String): Geocache
 }
