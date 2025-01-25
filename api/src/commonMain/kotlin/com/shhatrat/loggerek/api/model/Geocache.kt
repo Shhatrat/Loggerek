@@ -28,6 +28,7 @@ data class Geocache(
     @SerialName(OpencachingParam.Geocache.GEOCACHE_API_DESCRIPTION) val description: String,
     @SerialName(OpencachingParam.Geocache.GEOCACHE_API_HINT) val hint: String,
     @SerialName(OpencachingParam.Geocache.GEOCACHE_API_RECOMMENDATIONS) val recommendations: Int?,
+    @SerialName(OpencachingParam.Geocache.GEOCACHE_API_MY_NOTES) val myNotes: String?,
 )
 
 enum class GeocacheType {
