@@ -1,3 +1,14 @@
 <resources>
     <string name="logout">Wyloguj</string>
+    <string name="reccomend">Rekomendacja</string>
+    <string name="logContent">Treść wpisu</string>
+    <string name="notes">Notatki</string>
+    <string name="password">Hasło</string>
+    <string name="sendButton">Wyślij</string>
+    <string name="cleanButton">Wyczyść</string>
+    <string name="rate1">Słaba</string>
+    <string name="rate2">Poniżej przeciętnej</string>
+    <string name="rate3">Normalna</string>
+    <string name="rate4">Dobra</string>
+    <string name="rate5">Znakomita</string>
 </resources>
