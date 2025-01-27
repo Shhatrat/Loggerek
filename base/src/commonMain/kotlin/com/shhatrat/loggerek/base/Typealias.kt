@@ -7,3 +7,5 @@ import androidx.compose.runtime.Composable
 typealias WindowSizeCallback = @Composable () -> WindowSizeClass
 
 typealias MoveToIntro = () -> Unit
+
+typealias ButtonAction = () -> Unit

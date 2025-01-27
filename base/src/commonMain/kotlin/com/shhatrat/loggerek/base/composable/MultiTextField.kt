@@ -18,13 +18,21 @@ import com.shhatrat.loggerek.base.LoggerekTheme
 
 @Composable
 fun MultiTextField(modifier: Modifier = Modifier,
+                   multiTextFieldModel: MultiTextFieldModel,
+                   lines: Int = 5,
+                   placeholder: @Composable () -> Unit = {}){
+    MultiTextField(modifier, multiTextFieldModel.text, multiTextFieldModel.onChange, lines, placeholder)
+}
+
+@Composable
+fun MultiTextField(modifier: Modifier = Modifier,
                    text: String = "",
                    onChange: (String) -> Unit = {},
+                   lines: Int = 5,
                    placeholder: @Composable () -> Unit = {}){
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(150.dp)
             .verticalScroll(rememberScrollState())
     ) {
         TextField(
@@ -32,12 +40,16 @@ fun MultiTextField(modifier: Modifier = Modifier,
             onValueChange = { onChange(it) },
             modifier = Modifier.fillMaxSize(),
             placeholder = { placeholder() },
-            minLines = 5,
+            minLines = lines,
             maxLines = Int.MAX_VALUE,
             singleLine = false
         )
     }
 }
+
+data class MultiTextFieldModel(
+    val text: String = "",
+    val onChange: (String) -> Unit = {})
 
 @Preview
 @Composable
