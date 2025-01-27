@@ -8,6 +8,16 @@ import com.shhatrat.loggerek.api.model.OpencachingParam.GeocacheUser.Companion.G
 import com.shhatrat.loggerek.api.model.OpencachingParam.GeocacheUser.Companion.GEOCACHE_API_USER_UUID
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import loggerek.api.generated.resources.Res
+import loggerek.api.generated.resources.aaaa
+import loggerek.api.generated.resources.log_comment
+import loggerek.api.generated.resources.log_found
+import loggerek.api.generated.resources.log_need_service
+import loggerek.api.generated.resources.log_not_found
+import loggerek.api.generated.resources.log_participated_in_event
+import loggerek.api.generated.resources.log_service_done
+import loggerek.api.generated.resources.log_will_participated_in_event
+import org.jetbrains.compose.resources.StringResource
 
 @Serializable
 data class Geocache(
@@ -31,9 +41,34 @@ data class Geocache(
     @SerialName(OpencachingParam.Geocache.GEOCACHE_API_MY_NOTES) val myNotes: String?,
 )
 
-enum class GeocacheType {
-    Traditional, Multi, Quiz, Moving, Virtual, Other, Event
+enum class GeocacheType(val logType: LogOptions) {
+    Traditional(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT , LogType.NEED_SERVICE, LogType.SERVICE_DONE))),
+    Multi(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT , LogType.NEED_SERVICE, LogType.SERVICE_DONE))),
+    Quiz(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT , LogType.NEED_SERVICE, LogType.SERVICE_DONE))),
+    Moving(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT , LogType.NEED_SERVICE, LogType.SERVICE_DONE))),
+    Virtual(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT , LogType.NEED_SERVICE, LogType.SERVICE_DONE))),
+    Other(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT , LogType.NEED_SERVICE, LogType.SERVICE_DONE))),
+    Event(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT , LogType.NEED_SERVICE, LogType.SERVICE_DONE)))
 }
+
+enum class LogType(
+    val textRes: StringResource,
+    val canHasPassword: Boolean,
+    val canRate: Boolean,
+    val canBeRecommended: Boolean) {
+    COMMENT(Res.string.log_comment, false, false, false),
+    SERVICE_DONE(Res.string.log_service_done, false, false, false),
+    NEED_SERVICE(Res.string.log_need_service, false, false, false),
+    PARTICIPATED_IN_EVENT(Res.string.log_participated_in_event, false, true, false),
+    WILL_PARTICIPATE_IN_EVENT(Res.string.log_will_participated_in_event, false, false, false),
+    FOUND(Res.string.log_found, true, true, true),
+    NOT_FOUND(Res.string.log_not_found, false, false, false);
+}
+
+data class LogOptions(
+    val logTypes: List<LogType>,
+)
+
 
 @Serializable
 enum class GeocacheStatus{
