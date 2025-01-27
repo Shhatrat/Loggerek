@@ -18,5 +18,5 @@ val viewModelModule = module {
     viewModel { (navigateToIntro: () -> Unit) -> MainViewModel(navigateToIntro) }
     viewModel { ProfileViewModel(get()) }
     viewModel { (navigateToMain: () -> Unit) -> SettingsViewModel(navigateToMain, get()) }
-    viewModel { (cache: String) -> LogViewModel(cache) }
+    viewModel { (cache: String) -> LogViewModel(cache, get()) }
 }
