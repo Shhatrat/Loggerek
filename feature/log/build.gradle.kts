@@ -63,6 +63,7 @@ kotlin {
             implementation(projects.base.testing)
             implementation(projects.api)
             implementation(projects.manager.account)
+            implementation(projects.manager.log)
             implementation("org.jetbrains.compose.material3:material3-window-size-class:1.7.3")
             @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
             implementation(compose.uiTest)

@@ -87,6 +87,7 @@ kotlin {
             implementation(projects.feature.log)
             implementation(projects.base)
             implementation(projects.manager.account)
+            implementation(projects.manager.log)
             implementation(libs.navigation.compose)
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.koin.compose.viewmodel.navigation)
