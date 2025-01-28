@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -57,23 +58,25 @@ import loggerek.feature.log.generated.resources.sendButton
 
 @Composable
 fun LogScreen(calculateWindowSizeClass: WindowSizeCallback, logUiState: LogUiState) {
+    Box(modifier = Modifier.fillMaxSize()) { // Dodanie ograniczenia wysokości
 
-    val snackBarHostState = remember { SnackbarHostState() }
-    LaunchedEffect(logUiState.error) {
-        SnackBarHelper.handle(snackBarHostState, logUiState.error)
-    }
-
-    Crossfade(targetState = (calculateWindowSizeClass.invoke().widthSizeClass)) { screenClass ->
-        when (screenClass) {
-            WindowWidthSizeClass.Compact, WindowWidthSizeClass.Medium ->
-                CompactScreenLayout(modifier = Modifier.fillMaxSize(), logUiState)
-            WindowWidthSizeClass.Expanded -> ExpandedScreenLayout(
-                Modifier.fillMaxSize(),
-                logUiState
-            )
+        val snackBarHostState = remember { SnackbarHostState() }
+        LaunchedEffect(logUiState.error) {
+            SnackBarHelper.handle(snackBarHostState, logUiState.error)
         }
+
+        Crossfade(modifier = Modifier.fillMaxSize(), targetState = (calculateWindowSizeClass.invoke().widthSizeClass)) { screenClass ->
+            when (screenClass) {
+                WindowWidthSizeClass.Compact, WindowWidthSizeClass.Medium ->
+                    CompactScreenLayout(modifier = Modifier, logUiState)
+                WindowWidthSizeClass.Expanded -> ExpandedScreenLayout(
+                    Modifier.fillMaxSize(),
+                    logUiState
+                )
+            }
+        }
+        ProvideSnackBar(snackBarHostState)
     }
-    ProvideSnackBar(snackBarHostState)
 }
 
 @Composable
@@ -84,17 +87,29 @@ fun ExpandedScreenLayout(modifier: Modifier, logUiState: LogUiState) {
 @Composable
 fun CompactScreenLayout(modifier: Modifier, settingsUiState: LogUiState) {
     Box(modifier = modifier.fillMaxSize().background(MaterialTheme.colors.background).padding(16.dp)) {
-        AnimatedVisibility(settingsUiState.loader.active) {
-            CircularIndeterminateProgressBar(
-                modifier = Modifier.align(Alignment.Center),
-                color = MaterialTheme.colors.primary
-            )
-        }
+//        AnimatedVisibility(settingsUiState.loader.active) {
+//            CircularIndeterminateProgressBar(
+//                modifier = Modifier.align(Alignment.Center),
+//                color = MaterialTheme.colors.primary
+//            )
+//        }
         Column(
-            Modifier.fillMaxWidth().align(Alignment.TopCenter).verticalScroll(rememberScrollState()),
+            Modifier.fillMaxSize().align(Alignment.TopCenter).verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
+//            Column(
+//                modifier = Modifier
+//                    .fillMaxSize() // Wypełnij całą dostępną przestrzeń
+//                    .verticalScroll(rememberScrollState()) // Umożliwienie przewijania
+//            ) {
+//                repeat(1000) {
+//                    Text("dupa $it")
+//                }
+//            }
+
+
             settingsUiState.geocacheData?.let {
                 Header(Modifier, it.title)
                 Header(Modifier, it.titleLink)
@@ -110,15 +125,15 @@ fun CompactScreenLayout(modifier: Modifier, settingsUiState: LogUiState) {
                             currentRating = it
                             rating.starsOnChanged(it)
                         }
+                        Text(when(currentRating){
+                            0 -> Res.string.rate1
+                            1 -> Res.string.rate2
+                            2 -> Res.string.rate3
+                            3 -> Res.string.rate4
+                            null -> null
+                            else -> Res.string.rate5
+                        }?.get()?:"")
                     }
-                    Text(when(currentRating){
-                        0 -> Res.string.rate1
-                        1 -> Res.string.rate2
-                        2 -> Res.string.rate3
-                        3 -> Res.string.rate4
-                        null -> null
-                        else -> Res.string.rate5
-                    }?.get()?:"")
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         if(rating.recommendationPossible && rating.showRating) {
                             Text(Res.string.reccomend.get())
@@ -139,8 +154,8 @@ fun CompactScreenLayout(modifier: Modifier, settingsUiState: LogUiState) {
                     placeholder = { }
                 )
 
-                Text(Res.string.password.get())
                 it.password?.let { it1 ->
+                    Text(Res.string.password.get())
                     MultiTextField(
                         multiTextFieldModel = it1,
                         lines = 2
@@ -163,26 +178,18 @@ fun CompactScreenLayout(modifier: Modifier, settingsUiState: LogUiState) {
 }
 
 @Composable
-fun SimpleScrollableList(items: List<String>) {
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
+fun SimpleScrollableList(items: List<String>, modifier: Modifier = Modifier) {
+//    val scrollState = rememberScrollState()
+    Column(
+        modifier = modifier.fillMaxSize()
+//            .verticalScroll(scrollState) // Scrollowanie
+//            .size(400.dp) // Ogranicz wysokość
     ) {
-        items(items.size) { index ->
-            Text(
-                text = items[index],
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-                    .background(MaterialTheme.colors.primary.copy(alpha = 0.1f))
-                    .padding(16.dp),
-                style = MaterialTheme.typography.body1
-            )
+        items.forEach { item ->
+            Text(text = item)
         }
     }
 }
-
 @Preview()
 @Composable
 fun SimpleScrollableListPreview() {

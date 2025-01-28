@@ -1,7 +1,9 @@
 package com.shhatrat.loggerek.log
 
 import androidx.lifecycle.viewModelScope
+import com.shhatrat.loggerek.api.model.Geocache
 import com.shhatrat.loggerek.api.model.LogType
+import com.shhatrat.loggerek.api.model.OpencachingParam
 import com.shhatrat.loggerek.base.BaseViewModel
 import com.shhatrat.loggerek.base.ButtonAction
 import com.shhatrat.loggerek.base.Error
@@ -105,6 +107,7 @@ class LogViewModel(
                                         )
                                     )
                                 }
+                                setupPassword(cache)
                             }),
                         description = MultiTextFieldModel { changedText ->
                             updateUiState {
@@ -115,7 +118,7 @@ class LogViewModel(
                                 )
                             }
                         },
-                        myNotes = MultiTextFieldModel { changedText ->
+                        myNotes = MultiTextFieldModel(text = cache.myNotes?:"") { changedText ->
                             updateUiState {
                                 copy(
                                     geocacheData = geocacheData?.copy(
@@ -124,18 +127,7 @@ class LogViewModel(
                                 )
                             }
                         },
-                        password = MultiTextFieldModel { changedText ->
-                            updateUiState {
-                                copy(
-                                    geocacheData = geocacheData?.password?.copy(text = changedText)
-                                        ?.let {
-                                            geocacheData.copy(
-                                                password = it
-                                            )
-                                        }
-                                )
-                            }
-                        },
+                        password = null,
                         sendAction = {},
                         resetAction = {
                             resetData()
@@ -143,6 +135,29 @@ class LogViewModel(
                     )
                 )
             }
+            setupPassword(cache)
+        }
+    }
+
+    private fun setupPassword(cache: Geocache){
+        val shouldShow = cache.requirePassword && cache.type.logType.logTypes[state.value.geocacheData?.logTypeData?.selectedIndex?:defaultLogTypeIndex].canHasPassword
+        if(shouldShow){
+            updateUiState {
+                copy(
+                    geocacheData = geocacheData?.copy(password = MultiTextFieldModel { changedText ->
+                        updateUiState {
+                            copy(
+                                geocacheData = geocacheData?.password?.copy(text = changedText)
+                                    ?.let {
+                                        geocacheData.copy(
+                                            password = it
+                                        )
+                                    }
+                            )
+                        }
+                    }))}
+        }else{
+            updateUiState { copy(geocacheData = geocacheData?.copy(password = null)) }
         }
     }
 
