@@ -33,7 +33,6 @@ fun MultiTextField(modifier: Modifier = Modifier,
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .verticalScroll(rememberScrollState())
     ) {
         TextField(
             value = text,
