@@ -28,7 +28,7 @@ fun StarSwitch(
     onClicked: () -> Unit
 ) {
     Image(
-        modifier = modifier.size(60.dp).clickable { onClicked },
+        modifier = modifier.size(60.dp).clickable { onClicked() },
         colorFilter = ColorFilter.tint(MaterialTheme.colors.primary),
         painter = if (selected) painterResource(Res.drawable.starFull) else painterResource(
             Res.drawable.star

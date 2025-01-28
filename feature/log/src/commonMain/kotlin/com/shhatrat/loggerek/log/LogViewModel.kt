@@ -89,7 +89,8 @@ class LogViewModel(
                             recommendationPossible = logTypeData.selectedType?.canBeRecommended
                                 ?: false,
                             recommendationChanged = {
-                                logTypeData = logTypeData.copy(recommended = it)
+//                                logTypeData = logTypeData.copy(recommended = it)
+                                updateUiState { copy(geocacheData = geocacheData?.copy(ratingData = geocacheData.ratingData?.copy(recommendation = it))) }
                             }),
                         logTypeData = LogTypeData(
                             selectedIndex = defaultLogTypeIndex,
