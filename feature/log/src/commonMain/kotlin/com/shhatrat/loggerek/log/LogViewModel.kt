@@ -1,5 +1,7 @@
 package com.shhatrat.loggerek.log
 
+import androidx.compose.material.Text
+import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.viewModelScope
 import com.shhatrat.loggerek.api.model.Geocache
 import com.shhatrat.loggerek.api.model.LogType
@@ -19,9 +21,11 @@ import org.jetbrains.compose.resources.StringResource
 data class LogUiState(
     val loader: Loader = Loader(),
     val error: Error? = null,
-
+    val success: Success? = null,
     val geocacheData: GeocacheData? = null
 )
+
+class Success(val onFinished: (() -> Unit)? = null)
 
 data class GeocacheData(
     val title: String,
@@ -130,7 +134,7 @@ class LogViewModel(
                                             state.value.geocacheData?.myNotes?.text ?: "",
                                             cache.myNotes ?: ""
                                         )
-                                        logManager.submitLog(
+                                        val response = logManager.submitLog(
                                             SubmitLogData(
                                                 cacheId = cacheId,
                                                 logType = cache.type.logType.logTypes[state.value.geocacheData?.logTypeData?.selectedIndex
@@ -143,6 +147,13 @@ class LogViewModel(
                                                 password = state.value.geocacheData?.password?.text
                                             )
                                         )
+                                        if(response.success){
+                                            updateUiState { copy(success = Success{
+                                                updateUiState { copy(success = null) }
+                                            }) }
+                                        }else{
+                                            updateUiState { copy(error = Error(response.message)) }
+                                        }
                                     }
                                 }
                             }
