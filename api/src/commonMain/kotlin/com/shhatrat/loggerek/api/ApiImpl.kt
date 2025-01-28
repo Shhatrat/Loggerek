@@ -2,9 +2,11 @@ package com.shhatrat.loggerek.api
 
 import com.shhatrat.loggerek.api.model.FullUser
 import com.shhatrat.loggerek.api.model.Geocache
+import com.shhatrat.loggerek.api.model.LogResponse
 import com.shhatrat.loggerek.api.model.LogTypeResponse
 import com.shhatrat.loggerek.api.model.OpencachingParam
 import com.shhatrat.loggerek.api.model.OpencachingParam.Companion.parseForApiNotFormatted
+import com.shhatrat.loggerek.api.model.SubmitLogData
 import com.shhatrat.loggerek.api.model.UserName
 import com.shhatrat.loggerek.api.oauth.model.OAuthAccessTokenResponse
 import com.shhatrat.loggerek.api.oauth.OAuthLogic
@@ -97,5 +99,9 @@ class ApiImpl(private val client: HttpClient) : Api {
 
     override suspend fun logCapabilities(cacheId: String, token: String, tokenSecret: String): LogTypeResponse {
         return logCapabilities(client, token, tokenSecret, cacheId)
+    }
+
+    override suspend fun submitLog(submitLogData: SubmitLogData, token: String, tokenSecret: String): LogResponse {
+        return submitLog(client, token, tokenSecret, submitLogData)
     }
 }

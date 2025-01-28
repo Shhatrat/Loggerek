@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.shhatrat.loggerek.api.model.Geocache
 import com.shhatrat.loggerek.api.model.LogType
 import com.shhatrat.loggerek.api.model.OpencachingParam
+import com.shhatrat.loggerek.api.model.SubmitLogData
 import com.shhatrat.loggerek.base.BaseViewModel
 import com.shhatrat.loggerek.base.ButtonAction
 import com.shhatrat.loggerek.base.Error
@@ -122,7 +123,28 @@ class LogViewModel(
                         password = null,
                         sendAction = {
                             viewModelScope.launch {
-                                logManager.saveNote(cacheId, state.value.geocacheData?.myNotes?.text?:"", cache.myNotes?:"")
+                                errorHandlingUtil.withSuspendErrorHandling {
+                                    loaderHandlingUtil.withLoader {
+                                        logManager.saveNote(
+                                            cacheId,
+                                            state.value.geocacheData?.myNotes?.text ?: "",
+                                            cache.myNotes ?: ""
+                                        )
+                                        logManager.submitLog(
+                                            SubmitLogData(
+                                                cacheId = cacheId,
+                                                logType = cache.type.logType.logTypes[state.value.geocacheData?.logTypeData?.selectedIndex
+                                                    ?: defaultLogTypeIndex],
+                                                rating = state.value.geocacheData?.ratingData?.rating,
+                                                comment = state.value.geocacheData?.description?.text
+                                                    ?: "",
+                                                reccomend = state.value.geocacheData?.ratingData?.recommendation
+                                                    ?: false,
+                                                password = state.value.geocacheData?.password?.text
+                                            )
+                                        )
+                                    }
+                                }
                             }
                         },
                         resetAction = {

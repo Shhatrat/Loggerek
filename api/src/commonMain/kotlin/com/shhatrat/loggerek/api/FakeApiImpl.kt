@@ -2,7 +2,9 @@ package com.shhatrat.loggerek.api
 
 import com.shhatrat.loggerek.api.model.FullUser
 import com.shhatrat.loggerek.api.model.Geocache
+import com.shhatrat.loggerek.api.model.LogResponse
 import com.shhatrat.loggerek.api.model.LogTypeResponse
+import com.shhatrat.loggerek.api.model.SubmitLogData
 import com.shhatrat.loggerek.api.model.UserName
 import com.shhatrat.loggerek.api.oauth.model.OAuthAccessTokenResponse
 import com.shhatrat.loggerek.api.oauth.model.OAuthRequestTokenResponse
@@ -52,6 +54,10 @@ class FakeApiImpl: Api {
     }
 
     override suspend fun logCapabilities(cacheId: String, token: String, tokenSecret: String): LogTypeResponse {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun submitLog(submitLogData: SubmitLogData, token: String, tokenSecret: String): LogResponse {
         TODO("Not yet implemented")
     }
 }

@@ -49,7 +49,7 @@ enum class GeocacheType(val logType: LogOptions) {
     Moving(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))),
     Virtual(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))),
     Other(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))),
-    Event(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT)))
+    Event(LogOptions(listOf(LogType.PARTICIPATED_IN_EVENT, LogType.WILL_PARTICIPATE_IN_EVENT, LogType.COMMENT)))
 }
 
 @Serializable

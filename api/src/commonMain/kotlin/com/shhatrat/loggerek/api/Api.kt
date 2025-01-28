@@ -2,7 +2,10 @@ package com.shhatrat.loggerek.api
 
 import com.shhatrat.loggerek.api.model.FullUser
 import com.shhatrat.loggerek.api.model.Geocache
+import com.shhatrat.loggerek.api.model.LogResponse
+import com.shhatrat.loggerek.api.model.LogType
 import com.shhatrat.loggerek.api.model.LogTypeResponse
+import com.shhatrat.loggerek.api.model.SubmitLogData
 import com.shhatrat.loggerek.api.model.UserName
 import com.shhatrat.loggerek.api.oauth.model.OAuthAccessTokenResponse
 import com.shhatrat.loggerek.api.oauth.model.OAuthRequestTokenResponse
@@ -49,4 +52,8 @@ interface Api {
     suspend fun saveNote(cacheId: String, token: String, tokenSecret: String, noteToSave: String, oldValue: String)
 
     suspend fun logCapabilities(cacheId: String, token: String, tokenSecret: String): LogTypeResponse
+
+    suspend fun submitLog(submitLogData: SubmitLogData, token: String, tokenSecret: String): LogResponse
+
+
 }

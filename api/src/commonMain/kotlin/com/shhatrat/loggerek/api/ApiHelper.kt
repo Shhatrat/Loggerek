@@ -1,9 +1,11 @@
 package com.shhatrat.loggerek.api
 
 import com.shhatrat.loggerek.api.model.Geocache
+import com.shhatrat.loggerek.api.model.LogResponse
 import com.shhatrat.loggerek.api.model.LogTypeResponse
 import com.shhatrat.loggerek.api.model.OpencachingParam
 import com.shhatrat.loggerek.api.model.OpencachingParam.Companion.parseForApi
+import com.shhatrat.loggerek.api.model.SubmitLogData
 import com.shhatrat.loggerek.api.oauth.OAuthLogic.buildOAuthHeader
 import com.shhatrat.loggerek.api.oauth.OAuthLogic.generateSignature
 import com.shhatrat.loggerek.api.oauth.OAuthParams.generateOAuthNonce
@@ -14,6 +16,7 @@ import io.ktor.client.request.headers
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.encodeURLParameter
 import kotlinx.datetime.Clock
+import kotlin.math.log
 
 internal suspend inline fun <reified T> ApiImpl.getUser(
     client: HttpClient,
@@ -153,6 +156,33 @@ internal suspend inline fun ApiImpl.logCapabilities(
         mapOf(
             Pair("cache_code", geocacheId),
         ),
+    )
+}
+
+internal suspend inline fun ApiImpl.submitLog(
+    client: HttpClient,
+    token: String,
+    tokenSecret: String,
+    logData: SubmitLogData,
+): LogResponse {
+    val additionalParams: MutableMap<String, String> = mutableMapOf()
+    if(logData.password!=null){
+        additionalParams["password"] = logData.password
+    }
+    if(logData.rating!=null){
+        additionalParams["rating"] = logData.rating.toString()
+    }
+    return makeLevel3Request<LogResponse>(
+        client,
+        token,
+        tokenSecret,
+        OpencachingApi.Url.submitLog(),
+        mapOf(
+            Pair("cache_code", logData.cacheId),
+            Pair("logtype", logData.logType.apiKey),
+            Pair("comment", logData.comment),
+            Pair("recommend", logData.reccomend.toString())
+        ).plus(additionalParams).mapValues { it.value.encodeURLParameter() }
     )
 }
 

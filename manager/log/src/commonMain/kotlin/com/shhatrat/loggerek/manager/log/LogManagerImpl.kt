@@ -2,6 +2,8 @@ package com.shhatrat.loggerek.manager.log
 
 import com.shhatrat.loggerek.api.Api
 import com.shhatrat.loggerek.api.model.Geocache
+import com.shhatrat.loggerek.api.model.LogResponse
+import com.shhatrat.loggerek.api.model.SubmitLogData
 import com.shhatrat.loggerek.repository.Repository
 
 class LogManagerImpl(private val api: Api, private val repository: Repository): LogManager {
@@ -20,5 +22,10 @@ class LogManagerImpl(private val api: Api, private val repository: Repository): 
         val t = repository.safeTokenAndTokenSecret()
         val re = api.logCapabilities(id, t.token, t.tokenSecret)
         //TODO
+    }
+
+    override suspend fun submitLog(logData: SubmitLogData): LogResponse {
+        val t = repository.safeTokenAndTokenSecret()
+        return api.submitLog(logData, t.token, t.tokenSecret)
     }
 }

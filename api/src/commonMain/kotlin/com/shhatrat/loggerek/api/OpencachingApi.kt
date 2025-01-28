@@ -28,6 +28,7 @@ internal object OpencachingApi {
     private const val requestTokenPart = "services/oauth/request_token"
     private const val saveNotesPart = "services/caches/save_personal_notes"
     private const val logCapabilities = "services/logs/capabilities"
+    private const val submitLog = "services/logs/submit"
 
     /**
      * Provides methods for building URLs to specific API endpoints.
@@ -64,5 +65,7 @@ internal object OpencachingApi {
         fun saveNotes() = "$baseUrl$saveNotesPart"
 
         fun logCapabilities() = "$baseUrl$logCapabilities"
+
+        fun submitLog() = "$baseUrl$submitLog"
     }
 }

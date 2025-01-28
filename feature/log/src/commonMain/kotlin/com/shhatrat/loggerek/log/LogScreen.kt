@@ -58,7 +58,7 @@ import loggerek.feature.log.generated.resources.sendButton
 
 @Composable
 fun LogScreen(calculateWindowSizeClass: WindowSizeCallback, logUiState: LogUiState) {
-    Box(modifier = Modifier.fillMaxSize()) { // Dodanie ograniczenia wysokości
+    Box(modifier = Modifier.fillMaxSize()) {
 
         val snackBarHostState = remember { SnackbarHostState() }
         LaunchedEffect(logUiState.error) {
@@ -87,29 +87,17 @@ fun ExpandedScreenLayout(modifier: Modifier, logUiState: LogUiState) {
 @Composable
 fun CompactScreenLayout(modifier: Modifier, settingsUiState: LogUiState) {
     Box(modifier = modifier.fillMaxSize().background(MaterialTheme.colors.background).padding(16.dp)) {
-//        AnimatedVisibility(settingsUiState.loader.active) {
-//            CircularIndeterminateProgressBar(
-//                modifier = Modifier.align(Alignment.Center),
-//                color = MaterialTheme.colors.primary
-//            )
-//        }
+        AnimatedVisibility(modifier = Modifier.align(Alignment.Center), visible = settingsUiState.loader.active) {
+            CircularIndeterminateProgressBar(
+                modifier = Modifier,
+                color = MaterialTheme.colors.primary
+            )
+        }
         Column(
             Modifier.fillMaxSize().align(Alignment.TopCenter).verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
-//            Column(
-//                modifier = Modifier
-//                    .fillMaxSize() // Wypełnij całą dostępną przestrzeń
-//                    .verticalScroll(rememberScrollState()) // Umożliwienie przewijania
-//            ) {
-//                repeat(1000) {
-//                    Text("dupa $it")
-//                }
-//            }
-
-
             settingsUiState.geocacheData?.let {
                 Header(Modifier, it.title)
                 Header(Modifier, it.titleLink)
