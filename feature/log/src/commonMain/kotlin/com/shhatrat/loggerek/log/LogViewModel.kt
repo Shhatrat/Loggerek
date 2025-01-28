@@ -61,13 +61,6 @@ class LogViewModel(
     private val errorHandlingUtil =
         ErrorHandlingUtil { error -> updateUiState { copy(error = error) } }
 
-    private var logTypeData: FilledData = FilledData()
-
-    data class FilledData(
-//        val logType: LogType? = null,
-        val selectedType: LogType? = null,
-        val recommended: Boolean = false,
-    )
 
     private val defaultLogTypeIndex = 0
 
@@ -75,7 +68,7 @@ class LogViewModel(
         super.onStart()
         viewModelScope.launch {
             val cache = logManager.getCache(cacheId)
-            logTypeData = logTypeData.copy(selectedType = cache.type.logType.logTypes.first())
+            logManager.logCapabilities(cacheId)
             updateUiState {
                 copy(
                     geocacheData = GeocacheData(
@@ -86,10 +79,8 @@ class LogViewModel(
                             starsOnChanged = {
                                 updateUiState { copy(geocacheData = geocacheData?.copy(ratingData = geocacheData.ratingData?.copy(rating = it))) }
                             },
-                            recommendationPossible = logTypeData.selectedType?.canBeRecommended
-                                ?: false,
+                            recommendationPossible = cache.type.logType.logTypes[defaultLogTypeIndex].canBeRecommended,
                             recommendationChanged = {
-//                                logTypeData = logTypeData.copy(recommended = it)
                                 updateUiState { copy(geocacheData = geocacheData?.copy(ratingData = geocacheData.ratingData?.copy(recommendation = it))) }
                             }),
                         logTypeData = LogTypeData(
@@ -167,7 +158,6 @@ class LogViewModel(
     }
 
     private fun resetData() {
-        logTypeData = FilledData()
         updateUiState {
             copy(
                 geocacheData = geocacheData?.copy(

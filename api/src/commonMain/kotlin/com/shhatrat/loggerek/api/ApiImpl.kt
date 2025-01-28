@@ -2,6 +2,7 @@ package com.shhatrat.loggerek.api
 
 import com.shhatrat.loggerek.api.model.FullUser
 import com.shhatrat.loggerek.api.model.Geocache
+import com.shhatrat.loggerek.api.model.LogTypeResponse
 import com.shhatrat.loggerek.api.model.OpencachingParam
 import com.shhatrat.loggerek.api.model.OpencachingParam.Companion.parseForApiNotFormatted
 import com.shhatrat.loggerek.api.model.UserName
@@ -92,5 +93,9 @@ class ApiImpl(private val client: HttpClient) : Api {
         oldValue: String
     ) {
         saveNoteToApi(client, token, tokenSecret, cacheId, noteToSave, oldValue)
+    }
+
+    override suspend fun logCapabilities(cacheId: String, token: String, tokenSecret: String): LogTypeResponse {
+        return logCapabilities(client, token, tokenSecret, cacheId)
     }
 }

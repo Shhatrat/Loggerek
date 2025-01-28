@@ -15,4 +15,10 @@ class LogManagerImpl(private val api: Api, private val repository: Repository): 
         val t = repository.safeTokenAndTokenSecret()
         api.saveNote(id, t.token, t.tokenSecret, note, oldValue)
     }
+
+    override suspend fun logCapabilities(id: String) {
+        val t = repository.safeTokenAndTokenSecret()
+        val re = api.logCapabilities(id, t.token, t.tokenSecret)
+        //TODO
+    }
 }

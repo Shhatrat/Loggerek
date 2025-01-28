@@ -1,6 +1,7 @@
 package com.shhatrat.loggerek.api
 
 import com.shhatrat.loggerek.api.model.Geocache
+import com.shhatrat.loggerek.api.model.LogTypeResponse
 import com.shhatrat.loggerek.api.model.OpencachingParam
 import com.shhatrat.loggerek.api.model.OpencachingParam.Companion.parseForApi
 import com.shhatrat.loggerek.api.oauth.OAuthLogic.buildOAuthHeader
@@ -134,6 +135,23 @@ internal suspend inline fun ApiImpl.saveNoteToApi(
             Pair("cache_code", geocacheId),
             Pair("new_value", noteToSave.encodeURLParameter()),
             Pair("old_value", oldValue.encodeURLParameter())
+        ),
+    )
+}
+
+internal suspend inline fun ApiImpl.logCapabilities(
+    client: HttpClient,
+    token: String,
+    tokenSecret: String,
+    geocacheId: String,
+): LogTypeResponse {
+    return makeLevel3Request<LogTypeResponse>(
+        client,
+        token,
+        tokenSecret,
+        OpencachingApi.Url.logCapabilities(),
+        mapOf(
+            Pair("cache_code", geocacheId),
         ),
     )
 }

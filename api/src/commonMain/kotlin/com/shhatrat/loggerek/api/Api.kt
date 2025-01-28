@@ -2,6 +2,7 @@ package com.shhatrat.loggerek.api
 
 import com.shhatrat.loggerek.api.model.FullUser
 import com.shhatrat.loggerek.api.model.Geocache
+import com.shhatrat.loggerek.api.model.LogTypeResponse
 import com.shhatrat.loggerek.api.model.UserName
 import com.shhatrat.loggerek.api.oauth.model.OAuthAccessTokenResponse
 import com.shhatrat.loggerek.api.oauth.model.OAuthRequestTokenResponse
@@ -46,4 +47,6 @@ interface Api {
     suspend fun getFullCache(cacheId: String, token: String, tokenSecret: String): Geocache
 
     suspend fun saveNote(cacheId: String, token: String, tokenSecret: String, noteToSave: String, oldValue: String)
+
+    suspend fun logCapabilities(cacheId: String, token: String, tokenSecret: String): LogTypeResponse
 }

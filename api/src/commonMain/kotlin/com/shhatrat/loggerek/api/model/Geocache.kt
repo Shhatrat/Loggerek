@@ -43,29 +43,38 @@ data class Geocache(
 )
 
 enum class GeocacheType(val logType: LogOptions) {
-    Traditional(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT , LogType.NEED_SERVICE, LogType.SERVICE_DONE))),
-    Multi(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT , LogType.NEED_SERVICE, LogType.SERVICE_DONE))),
-    Quiz(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT , LogType.NEED_SERVICE, LogType.SERVICE_DONE))),
-    Moving(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT , LogType.NEED_SERVICE, LogType.SERVICE_DONE))),
-    Virtual(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT , LogType.NEED_SERVICE, LogType.SERVICE_DONE))),
-    Other(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT , LogType.NEED_SERVICE, LogType.SERVICE_DONE))),
-    Event(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT , LogType.NEED_SERVICE, LogType.SERVICE_DONE)))
+    Traditional(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))),
+    Multi(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))),
+    Quiz(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))),
+    Moving(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))),
+    Virtual(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))),
+    Other(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))),
+    Event(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT)))
 }
 
+@Serializable
 enum class LogType(
+    @SerialName("apiKey") val apiKey: String,
     val textRes: StringResource,
     val canHasPassword: Boolean,
     val canRate: Boolean,
-    val canBeRecommended: Boolean) {
-    COMMENT(Res.string.log_comment, false, false, false),
-    SERVICE_DONE(Res.string.log_service_done, false, false, false),
-    NEED_SERVICE(Res.string.log_need_service, false, false, false),
-    PARTICIPATED_IN_EVENT(Res.string.log_participated_in_event, false, true, false),
-    WILL_PARTICIPATE_IN_EVENT(Res.string.log_will_participated_in_event, false, false, false),
-    FOUND(Res.string.log_found, true, true, true),
-    NOT_FOUND(Res.string.log_not_found, false, false, false);
-}
+    val canBeRecommended: Boolean
+) {
+    @SerialName("Comment")
+    COMMENT("Comment", Res.string.log_comment, false, false, false),
 
+    @SerialName("Attended")
+    PARTICIPATED_IN_EVENT("Attended", Res.string.log_participated_in_event, false, true, false),
+
+    @SerialName("Will attend")
+    WILL_PARTICIPATE_IN_EVENT("Will attend", Res.string.log_will_participated_in_event, false, false, false),
+
+    @SerialName("Found it")
+    FOUND("Found it", Res.string.log_found, true, true, true),
+
+    @SerialName("Didn't find it")
+    NOT_FOUND("Didn't find it", Res.string.log_not_found, false, false, false);
+}
 data class LogOptions(
     val logTypes: List<LogType>,
 )
