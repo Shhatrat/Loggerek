@@ -39,4 +39,14 @@ class FakeApiImpl: Api {
     ): Geocache {
         TODO("Not yet implemented")
     }
+
+    override suspend fun saveNote(
+        cacheId: String,
+        token: String,
+        tokenSecret: String,
+        noteToSave: String,
+        oldValue: String
+    ) {
+        TODO("Not yet implemented")
+    }
 }

@@ -44,4 +44,6 @@ interface Api {
     suspend fun getLoggedUserData(token: String, tokenSecret: String): FullUser
 
     suspend fun getFullCache(cacheId: String, token: String, tokenSecret: String): Geocache
+
+    suspend fun saveNote(cacheId: String, token: String, tokenSecret: String, noteToSave: String, oldValue: String)
 }

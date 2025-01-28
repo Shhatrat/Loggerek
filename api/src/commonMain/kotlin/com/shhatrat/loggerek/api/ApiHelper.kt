@@ -11,6 +11,7 @@ import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.headers
 import io.ktor.client.statement.HttpResponse
+import io.ktor.http.encodeURLParameter
 import kotlinx.datetime.Clock
 
 internal suspend inline fun <reified T> ApiImpl.getUser(
@@ -55,11 +56,48 @@ private suspend inline fun <reified T> makeLevel3Request(
     return response.body<T>()
 }
 
+private suspend inline fun <reified T> makeLevel3Request(
+    client: HttpClient,
+    token: String,
+    tokenSecret: String,
+    url: String,
+    params: Map<String, String>,
+): T {
+    val p = mapOf(
+        "oauth_consumer_key" to OpencachingApi.consumerKey,
+        "oauth_nonce" to generateOAuthNonce(),
+        "oauth_signature_method" to "HMAC-SHA1",
+        "oauth_timestamp" to (Clock.System.now().toEpochMilliseconds()).toString(),
+        "oauth_version" to "1.0",
+        "oauth_token" to token
+    ).plus(params)
+
+    val signature = generateSignature("GET", url, p, OpencachingApi.consumerSecret, tokenSecret)
+    val signedParams = p + ("oauth_signature" to signature)
+    val response: HttpResponse =
+        client.get("${url}?${params.parseParamsWithoutEnd()}") {
+            headers {
+                append(
+                    "Authorization",
+                    buildOAuthHeader(signedParams.filter { it.key.startsWith("oauth") })
+                )
+            }
+        }
+    return response.body<T>()
+}
+
 private fun Map<String, String>.parseParams(): String {
     return if (this.isEmpty()) ""
     else
         this.map { "${it.key}=${it.value}" }
             .joinToString(separator = "&", prefix = "", postfix = "&")
+}
+
+private fun Map<String, String>.parseParamsWithoutEnd(): String {
+    return if (this.isEmpty()) ""
+    else
+        this.map { "${it.key}=${it.value}" }
+            .joinToString(separator = "&", prefix = "", postfix = "")
 }
 
 internal suspend inline fun ApiImpl.getCache(
@@ -77,3 +115,26 @@ internal suspend inline fun ApiImpl.getCache(
         OpencachingParam.Geocache.getAll()
     )
 }
+
+
+internal suspend inline fun ApiImpl.saveNoteToApi(
+    client: HttpClient,
+    token: String,
+    tokenSecret: String,
+    geocacheId: String,
+    noteToSave: String,
+    oldValue: String
+) {
+    makeLevel3Request<Unit>(
+        client,
+        token,
+        tokenSecret,
+        OpencachingApi.Url.saveNotes(),k
+        mapOf(
+            Pair("cache_code", geocacheId),
+            Pair("new_value", noteToSave.encodeURLParameter()),
+            Pair("old_value", oldValue.encodeURLParameter())
+        ),
+    )
+}
+

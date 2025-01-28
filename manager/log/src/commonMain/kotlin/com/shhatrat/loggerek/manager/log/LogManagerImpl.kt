@@ -10,4 +10,9 @@ class LogManagerImpl(private val api: Api, private val repository: Repository): 
         val t = repository.safeTokenAndTokenSecret()
         return api.getFullCache(id, t.token, t.tokenSecret)
      }
+
+    override suspend fun saveNote(id: String, note: String, oldValue: String) {
+        val t = repository.safeTokenAndTokenSecret()
+        api.saveNote(id, t.token, t.tokenSecret, note, oldValue)
+    }
 }

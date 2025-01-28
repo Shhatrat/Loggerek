@@ -128,7 +128,11 @@ class LogViewModel(
                             }
                         },
                         password = null,
-                        sendAction = {},
+                        sendAction = {
+                            viewModelScope.launch {
+                                logManager.saveNote(cacheId, state.value.geocacheData?.myNotes?.text?:"", cache.myNotes?:"")
+                            }
+                        },
                         resetAction = {
                             resetData()
                         },

@@ -26,6 +26,7 @@ internal object OpencachingApi {
     private const val userPart = "services/users/user"
     private const val accessTokenPart = "services/oauth/access_token"
     private const val requestTokenPart = "services/oauth/request_token"
+    private const val saveNotesPart = "services/caches/save_personal_notes"
 
     /**
      * Provides methods for building URLs to specific API endpoints.
@@ -58,5 +59,7 @@ internal object OpencachingApi {
          * @return A [String] representing the user endpoint URL.
          */
         fun user() = "$baseUrl$userPart"
+
+        fun saveNotes() = "$baseUrl$saveNotesPart"
     }
 }

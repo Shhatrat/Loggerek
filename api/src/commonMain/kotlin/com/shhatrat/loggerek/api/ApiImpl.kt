@@ -83,4 +83,14 @@ class ApiImpl(private val client: HttpClient) : Api {
     override suspend fun getFullCache(cacheId: String, token: String, tokenSecret: String): Geocache {
         return getCache(client, token, tokenSecret, cacheId)
     }
+
+    override suspend fun saveNote(
+        cacheId: String,
+        token: String,
+        tokenSecret: String,
+        noteToSave: String,
+        oldValue: String
+    ) {
+        saveNoteToApi(client, token, tokenSecret, cacheId, noteToSave, oldValue)
+    }
 }
