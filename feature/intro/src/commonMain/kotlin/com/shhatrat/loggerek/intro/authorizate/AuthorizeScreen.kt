@@ -52,7 +52,7 @@ import loggerek.feature.intro.generated.resources.introStartButton
 fun AuthorizeScreen(calculateWindowSizeClass: WindowSizeCallback, authUiState: AuthUiState) {
 
     val snackBarHostState = remember { SnackbarHostState() }
-    LaunchedEffect(authUiState.error){
+    LaunchedEffect(authUiState.error) {
         SnackBarHelper.handle(snackBarHostState, authUiState.error)
     }
 
@@ -130,7 +130,7 @@ private fun Logic(modifier: Modifier, authUiState: AuthUiState) {
                 contentColor = MaterialTheme.colors.primary,
             ), onClick = { it.invoke(text) }, content = { Text("set PIN") })
         }
-        AnimatedVisibility(authUiState.startButton!=null){
+        AnimatedVisibility(authUiState.startButton != null) {
             Button(
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = MaterialTheme.colors.background,

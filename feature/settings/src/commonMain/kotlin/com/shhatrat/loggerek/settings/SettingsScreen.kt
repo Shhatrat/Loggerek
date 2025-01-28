@@ -72,30 +72,37 @@ fun ExpandedScreenLayout(modifier: Modifier, settingsUiState: SettingsUiState) {
 @Composable
 fun CompactScreenLayout(modifier: Modifier, settingsUiState: SettingsUiState) {
     Box(modifier = modifier.background(MaterialTheme.colors.background).padding(16.dp)) {
-        AnimatedVisibility(settingsUiState.loader.active){
+        AnimatedVisibility(settingsUiState.loader.active) {
             CircularIndeterminateProgressBar(
                 modifier = Modifier.align(Alignment.Center),
-                color = MaterialTheme.colors.primary)
+                color = MaterialTheme.colors.primary
+            )
         }
-            Column(
-                Modifier.align(Alignment.TopCenter),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                settingsUiState.settings.forEach { handleMapper(it) }
-            }
+        Column(
+            Modifier.align(Alignment.TopCenter),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            settingsUiState.settings.forEach { handleMapper(it) }
         }
     }
+}
 
 @Composable
-private fun handleMapper(settingsItem: SettingsItem){
-    when(settingsItem){
+private fun handleMapper(settingsItem: SettingsItem) {
+    when (settingsItem) {
         is SettingsItem.SettingsButton -> {
             SettingsButton(settingsItem)
         }
+
         is SettingsItem.SettingsSwitch -> {
-            SwitchWithLabel(label = settingsItem.descriptionRes.get(), settingsItem.checked, settingsItem.onChecked)
+            SwitchWithLabel(
+                label = settingsItem.descriptionRes.get(),
+                settingsItem.checked,
+                settingsItem.onChecked
+            )
         }
+
         is SettingsItem.SettingsTitle -> {
             Header(text = settingsItem.descriptionRes.get())
         }
@@ -112,9 +119,17 @@ fun SettingsButton(settingsItem: SettingsItem.SettingsButton) {
             .padding(8.dp)
             .clickable { settingsItem.action() }
     ) {
-        Text(color = MaterialTheme.colors.background, modifier = Modifier, text = settingsItem.descriptionRes.get())
+        Text(
+            color = MaterialTheme.colors.background,
+            modifier = Modifier,
+            text = settingsItem.descriptionRes.get()
+        )
         Spacer(Modifier.weight(1f))
-        Image(colorFilter = ColorFilter.tint(MaterialTheme.colors.background), painter = painterResource(settingsItem.iconRes), contentDescription = null)
+        Image(
+            colorFilter = ColorFilter.tint(MaterialTheme.colors.background),
+            painter = painterResource(settingsItem.iconRes),
+            contentDescription = null
+        )
     }
 }
 

@@ -12,7 +12,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.unit.dp
 import com.shhatrat.loggerek.base.LoggerekTheme
@@ -43,8 +42,8 @@ fun StarSwitchPreview() {
     LoggerekTheme {
         Box(Modifier.background(MaterialTheme.colors.background).padding(100.dp).scale(1f)) {
             Column {
-                StarSwitch(selected = true){}
-                StarSwitch(selected = false){}
+                StarSwitch(selected = true) {}
+                StarSwitch(selected = false) {}
             }
         }
     }

@@ -74,7 +74,7 @@ fun SegmentedButton(
                     text = option,
                     color = if (selectedIndex == index) MaterialTheme.colors.background else MaterialTheme.colors.primary,
                     style = MaterialTheme.typography.body1,
-                    )
+                )
             }
         }
     }
@@ -134,7 +134,7 @@ fun VerticalSegmentedButton(
 
 @Preview
 @Composable
-private fun SegmentedButton3Elements(){
+private fun SegmentedButton3Elements() {
     Column {
         LoggerekTheme {
             var selectedIndex by remember { mutableStateOf(0) }
@@ -148,7 +148,7 @@ private fun SegmentedButton3Elements(){
         }
         LoggerekTheme {
             var selectedIndex by remember { mutableStateOf(1) }
-            val options = listOf("Option 1", "option2", "else",  "Option 3")
+            val options = listOf("Option 1", "option2", "else", "Option 3")
 
             SegmentedButton(
                 options = options,
@@ -161,7 +161,7 @@ private fun SegmentedButton3Elements(){
 
 @Preview
 @Composable
-private fun VerticalSegmentedButton3Elements(){
+private fun VerticalSegmentedButton3Elements() {
     Column {
         LoggerekTheme {
             var selectedIndex by remember { mutableStateOf(0) }
@@ -175,7 +175,7 @@ private fun VerticalSegmentedButton3Elements(){
         }
         LoggerekTheme {
             var selectedIndex by remember { mutableStateOf(1) }
-            val options = listOf("Option 1", "option2", "else",  "Option 3")
+            val options = listOf("Option 1", "option2", "else", "Option 3")
 
             VerticalSegmentedButton(
                 options = options,

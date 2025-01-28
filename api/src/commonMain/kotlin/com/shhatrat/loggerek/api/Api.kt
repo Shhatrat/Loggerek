@@ -3,7 +3,6 @@ package com.shhatrat.loggerek.api
 import com.shhatrat.loggerek.api.model.FullUser
 import com.shhatrat.loggerek.api.model.Geocache
 import com.shhatrat.loggerek.api.model.LogResponse
-import com.shhatrat.loggerek.api.model.LogType
 import com.shhatrat.loggerek.api.model.LogTypeResponse
 import com.shhatrat.loggerek.api.model.SubmitLogData
 import com.shhatrat.loggerek.api.model.UserName
@@ -32,7 +31,11 @@ interface Api {
      * @return [OAuthAccessTokenResponse] containing the access token and secret.
      * @throws Exception if the request fails or the response cannot be parsed.
      */
-    suspend fun accessToken(pin: String, token: String, tokenSecret: String): OAuthAccessTokenResponse
+    suspend fun accessToken(
+        pin: String,
+        token: String,
+        tokenSecret: String
+    ): OAuthAccessTokenResponse
 
     /**
      * Fetches information about a specific geocache using its cache ID.
@@ -49,11 +52,25 @@ interface Api {
 
     suspend fun getFullCache(cacheId: String, token: String, tokenSecret: String): Geocache
 
-    suspend fun saveNote(cacheId: String, token: String, tokenSecret: String, noteToSave: String, oldValue: String)
+    suspend fun saveNote(
+        cacheId: String,
+        token: String,
+        tokenSecret: String,
+        noteToSave: String,
+        oldValue: String
+    )
 
-    suspend fun logCapabilities(cacheId: String, token: String, tokenSecret: String): LogTypeResponse
+    suspend fun logCapabilities(
+        cacheId: String,
+        token: String,
+        tokenSecret: String
+    ): LogTypeResponse
 
-    suspend fun submitLog(submitLogData: SubmitLogData, token: String, tokenSecret: String): LogResponse
+    suspend fun submitLog(
+        submitLogData: SubmitLogData,
+        token: String,
+        tokenSecret: String
+    ): LogResponse
 
 
 }

@@ -1,3 +1,3 @@
 package com.shhatrat.loggerek.base.exception
 
-class NoTokenException: Exception("NoTokenException")
+class NoTokenException : Exception("NoTokenException")

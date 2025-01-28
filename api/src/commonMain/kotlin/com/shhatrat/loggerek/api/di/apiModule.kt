@@ -21,7 +21,7 @@ val apiModule = module {
             HttpClient(it) {
                 setupLogger()
             }
-        } ?: HttpClient{ setupLogger() })
+        } ?: HttpClient { setupLogger() })
     }
     single<Api> { ApiImpl(get()) }
 }

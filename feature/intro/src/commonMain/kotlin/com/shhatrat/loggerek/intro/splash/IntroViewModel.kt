@@ -22,7 +22,8 @@ class IntroViewModel(
         return actionWithLoader(
             loaderAction = { updateUiState { copy(loader = Loader(it)) } },
             action = action,
-            delayMs = delayMs)
+            delayMs = delayMs
+        )
     }
 
     override fun onStart() {
@@ -36,11 +37,11 @@ class IntroViewModel(
         if (withLoader { accountManager.isUserLogged() }) {
             withLoader { delay(500) }
             navigateToMainScreen()
-        }
-        else {
-            updateUiState { copy(buttonAction = {
-                navigateToAuthScreen()
-            })
+        } else {
+            updateUiState {
+                copy(buttonAction = {
+                    navigateToAuthScreen()
+                })
             }
         }
     }

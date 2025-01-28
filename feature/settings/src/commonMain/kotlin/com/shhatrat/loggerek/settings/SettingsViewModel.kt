@@ -20,24 +20,26 @@ data class SettingsUiState(
     val loader: Loader = Loader(),
     val error: Error? = null,
 )
+
 sealed class SettingsItem(open val descriptionRes: StringResource) {
 
     data class SettingsTitle(
         override val descriptionRes: StringResource,
-    ): SettingsItem(descriptionRes)
+    ) : SettingsItem(descriptionRes)
 
     data class SettingsSwitch(
         override val descriptionRes: StringResource,
         val checked: Boolean,
         val onChecked: (Boolean) -> Unit
-    ): SettingsItem(descriptionRes)
+    ) : SettingsItem(descriptionRes)
 
     data class SettingsButton(
         override val descriptionRes: StringResource,
         val iconRes: DrawableResource,
         val action: () -> Unit
-    ): SettingsItem(descriptionRes)
+    ) : SettingsItem(descriptionRes)
 }
+
 class SettingsViewModel(
     private val moveToIntro: MoveToIntro,
     private val accountManager: AccountManager
@@ -55,7 +57,7 @@ class SettingsViewModel(
             copy(
                 settings = listOf(
                     SettingsItem.SettingsTitle(Res.string.logsTitle),
-                    SettingsItem.SettingsSwitch(Res.string.savePasswordToMyNotes, checked = true){
+                    SettingsItem.SettingsSwitch(Res.string.savePasswordToMyNotes, checked = true) {
 
                     },
                     SettingsItem.SettingsTitle(Res.string.accountTitle),

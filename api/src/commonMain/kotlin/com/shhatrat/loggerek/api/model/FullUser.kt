@@ -21,8 +21,8 @@ data class FullUser(
     val recommendationsGiven: Int,
     @SerialName(API_RECOMMENDATIONS_LEFT)
     val recommendationsLeft: Int
-){
-    companion object{
+) {
+    companion object {
         fun mock() = FullUser("Mock", 100, 100, 100, 100, 100)
     }
 }

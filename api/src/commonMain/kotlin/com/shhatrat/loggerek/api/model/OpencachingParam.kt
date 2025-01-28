@@ -38,7 +38,7 @@ sealed class OpencachingParam(val apiKey: String) {
         data object RECOMMENDATIONS_LEFT : User(API_RECOMMENDATIONS_LEFT)
     }
 
-    sealed class GeocacheUser(apiKey: String): OpencachingParam(apiKey){
+    sealed class GeocacheUser(apiKey: String) : OpencachingParam(apiKey) {
         companion object {
             const val GEOCACHE_API_USER_UUID = "uuid"
             const val GEOCACHE_API_USER_USERNAME = "username"
@@ -46,7 +46,7 @@ sealed class OpencachingParam(val apiKey: String) {
         }
     }
 
-    sealed class GeocacheStatus(apiKey: String): OpencachingParam(apiKey){
+    sealed class GeocacheStatus(apiKey: String) : OpencachingParam(apiKey) {
         companion object {
             const val GEOCACHE_API_STATUS_AVAILABLE = "Available"
             const val GEOCACHE_API_STATUS_TEMPORARILY_UNAVAILABLE = "Temporarily unavailable"

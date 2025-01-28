@@ -3,7 +3,7 @@ package com.shhatrat.loggerek.api.oauth
 import com.shhatrat.loggerek.api.OpencachingApi
 import com.shhatrat.loggerek.api.oauth.model.OAuthAccessTokenResponse
 import com.shhatrat.loggerek.api.oauth.model.OAuthRequestTokenResponse
-import io.ktor.http.*
+import io.ktor.http.encodeURLParameter
 import okio.ByteString.Companion.encodeUtf8
 
 object OAuthLogic {
@@ -51,7 +51,7 @@ object OAuthLogic {
 
     fun parseAccessTokenResponse(body: String): OAuthAccessTokenResponse {
         return OAuthAccessTokenResponse(
-            oauthToken =  parseOAuthResponse(body)["oauth_token"]!!,
+            oauthToken = parseOAuthResponse(body)["oauth_token"]!!,
             oauthTokenSecret = parseOAuthResponse(body)["oauth_token_secret"]!!
         )
     }

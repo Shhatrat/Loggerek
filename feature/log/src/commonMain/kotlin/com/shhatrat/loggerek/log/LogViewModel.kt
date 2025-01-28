@@ -1,11 +1,7 @@
 package com.shhatrat.loggerek.log
 
-import androidx.compose.material.Text
-import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.viewModelScope
 import com.shhatrat.loggerek.api.model.Geocache
-import com.shhatrat.loggerek.api.model.LogType
-import com.shhatrat.loggerek.api.model.OpencachingParam
 import com.shhatrat.loggerek.api.model.SubmitLogData
 import com.shhatrat.loggerek.base.BaseViewModel
 import com.shhatrat.loggerek.base.ButtonAction
@@ -82,11 +78,27 @@ class LogViewModel(
                         ratingData = RatingData(
                             showRating = cache.type.logType.logTypes[defaultLogTypeIndex].canRate,
                             starsOnChanged = {
-                                updateUiState { copy(geocacheData = geocacheData?.copy(ratingData = geocacheData.ratingData?.copy(rating = it))) }
+                                updateUiState {
+                                    copy(
+                                        geocacheData = geocacheData?.copy(
+                                            ratingData = geocacheData.ratingData?.copy(
+                                                rating = it
+                                            )
+                                        )
+                                    )
+                                }
                             },
                             recommendationPossible = cache.type.logType.logTypes[defaultLogTypeIndex].canBeRecommended,
                             recommendationChanged = {
-                                updateUiState { copy(geocacheData = geocacheData?.copy(ratingData = geocacheData.ratingData?.copy(recommendation = it))) }
+                                updateUiState {
+                                    copy(
+                                        geocacheData = geocacheData?.copy(
+                                            ratingData = geocacheData.ratingData?.copy(
+                                                recommendation = it
+                                            )
+                                        )
+                                    )
+                                }
                             }),
                         logTypeData = LogTypeData(
                             selectedIndex = defaultLogTypeIndex,
@@ -97,7 +109,7 @@ class LogViewModel(
                                         geocacheData = geocacheData?.copy(
                                             ratingData = geocacheData.ratingData?.copy(
                                                 showRating = cache.type.logType.logTypes[changed].canRate,
-                                                ),
+                                            ),
                                             logTypeData = geocacheData.logTypeData.copy(
                                                 selectedIndex = changed
                                             )
@@ -115,7 +127,7 @@ class LogViewModel(
                                 )
                             }
                         },
-                        myNotes = MultiTextFieldModel(text = cache.myNotes?:"") { changedText ->
+                        myNotes = MultiTextFieldModel(text = cache.myNotes ?: "") { changedText ->
                             updateUiState {
                                 copy(
                                     geocacheData = geocacheData?.copy(
@@ -147,11 +159,13 @@ class LogViewModel(
                                                 password = state.value.geocacheData?.password?.text
                                             )
                                         )
-                                        if(response.success){
-                                            updateUiState { copy(success = Success{
-                                                updateUiState { copy(success = null) }
-                                            }) }
-                                        }else{
+                                        if (response.success) {
+                                            updateUiState {
+                                                copy(success = Success {
+                                                    updateUiState { copy(success = null) }
+                                                })
+                                            }
+                                        } else {
                                             updateUiState { copy(error = Error(response.message)) }
                                         }
                                     }
@@ -168,9 +182,11 @@ class LogViewModel(
         }
     }
 
-    private fun setupPassword(cache: Geocache){
-        val shouldShow = cache.requirePassword && cache.type.logType.logTypes[state.value.geocacheData?.logTypeData?.selectedIndex?:defaultLogTypeIndex].canHasPassword
-        if(shouldShow){
+    private fun setupPassword(cache: Geocache) {
+        val shouldShow =
+            cache.requirePassword && cache.type.logType.logTypes[state.value.geocacheData?.logTypeData?.selectedIndex
+                ?: defaultLogTypeIndex].canHasPassword
+        if (shouldShow) {
             updateUiState {
                 copy(
                     geocacheData = geocacheData?.copy(password = MultiTextFieldModel { changedText ->
@@ -184,8 +200,10 @@ class LogViewModel(
                                     }
                             )
                         }
-                    }))}
-        }else{
+                    })
+                )
+            }
+        } else {
             updateUiState { copy(geocacheData = geocacheData?.copy(password = null)) }
         }
     }

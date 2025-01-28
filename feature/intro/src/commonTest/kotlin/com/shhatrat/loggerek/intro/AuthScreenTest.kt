@@ -30,7 +30,14 @@ class AuthScreenTest {
 
         setContent {
             AuthorizeScreen(
-                calculateWindowSizeClass = { WindowSizeClass.calculateFromSize(DpSize(200.dp, 300.dp)) },
+                calculateWindowSizeClass = {
+                    WindowSizeClass.calculateFromSize(
+                        DpSize(
+                            200.dp,
+                            300.dp
+                        )
+                    )
+                },
                 authUiState = compactUiState
             )
         }

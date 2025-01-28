@@ -22,8 +22,15 @@ class AccountManagerImpl(
 
     private suspend fun canDownloadUsername() =
         repository.token.get()
-            ?.let { token -> repository.tokenSecret.get()
-                ?.let { tokenSecret -> api.getLoggedUserNickname(token, tokenSecret).username.isNotEmpty() } } == true
+            ?.let { token ->
+                repository.tokenSecret.get()
+                    ?.let { tokenSecret ->
+                        api.getLoggedUserNickname(
+                            token,
+                            tokenSecret
+                        ).username.isNotEmpty()
+                    }
+            } == true
 
     override suspend fun startAuthorizationProcess(): AccountManager.ProcessResponse {
 

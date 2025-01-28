@@ -23,59 +23,66 @@ class AuthViewModel(
     private val accountManager: AccountManager
 ) : BaseViewModel<AuthUiState>(AuthUiState()) {
 
-    private val loaderHandlingUtil = LoaderHandlingUtil { loaderAction -> updateUiState { copy(loader = Loader(loaderAction)) }  }
+    private val loaderHandlingUtil =
+        LoaderHandlingUtil { loaderAction -> updateUiState { copy(loader = Loader(loaderAction)) } }
 
-    private val errorHandlingUtil = ErrorHandlingUtil { error -> updateUiState { copy(error = error) } }
+    private val errorHandlingUtil =
+        ErrorHandlingUtil { error -> updateUiState { copy(error = error) } }
 
     override fun onStart() {
         super.onStart()
         setupStartState()
     }
 
-    private fun setupStartState(){
-        updateUiState { copy(startButton = { errorHandlingUtil.withErrorHandling { startAction() } },
-            loader = loader.copy(false),
-            pastePinAction = null,
-            browserLink = null,
-            openBrowserAction = null) }
+    private fun setupStartState() {
+        updateUiState {
+            copy(
+                startButton = { errorHandlingUtil.withErrorHandling { startAction() } },
+                loader = loader.copy(false),
+                pastePinAction = null,
+                browserLink = null,
+                openBrowserAction = null
+            )
+        }
     }
 
     private fun startAction() {
         val error = Error("blad")
         viewModelScope.launch {
-                errorHandlingUtil.withSuspendErrorHandling(
-                    error = error,
-                    onError = { setupStartState() }) {
-                    val response = loaderHandlingUtil.withLoader {
-                        accountManager.startAuthorizationProcess() }
-                    updateUiState {
-                        copy(
-                            loader = loader.copy(false),
-                            openBrowserAction = { openUrl(response.url) },
-                            browserLink = response.url,
-                            startButton = null,
-                            pastePinAction = {
-                                viewModelScope.launch {
-                                    errorHandlingUtil.withSuspendErrorHandling(
-                                        error = error,
-                                        onError = { setupStartState() }) {
-                                        loaderHandlingUtil.withLoader { response.pastePinAction(it) }
-                                        updateUiState {
-                                            copy(
-                                                openBrowserAction = null,
-                                                browserLink = null,
-                                                pastePinAction = null
-                                            )
-                                        }
-                                        navigateToMain()
-                                    }
-                                }
-
-                            }
-                        )
-                    }
-
+            errorHandlingUtil.withSuspendErrorHandling(
+                error = error,
+                onError = { setupStartState() }) {
+                val response = loaderHandlingUtil.withLoader {
+                    accountManager.startAuthorizationProcess()
                 }
+                updateUiState {
+                    copy(
+                        loader = loader.copy(false),
+                        openBrowserAction = { openUrl(response.url) },
+                        browserLink = response.url,
+                        startButton = null,
+                        pastePinAction = {
+                            viewModelScope.launch {
+                                errorHandlingUtil.withSuspendErrorHandling(
+                                    error = error,
+                                    onError = { setupStartState() }) {
+                                    loaderHandlingUtil.withLoader { response.pastePinAction(it) }
+                                    updateUiState {
+                                        copy(
+                                            openBrowserAction = null,
+                                            browserLink = null,
+                                            pastePinAction = null
+                                        )
+                                    }
+                                    navigateToMain()
+                                }
+                            }
+
+                        }
+                    )
+                }
+
+            }
         }
     }
 

@@ -8,20 +8,20 @@ import com.shhatrat.loggerek.api.model.OpencachingParam
 import com.shhatrat.loggerek.api.model.OpencachingParam.Companion.parseForApiNotFormatted
 import com.shhatrat.loggerek.api.model.SubmitLogData
 import com.shhatrat.loggerek.api.model.UserName
-import com.shhatrat.loggerek.api.oauth.model.OAuthAccessTokenResponse
 import com.shhatrat.loggerek.api.oauth.OAuthLogic
 import com.shhatrat.loggerek.api.oauth.OAuthLogic.buildOAuthHeader
 import com.shhatrat.loggerek.api.oauth.OAuthLogic.generateSignature
 import com.shhatrat.loggerek.api.oauth.OAuthParams
-import com.shhatrat.loggerek.api.oauth.OAuthParams.generateOAuthNonce
 import com.shhatrat.loggerek.api.oauth.OAuthParams.getRequestTokenParams
+import com.shhatrat.loggerek.api.oauth.model.OAuthAccessTokenResponse
 import com.shhatrat.loggerek.api.oauth.model.OAuthRequestTokenResponse
-import io.ktor.client.*
+import io.ktor.client.HttpClient
 import io.ktor.client.call.body
-import io.ktor.client.request.*
-import io.ktor.client.statement.*
-import kotlinx.datetime.Clock
-import kotlinx.serialization.Serializable
+import io.ktor.client.request.get
+import io.ktor.client.request.headers
+import io.ktor.client.request.parameter
+import io.ktor.client.statement.HttpResponse
+import io.ktor.client.statement.bodyAsText
 
 class ApiImpl(private val client: HttpClient) : Api {
 
@@ -55,7 +55,11 @@ class ApiImpl(private val client: HttpClient) : Api {
         return OAuthLogic.parseRequestTokenResponse(responseBody)
     }
 
-    override suspend fun accessToken(pin: String, token: String, tokenSecret: String): OAuthAccessTokenResponse {
+    override suspend fun accessToken(
+        pin: String,
+        token: String,
+        tokenSecret: String
+    ): OAuthAccessTokenResponse {
         val oauthParams = OAuthParams.getAccessTokenParams(pin, token)
         val responseBody = sendOAuthRequest(
             url = OpencachingApi.Url.accessToken(),
@@ -66,7 +70,7 @@ class ApiImpl(private val client: HttpClient) : Api {
     }
 
     override suspend fun cache(cacheId: String): String {
-        val g =  client.get(OpencachingApi.Url.geocache()) {
+        val g = client.get(OpencachingApi.Url.geocache()) {
             parameter("consumer_key", OpencachingApi.consumerKey)
             parameter("cache_code", cacheId)
             parameter("fields", parseForApiNotFormatted(OpencachingParam.Geocache.getAll()))
@@ -83,7 +87,11 @@ class ApiImpl(private val client: HttpClient) : Api {
         return getUser(client, token, tokenSecret, OpencachingParam.User.getAll())
     }
 
-    override suspend fun getFullCache(cacheId: String, token: String, tokenSecret: String): Geocache {
+    override suspend fun getFullCache(
+        cacheId: String,
+        token: String,
+        tokenSecret: String
+    ): Geocache {
         return getCache(client, token, tokenSecret, cacheId)
     }
 
@@ -97,11 +105,19 @@ class ApiImpl(private val client: HttpClient) : Api {
         saveNoteToApi(client, token, tokenSecret, cacheId, noteToSave, oldValue)
     }
 
-    override suspend fun logCapabilities(cacheId: String, token: String, tokenSecret: String): LogTypeResponse {
+    override suspend fun logCapabilities(
+        cacheId: String,
+        token: String,
+        tokenSecret: String
+    ): LogTypeResponse {
         return logCapabilities(client, token, tokenSecret, cacheId)
     }
 
-    override suspend fun submitLog(submitLogData: SubmitLogData, token: String, tokenSecret: String): LogResponse {
+    override suspend fun submitLog(
+        submitLogData: SubmitLogData,
+        token: String,
+        tokenSecret: String
+    ): LogResponse {
         return submitLog(client, token, tokenSecret, submitLogData)
     }
 }

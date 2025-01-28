@@ -23,16 +23,20 @@ import loggerek.base.generated.resources.starFull
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
-fun StarFiller(modifier: Modifier = Modifier,
-               currentSelectedIndex: Int?,
-               size: Int,
-               onChange: (Int) -> Unit){
+fun StarFiller(
+    modifier: Modifier = Modifier,
+    currentSelectedIndex: Int?,
+    size: Int,
+    onChange: (Int) -> Unit
+) {
     Row(modifier) {
         repeat(size) {
             Image(
                 modifier = Modifier.size(60.dp).clickable { onChange(it) },
                 colorFilter = ColorFilter.tint(MaterialTheme.colors.primary),
-                painter = if((currentSelectedIndex ?: 0) >= it) painterResource(Res.drawable.starFull) else painterResource(Res.drawable.star),
+                painter = if ((currentSelectedIndex
+                        ?: 0) >= it
+                ) painterResource(Res.drawable.starFull) else painterResource(Res.drawable.star),
                 contentDescription = "Single star item"
             )
         }
@@ -41,12 +45,12 @@ fun StarFiller(modifier: Modifier = Modifier,
 
 @Preview
 @Composable
-fun StarPreview(){
+fun StarPreview() {
     LoggerekTheme {
         Box(Modifier.background(Color.Black).padding(100.dp).scale(1f)) {
             Column {
-                StarFiller(currentSelectedIndex = 2, size = 5){}
-                StarFiller(currentSelectedIndex = 3, size = 5){}
+                StarFiller(currentSelectedIndex = 2, size = 5) {}
+                StarFiller(currentSelectedIndex = 3, size = 5) {}
             }
         }
     }

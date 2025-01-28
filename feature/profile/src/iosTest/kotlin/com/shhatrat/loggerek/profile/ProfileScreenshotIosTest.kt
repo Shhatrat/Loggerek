@@ -19,26 +19,31 @@ class ProfileScreenshotIosTest {
     @Test
     fun authScreenWithError() {
         screenshotTestSource.provideProfileScreensWithError().forEach { item ->
-            runIntroScreenTest( item.content, item.description)
+            runIntroScreenTest(item.content, item.description)
         }
     }
 
     @Test
     fun authScreenWithUser() {
         screenshotTestSource.provideProfileScreensWithUser().forEach { item ->
-            runIntroScreenTest( item.content, item.description)
+            runIntroScreenTest(item.content, item.description)
         }
 
     }
 
     @OptIn(ExperimentalTestApi::class)
-    private fun runIntroScreenTest(composable: @Composable () -> Unit,
-                                   description: String) {
+    private fun runIntroScreenTest(
+        composable: @Composable () -> Unit,
+        description: String
+    ) {
         runComposeUiTest {
             setContent {
                 composable()
             }
-            onRoot().captureRoboImage(this, filePath = "${description.addPackagePrefix(Type.IOS, description)}.png")
+            onRoot().captureRoboImage(
+                this,
+                filePath = "${description.addPackagePrefix(Type.IOS, description)}.png"
+            )
         }
     }
 }

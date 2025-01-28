@@ -1,11 +1,9 @@
 package com.shhatrat.loggerek.main
 
 import androidx.lifecycle.viewModelScope
-import com.shhatrat.loggerek.api.Api
 import com.shhatrat.loggerek.base.BaseViewModel
 import com.shhatrat.loggerek.base.Loader
 import com.shhatrat.loggerek.base.MoveToIntro
-import com.shhatrat.loggerek.repository.Repository
 import kotlinx.coroutines.launch
 
 data class MainUiState(

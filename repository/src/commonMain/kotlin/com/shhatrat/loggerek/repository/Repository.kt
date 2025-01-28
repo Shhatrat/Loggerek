@@ -7,10 +7,10 @@ interface Repository {
     val token: RepositoryItem<String>
     val tokenSecret: RepositoryItem<String>
 
-    fun safeTokenAndTokenSecret(): TokenData{
+    fun safeTokenAndTokenSecret(): TokenData {
         try {
             return TokenData(token.get()!!, tokenSecret.get()!!)
-        }catch (e: Exception){
+        } catch (e: Exception) {
             throw NoTokenException()
         }
     }

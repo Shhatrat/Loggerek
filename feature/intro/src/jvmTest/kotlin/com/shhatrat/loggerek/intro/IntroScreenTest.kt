@@ -29,21 +29,22 @@ class IntroScreenTest {
         }
     }
 
-    private fun runIntroScreenTest(deviceScreen: DeviceScreen, loader: Boolean) = runDesktopComposeUiTest(
-        width = deviceScreen.width,
-        height = deviceScreen.height
-    ) {
-        setContent {
-            LoggerekTheme {
-                IntroScreen(
-                    calculateWindowSizeClass = { deviceScreen.getWindowSizeClass() },
-                    introUiState = IntroUiState(
-                        loader = Loader(loader),
-                        buttonAction = { }
+    private fun runIntroScreenTest(deviceScreen: DeviceScreen, loader: Boolean) =
+        runDesktopComposeUiTest(
+            width = deviceScreen.width,
+            height = deviceScreen.height
+        ) {
+            setContent {
+                LoggerekTheme {
+                    IntroScreen(
+                        calculateWindowSizeClass = { deviceScreen.getWindowSizeClass() },
+                        introUiState = IntroUiState(
+                            loader = Loader(loader),
+                            buttonAction = { }
+                        )
                     )
-                )
+                }
             }
+            onRoot().captureRoboImage(roborazziOptions = RoborazziOptions())
         }
-        onRoot().captureRoboImage(roborazziOptions = RoborazziOptions())
-    }
 }

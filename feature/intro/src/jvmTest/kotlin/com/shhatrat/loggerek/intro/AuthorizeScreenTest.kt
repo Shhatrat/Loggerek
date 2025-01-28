@@ -18,8 +18,10 @@ class AuthorizeScreenTest {
     @Test
     fun authScreenWithError() {
         DeviceScreen.entries.forEach { deviceScreen ->
-            runIntroScreenTest(deviceScreen, AuthUiState(
-                error = Error("Error"))
+            runIntroScreenTest(
+                deviceScreen, AuthUiState(
+                    error = Error("Error")
+                )
             )
         }
     }
@@ -34,26 +36,30 @@ class AuthorizeScreenTest {
     @Test
     fun authScreenWithLink() {
         DeviceScreen.entries.forEach { deviceScreen ->
-            runIntroScreenTest(deviceScreen, AuthUiState(
-                pastePinAction = {},
-                browserLink = "https://broser.link"
-            ))
+            runIntroScreenTest(
+                deviceScreen, AuthUiState(
+                    pastePinAction = {},
+                    browserLink = "https://broser.link"
+                )
+            )
         }
     }
 
 
-    private fun runIntroScreenTest(deviceScreen: DeviceScreen, authUiState: AuthUiState) = runDesktopComposeUiTest(
-        width = deviceScreen.width,
-        height = deviceScreen.height
-    ) {
-        setContent {
-            LoggerekTheme {
-                AuthorizeScreen(
-                    calculateWindowSizeClass = { deviceScreen.getWindowSizeClass() },
-                    authUiState = authUiState)
+    private fun runIntroScreenTest(deviceScreen: DeviceScreen, authUiState: AuthUiState) =
+        runDesktopComposeUiTest(
+            width = deviceScreen.width,
+            height = deviceScreen.height
+        ) {
+            setContent {
+                LoggerekTheme {
+                    AuthorizeScreen(
+                        calculateWindowSizeClass = { deviceScreen.getWindowSizeClass() },
+                        authUiState = authUiState
+                    )
+                }
             }
+            onRoot().captureRoboImage(roborazziOptions = RoborazziOptions())
         }
-        onRoot().captureRoboImage(roborazziOptions = RoborazziOptions())
-    }
 
 }

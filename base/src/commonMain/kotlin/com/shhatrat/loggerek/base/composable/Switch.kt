@@ -27,33 +27,34 @@ import loggerek.base.generated.resources.trueSwitch
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
-fun Switch(modifier: Modifier = Modifier, checked: Boolean = false){
+fun Switch(modifier: Modifier = Modifier, checked: Boolean = false) {
+    Box(
+        modifier = modifier
+            .requiredWidth(64.dp).requiredHeight(40.dp)
+            .clip(RoundedCornerShape(20.dp))
+            .background(MaterialTheme.colors.background)
+    ) {
         Box(
-            modifier = modifier
-                .requiredWidth(64.dp).requiredHeight(40.dp)
-                .clip(RoundedCornerShape(20.dp))
-                .background(MaterialTheme.colors.background)
+            modifier = Modifier
+                .align(if (checked) Alignment.CenterEnd else Alignment.CenterStart)
+                .size(40.dp)
+                .clip(RoundedCornerShape(100))
+                .background(Color.Black)
+                .border(2.dp, MaterialTheme.colors.background, RoundedCornerShape(100))
         ) {
-            Box(
-                modifier = Modifier
-                    .align(if(checked) Alignment.CenterEnd else Alignment.CenterStart)
-                    .size(40.dp)
-                    .clip(RoundedCornerShape(100))
-                    .background(Color.Black)
-                    .border(2.dp, MaterialTheme.colors.background, RoundedCornerShape(100))
-            ){
-                Image(
-                    modifier = Modifier.align(Alignment.Center),
-                    contentDescription = "",
-                    colorFilter = ColorFilter.tint(color = MaterialTheme.colors.background),
-                    painter = painterResource(if(checked) Res.drawable.trueSwitch else Res.drawable.falseSwitch))
-            }
+            Image(
+                modifier = Modifier.align(Alignment.Center),
+                contentDescription = "",
+                colorFilter = ColorFilter.tint(color = MaterialTheme.colors.background),
+                painter = painterResource(if (checked) Res.drawable.trueSwitch else Res.drawable.falseSwitch)
+            )
         }
+    }
 }
 
 @Preview
 @Composable
-fun SwitchPreview(){
+fun SwitchPreview() {
     LoggerekTheme {
         Box(Modifier.background(Color.Black).padding(100.dp).scale(1f)) {
             Column {

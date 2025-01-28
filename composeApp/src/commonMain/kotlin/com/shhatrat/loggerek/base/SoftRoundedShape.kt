@@ -9,7 +9,12 @@ object SoftRoundedShape {
         return GenericShape { size, _ ->
             moveTo(0f, 0f)
             lineTo(0f, size.height - size.height / 7)
-            quadraticBezierTo(size.width / 2, size.height, size.width, size.height - size.height / 7)
+            quadraticBezierTo(
+                size.width / 2,
+                size.height,
+                size.width,
+                size.height - size.height / 7
+            )
             lineTo(size.width, 0f)
             close()
         }

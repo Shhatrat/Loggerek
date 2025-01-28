@@ -16,7 +16,8 @@ object OAuthParams {
         )
     }
 
-    internal fun getRequestTokenParams() = createBaseParams(OpencachingApi.consumerKey).plus("oauth_callback" to "oob")
+    internal fun getRequestTokenParams() =
+        createBaseParams(OpencachingApi.consumerKey).plus("oauth_callback" to "oob")
 
     internal fun getAccessTokenParams(pin: String, token: String): Map<String, String> {
         return createBaseParams(OpencachingApi.consumerKey)

@@ -53,26 +53,26 @@ class NavigationTest {
     }
 
     @After
-    fun after(){
+    fun after() {
         stopKoin()
     }
 
     @Before
-    fun before(){
-            startKoin {
-                modules(
-                    fakeRepositoryModule,
-                    fakeApiModule,
-                    fakeAccountModule,
-                    viewModelModule
-                ).modules(
-                    PlatformSpecificModule().getModules()
-                ).modules(module {
-                    single<WindowSizeCallback> {
-                        { WindowSizeClass.calculateFromSize(DpSize(0.dp, 0.dp)) }
-                    }
-                })
-            }
+    fun before() {
+        startKoin {
+            modules(
+                fakeRepositoryModule,
+                fakeApiModule,
+                fakeAccountModule,
+                viewModelModule
+            ).modules(
+                PlatformSpecificModule().getModules()
+            ).modules(module {
+                single<WindowSizeCallback> {
+                    { WindowSizeClass.calculateFromSize(DpSize(0.dp, 0.dp)) }
+                }
+            })
+        }
     }
 
     @Test

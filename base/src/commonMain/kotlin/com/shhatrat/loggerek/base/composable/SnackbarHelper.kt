@@ -11,7 +11,7 @@ import com.shhatrat.loggerek.base.Error
 object SnackBarHelper {
 
     @Composable
-    fun ProvideSnackBar(snackbarHostState: SnackbarHostState){
+    fun ProvideSnackBar(snackbarHostState: SnackbarHostState) {
         SnackbarHost(
             hostState = snackbarHostState,
             snackbar = { snackbarData ->
@@ -25,10 +25,13 @@ object SnackBarHelper {
         )
     }
 
-    suspend fun handle(snackBarHostState: SnackbarHostState, errorObj: Error?){
+    suspend fun handle(snackBarHostState: SnackbarHostState, errorObj: Error?) {
         errorObj?.let { error ->
-            val result = snackBarHostState.showSnackbar(message = error.descriptionText, actionLabel = error.retry?.description)
-            if(result == SnackbarResult.ActionPerformed){
+            val result = snackBarHostState.showSnackbar(
+                message = error.descriptionText,
+                actionLabel = error.retry?.description
+            )
+            if (result == SnackbarResult.ActionPerformed) {
                 error.retry?.action?.invoke()
             }
         }

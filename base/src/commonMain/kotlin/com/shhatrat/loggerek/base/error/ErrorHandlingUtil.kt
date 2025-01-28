@@ -2,7 +2,7 @@ package com.shhatrat.loggerek.base.error
 
 import com.shhatrat.loggerek.base.Error
 
-class ErrorHandlingUtil(private val errorAction: (Error) -> Unit) : HasErrorHandling{
+class ErrorHandlingUtil(private val errorAction: (Error) -> Unit) : HasErrorHandling {
     override suspend fun <T> withSuspendErrorHandling(
         error: Error?,
         onError: (() -> Unit)?,
@@ -11,7 +11,7 @@ class ErrorHandlingUtil(private val errorAction: (Error) -> Unit) : HasErrorHand
         try {
             action()
         } catch (e: Exception) {
-            errorAction.invoke(error?:Error(e.message?:""))
+            errorAction.invoke(error ?: Error(e.message ?: ""))
             onError?.invoke()
         }
     }
@@ -20,7 +20,7 @@ class ErrorHandlingUtil(private val errorAction: (Error) -> Unit) : HasErrorHand
         try {
             action()
         } catch (e: Exception) {
-            errorAction.invoke(Error(e.message?:""))
+            errorAction.invoke(Error(e.message ?: ""))
         }
     }
 }

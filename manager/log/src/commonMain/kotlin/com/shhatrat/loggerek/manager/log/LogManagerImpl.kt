@@ -6,12 +6,12 @@ import com.shhatrat.loggerek.api.model.LogResponse
 import com.shhatrat.loggerek.api.model.SubmitLogData
 import com.shhatrat.loggerek.repository.Repository
 
-class LogManagerImpl(private val api: Api, private val repository: Repository): LogManager {
+class LogManagerImpl(private val api: Api, private val repository: Repository) : LogManager {
 
     override suspend fun getCache(id: String): Geocache {
         val t = repository.safeTokenAndTokenSecret()
         return api.getFullCache(id, t.token, t.tokenSecret)
-     }
+    }
 
     override suspend fun saveNote(id: String, note: String, oldValue: String) {
         val t = repository.safeTokenAndTokenSecret()

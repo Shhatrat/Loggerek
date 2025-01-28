@@ -4,9 +4,6 @@ package com.shhatrat.loggerek.log
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -17,12 +14,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
@@ -31,15 +24,12 @@ import androidx.compose.material.Text
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.shhatrat.loggerek.api.model.GeocacheMock
 import com.shhatrat.loggerek.base.LoggerekTheme
@@ -58,8 +48,6 @@ import io.github.alexzhirkevich.compottie.LottieCompositionSpec
 import io.github.alexzhirkevich.compottie.animateLottieCompositionAsState
 import io.github.alexzhirkevich.compottie.rememberLottieComposition
 import io.github.alexzhirkevich.compottie.rememberLottiePainter
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import loggerek.feature.log.generated.resources.Res
 import loggerek.feature.log.generated.resources.cleanButton
 import loggerek.feature.log.generated.resources.logContent
@@ -83,10 +71,14 @@ fun LogScreen(calculateWindowSizeClass: WindowSizeCallback, logUiState: LogUiSta
             SnackBarHelper.handle(snackBarHostState, logUiState.error)
         }
 
-        Crossfade(modifier = Modifier.fillMaxSize(), targetState = (calculateWindowSizeClass.invoke().widthSizeClass)) { screenClass ->
+        Crossfade(
+            modifier = Modifier.fillMaxSize(),
+            targetState = (calculateWindowSizeClass.invoke().widthSizeClass)
+        ) { screenClass ->
             when (screenClass) {
                 WindowWidthSizeClass.Compact, WindowWidthSizeClass.Medium ->
                     CompactScreenLayout(modifier = Modifier, logUiState)
+
                 WindowWidthSizeClass.Expanded -> ExpandedScreenLayout(
                     Modifier.fillMaxSize(),
                     logUiState
@@ -104,8 +96,13 @@ fun ExpandedScreenLayout(modifier: Modifier, logUiState: LogUiState) {
 
 @Composable
 fun CompactScreenLayout(modifier: Modifier, settingsUiState: LogUiState) {
-    Box(modifier = modifier.fillMaxSize().background(MaterialTheme.colors.background).padding(16.dp)) {
-        AnimatedVisibility(modifier = Modifier.align(Alignment.Center), visible = settingsUiState.loader.active) {
+    Box(
+        modifier = modifier.fillMaxSize().background(MaterialTheme.colors.background).padding(16.dp)
+    ) {
+        AnimatedVisibility(
+            modifier = Modifier.align(Alignment.Center),
+            visible = settingsUiState.loader.active
+        ) {
             CircularIndeterminateProgressBar(
                 modifier = Modifier,
                 color = MaterialTheme.colors.primary
@@ -126,22 +123,24 @@ fun CompactScreenLayout(modifier: Modifier, settingsUiState: LogUiState) {
                 )
                 it.ratingData?.let { rating ->
                     var currentRating: Int? by remember { mutableStateOf(null) }
-                    if(rating.showRating) {
+                    if (rating.showRating) {
                         StarFiller(currentSelectedIndex = currentRating, size = 5) {
                             currentRating = it
                             rating.starsOnChanged(it)
                         }
-                        Text(when(currentRating){
-                            0 -> Res.string.rate1
-                            1 -> Res.string.rate2
-                            2 -> Res.string.rate3
-                            3 -> Res.string.rate4
-                            null -> null
-                            else -> Res.string.rate5
-                        }?.get()?:"")
+                        Text(
+                            when (currentRating) {
+                                0 -> Res.string.rate1
+                                1 -> Res.string.rate2
+                                2 -> Res.string.rate3
+                                3 -> Res.string.rate4
+                                null -> null
+                                else -> Res.string.rate5
+                            }?.get() ?: ""
+                        )
                     }
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        if(rating.recommendationPossible && rating.showRating) {
+                        if (rating.recommendationPossible && rating.showRating) {
                             Text(Res.string.reccomend.get())
                             StarSwitch(selected = rating.recommendation, onClicked = {
                                 rating.recommendationChanged(!rating.recommendation)
@@ -181,16 +180,16 @@ fun CompactScreenLayout(modifier: Modifier, settingsUiState: LogUiState) {
             }
         }
 
-        if(settingsUiState.success!=null){
-            Box(Modifier.fillMaxSize()){
+        if (settingsUiState.success != null) {
+            Box(Modifier.fillMaxSize()) {
                 val composition by rememberLottieComposition {
                     LottieCompositionSpec.JsonString(
                         Res.readBytes("files/confettiAnimation.json").decodeToString()
                     )
                 }
                 val progress by animateLottieCompositionAsState(composition)
-                if(progress == 1f){
-                    LaunchedEffect(Unit){
+                if (progress == 1f) {
+                    LaunchedEffect(Unit) {
                         settingsUiState.success.onFinished?.invoke()
                     }
                 }
@@ -216,7 +215,10 @@ fun LogScreenPreview() {
                 title = cache.name,
                 titleLink = cache.url,
                 ratingData = RatingData(true, 5, {}, true, true, {}),
-                logTypeData = LogTypeData(0, cache.type.logType.logTypes.map { it.textRes }, onChangedIndex = {} ),
+                logTypeData = LogTypeData(
+                    0,
+                    cache.type.logType.logTypes.map { it.textRes },
+                    onChangedIndex = {}),
                 description = MultiTextFieldModel(),
                 myNotes = MultiTextFieldModel(),
                 password = MultiTextFieldModel(),

@@ -4,10 +4,6 @@ import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -36,12 +32,17 @@ private val headerTextStyle = TextStyle(
 
 @Composable
 fun Header(modifier: Modifier = Modifier, text: String) {
-    Text(modifier = modifier.testTag(headerTestTag), text = text, style = headerTextStyle, textAlign = TextAlign.Center)
+    Text(
+        modifier = modifier.testTag(headerTestTag),
+        text = text,
+        style = headerTextStyle,
+        textAlign = TextAlign.Center
+    )
 }
 
 @Preview
 @Composable
-private fun HeaderPreview(){
+private fun HeaderPreview() {
     Column {
         LoggerekTheme {
             Header(text = "Hello header")

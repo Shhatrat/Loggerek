@@ -15,7 +15,7 @@ const val loaderTestTag = "com.shhatrat.loggerek.base.composable.loaderTestTag"
 fun CircularIndeterminateProgressBar(modifier: Modifier = Modifier, color: Color? = null) {
     CircularProgressIndicator(
         modifier = modifier.size(48.dp).testTag(loaderTestTag),
-        color = color?: MaterialTheme.colors.primary,
+        color = color ?: MaterialTheme.colors.primary,
         strokeWidth = 4.dp
     )
 }

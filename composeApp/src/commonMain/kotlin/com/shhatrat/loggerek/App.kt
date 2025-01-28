@@ -53,7 +53,7 @@ fun App(
 }
 
 private fun KoinApplication.setupModules(calculateWindowSizeClass: WindowSizeCallback) {
-    modules(repositoryModule, apiModule, accountModule,logManagerModule, viewModelModule).modules(
+    modules(repositoryModule, apiModule, accountModule, logManagerModule, viewModelModule).modules(
         PlatformSpecificModule().getModules()
     ).modules(module {
         single<WindowSizeCallback> {

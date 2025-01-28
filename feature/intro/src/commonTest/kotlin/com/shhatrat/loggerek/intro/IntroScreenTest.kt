@@ -33,7 +33,14 @@ class IntroScreenTest {
 
         setContent {
             IntroScreen(
-                calculateWindowSizeClass = { WindowSizeClass.calculateFromSize(DpSize(200.dp, 300.dp)) },
+                calculateWindowSizeClass = {
+                    WindowSizeClass.calculateFromSize(
+                        DpSize(
+                            200.dp,
+                            300.dp
+                        )
+                    )
+                },
                 introUiState = if (windowSizeClass.value == WindowWidthSizeClass.Compact) compactUiState else expandedUiState
             )
         }
@@ -55,7 +62,14 @@ class IntroScreenTest {
 
         setContent {
             IntroScreen(
-                calculateWindowSizeClass = { WindowSizeClass.calculateFromSize(DpSize(200.dp, 300.dp)) },
+                calculateWindowSizeClass = {
+                    WindowSizeClass.calculateFromSize(
+                        DpSize(
+                            200.dp,
+                            300.dp
+                        )
+                    )
+                },
                 introUiState = if (windowSizeClass.value == WindowWidthSizeClass.Compact) compactUiState else expandedUiState
             )
         }

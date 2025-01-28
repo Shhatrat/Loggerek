@@ -16,7 +16,6 @@ import io.ktor.client.request.headers
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.encodeURLParameter
 import kotlinx.datetime.Clock
-import kotlin.math.log
 
 internal suspend inline fun <reified T> ApiImpl.getUser(
     client: HttpClient,
@@ -166,10 +165,10 @@ internal suspend inline fun ApiImpl.submitLog(
     logData: SubmitLogData,
 ): LogResponse {
     val additionalParams: MutableMap<String, String> = mutableMapOf()
-    if(logData.password!=null){
+    if (logData.password != null) {
         additionalParams["password"] = logData.password
     }
-    if(logData.rating!=null){
+    if (logData.rating != null) {
         additionalParams["rating"] = logData.rating.toString()
     }
     return makeLevel3Request<LogResponse>(

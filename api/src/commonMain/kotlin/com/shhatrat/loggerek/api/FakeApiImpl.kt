@@ -9,10 +9,14 @@ import com.shhatrat.loggerek.api.model.UserName
 import com.shhatrat.loggerek.api.oauth.model.OAuthAccessTokenResponse
 import com.shhatrat.loggerek.api.oauth.model.OAuthRequestTokenResponse
 
-class FakeApiImpl: Api {
+class FakeApiImpl : Api {
 
     override suspend fun requestToken(): OAuthRequestTokenResponse {
-        return OAuthRequestTokenResponse(token = "fakeToken", tokenSecret = "fakeTokenSecret", url = "https://FakeUrl.com")
+        return OAuthRequestTokenResponse(
+            token = "fakeToken",
+            tokenSecret = "fakeTokenSecret",
+            url = "https://FakeUrl.com"
+        )
     }
 
     override suspend fun accessToken(
@@ -20,7 +24,10 @@ class FakeApiImpl: Api {
         token: String,
         tokenSecret: String
     ): OAuthAccessTokenResponse {
-        return OAuthAccessTokenResponse(oauthToken = "oauthToken", oauthTokenSecret = "oauthTokenSecret")
+        return OAuthAccessTokenResponse(
+            oauthToken = "oauthToken",
+            oauthTokenSecret = "oauthTokenSecret"
+        )
     }
 
     override suspend fun cache(cacheId: String): String {
@@ -53,11 +60,19 @@ class FakeApiImpl: Api {
         TODO("Not yet implemented")
     }
 
-    override suspend fun logCapabilities(cacheId: String, token: String, tokenSecret: String): LogTypeResponse {
+    override suspend fun logCapabilities(
+        cacheId: String,
+        token: String,
+        tokenSecret: String
+    ): LogTypeResponse {
         TODO("Not yet implemented")
     }
 
-    override suspend fun submitLog(submitLogData: SubmitLogData, token: String, tokenSecret: String): LogResponse {
+    override suspend fun submitLog(
+        submitLogData: SubmitLogData,
+        token: String,
+        tokenSecret: String
+    ): LogResponse {
         TODO("Not yet implemented")
     }
 }

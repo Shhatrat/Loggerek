@@ -1,4 +1,5 @@
-@file:OptIn(ExperimentalMaterial3WindowSizeClassApi::class,
+@file:OptIn(
+    ExperimentalMaterial3WindowSizeClassApi::class,
     ExperimentalMaterial3WindowSizeClassApi::class, ExperimentalMaterial3WindowSizeClassApi::class
 )
 

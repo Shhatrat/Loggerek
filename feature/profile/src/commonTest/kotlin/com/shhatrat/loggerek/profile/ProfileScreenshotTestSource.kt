@@ -39,17 +39,17 @@ class ProfileScreenshotTestSource {
         return DeviceScreen.entries.map { deviceScreen ->
             TestItem(
                 content = {
-                LoggerekTheme {
-                    ProfileScreen(
-                        calculateWindowSizeClass = { deviceScreen.getWindowSizeClass() },
-                        profileUiState = profileUiState
-                    )
-                }
-            },
-                description= "${deviceScreen.name}-$description",
-            width = deviceScreen.width,
-            height = deviceScreen.height,
+                    LoggerekTheme {
+                        ProfileScreen(
+                            calculateWindowSizeClass = { deviceScreen.getWindowSizeClass() },
+                            profileUiState = profileUiState
+                        )
+                    }
+                },
+                description = "${deviceScreen.name}-$description",
+                width = deviceScreen.width,
+                height = deviceScreen.height,
             )
-       }
+        }
     }
 }

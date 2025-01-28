@@ -9,13 +9,10 @@ import com.shhatrat.loggerek.api.model.OpencachingParam.GeocacheUser.Companion.G
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import loggerek.api.generated.resources.Res
-import loggerek.api.generated.resources.aaaa
 import loggerek.api.generated.resources.log_comment
 import loggerek.api.generated.resources.log_found
-import loggerek.api.generated.resources.log_need_service
 import loggerek.api.generated.resources.log_not_found
 import loggerek.api.generated.resources.log_participated_in_event
-import loggerek.api.generated.resources.log_service_done
 import loggerek.api.generated.resources.log_will_participated_in_event
 import org.jetbrains.compose.resources.StringResource
 
@@ -49,7 +46,15 @@ enum class GeocacheType(val logType: LogOptions) {
     Moving(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))),
     Virtual(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))),
     Other(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))),
-    Event(LogOptions(listOf(LogType.PARTICIPATED_IN_EVENT, LogType.WILL_PARTICIPATE_IN_EVENT, LogType.COMMENT)))
+    Event(
+        LogOptions(
+            listOf(
+                LogType.PARTICIPATED_IN_EVENT,
+                LogType.WILL_PARTICIPATE_IN_EVENT,
+                LogType.COMMENT
+            )
+        )
+    )
 }
 
 @Serializable
@@ -67,7 +72,13 @@ enum class LogType(
     PARTICIPATED_IN_EVENT("Attended", Res.string.log_participated_in_event, false, true, false),
 
     @SerialName("Will attend")
-    WILL_PARTICIPATE_IN_EVENT("Will attend", Res.string.log_will_participated_in_event, false, false, false),
+    WILL_PARTICIPATE_IN_EVENT(
+        "Will attend",
+        Res.string.log_will_participated_in_event,
+        false,
+        false,
+        false
+    ),
 
     @SerialName("Found it")
     FOUND("Found it", Res.string.log_found, true, true, true),
@@ -75,16 +86,20 @@ enum class LogType(
     @SerialName("Didn't find it")
     NOT_FOUND("Didn't find it", Res.string.log_not_found, false, false, false);
 }
+
 data class LogOptions(
     val logTypes: List<LogType>,
 )
 
 
 @Serializable
-enum class GeocacheStatus{
-    @SerialName(GEOCACHE_API_STATUS_AVAILABLE) AVAILABLE(),
-    @SerialName(GEOCACHE_API_STATUS_TEMPORARILY_UNAVAILABLE) TEMPORARILY_UNAVAILABLE(),
-    @SerialName(GEOCACHE_API_STATUS_ARCHIVED) ARCHIVED()
+enum class GeocacheStatus {
+    @SerialName(GEOCACHE_API_STATUS_AVAILABLE)
+    AVAILABLE(),
+    @SerialName(GEOCACHE_API_STATUS_TEMPORARILY_UNAVAILABLE)
+    TEMPORARILY_UNAVAILABLE(),
+    @SerialName(GEOCACHE_API_STATUS_ARCHIVED)
+    ARCHIVED()
 }
 
 @Serializable
