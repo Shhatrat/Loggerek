@@ -31,7 +31,7 @@ data class Geocache(
     @SerialName(OpencachingParam.Geocache.GEOCACHE_API_DATE_HIDDEN) val dateHidden: String,
     @SerialName(OpencachingParam.Geocache.GEOCACHE_API_FOUNDS) val founds: Int,
     @SerialName(OpencachingParam.Geocache.GEOCACHE_API_NOT_FOUNDS) val notFounds: Int,
-    @SerialName(OpencachingParam.Geocache.GEOCACHE_API_RATINGS) val ratings: Int,
+    @SerialName(OpencachingParam.Geocache.GEOCACHE_API_RATINGS) val ratings: Int?,
     @SerialName(OpencachingParam.Geocache.GEOCACHE_API_DESCRIPTION) val description: String,
     @SerialName(OpencachingParam.Geocache.GEOCACHE_API_HINT) val hint: String,
     @SerialName(OpencachingParam.Geocache.GEOCACHE_API_RECOMMENDATIONS) val recommendations: Int?,
@@ -46,6 +46,8 @@ enum class GeocacheType(val logType: LogOptions) {
     Moving(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))),
     Virtual(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))),
     Other(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))),
+    Own(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))),
+    Webcam(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))),
     Event(
         LogOptions(
             listOf(
