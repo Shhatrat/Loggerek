@@ -6,6 +6,7 @@ import com.shhatrat.loggerek.api.model.LogResponse
 import com.shhatrat.loggerek.api.model.LogTypeResponse
 import com.shhatrat.loggerek.api.model.OpencachingParam
 import com.shhatrat.loggerek.api.model.OpencachingParam.Companion.parseForApiNotFormatted
+import com.shhatrat.loggerek.api.model.SearchResponse
 import com.shhatrat.loggerek.api.model.SubmitLogData
 import com.shhatrat.loggerek.api.model.UserName
 import com.shhatrat.loggerek.api.oauth.OAuthLogic
@@ -22,6 +23,7 @@ import io.ktor.client.request.headers
 import io.ktor.client.request.parameter
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
+import kotlinx.serialization.Serializable
 
 class ApiImpl(private val client: HttpClient) : Api {
 
@@ -119,5 +121,17 @@ class ApiImpl(private val client: HttpClient) : Api {
         tokenSecret: String
     ): LogResponse {
         return submitLog(client, token, tokenSecret, submitLogData)
+    }
+
+    override suspend fun searchByName(name: String, token: String, tokenSecret: String): SearchResponse {
+        return searchByName(client, token, tokenSecret, name)
+    }
+
+    override suspend fun geocaches(
+        geocacheCodes: List<String>,
+        token: String,
+        tokenSecret: String
+    ): List<Geocache> {
+        return getGeocaches(client, token, tokenSecret, geocacheCodes)
     }
 }

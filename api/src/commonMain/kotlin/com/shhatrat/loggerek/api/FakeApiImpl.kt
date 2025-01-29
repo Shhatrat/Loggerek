@@ -4,6 +4,7 @@ import com.shhatrat.loggerek.api.model.FullUser
 import com.shhatrat.loggerek.api.model.Geocache
 import com.shhatrat.loggerek.api.model.LogResponse
 import com.shhatrat.loggerek.api.model.LogTypeResponse
+import com.shhatrat.loggerek.api.model.SearchResponse
 import com.shhatrat.loggerek.api.model.SubmitLogData
 import com.shhatrat.loggerek.api.model.UserName
 import com.shhatrat.loggerek.api.oauth.model.OAuthAccessTokenResponse
@@ -73,6 +74,18 @@ class FakeApiImpl : Api {
         token: String,
         tokenSecret: String
     ): LogResponse {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun searchByName(name: String, token: String, tokenSecret: String): SearchResponse {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun geocaches(
+        geocacheCodes: List<String>,
+        token: String,
+        tokenSecret: String
+    ): List<Geocache> {
         TODO("Not yet implemented")
     }
 }

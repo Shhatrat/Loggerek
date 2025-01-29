@@ -14,4 +14,6 @@ interface LogManager {
     suspend fun logCapabilities(id: String)
 
     suspend fun submitLog(logData: SubmitLogData): LogResponse
+
+    suspend fun searchByName(name: String): List<Geocache>
 }

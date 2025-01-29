@@ -4,6 +4,7 @@ import com.shhatrat.loggerek.api.model.FullUser
 import com.shhatrat.loggerek.api.model.Geocache
 import com.shhatrat.loggerek.api.model.LogResponse
 import com.shhatrat.loggerek.api.model.LogTypeResponse
+import com.shhatrat.loggerek.api.model.SearchResponse
 import com.shhatrat.loggerek.api.model.SubmitLogData
 import com.shhatrat.loggerek.api.model.UserName
 import com.shhatrat.loggerek.api.oauth.model.OAuthAccessTokenResponse
@@ -72,5 +73,15 @@ interface Api {
         tokenSecret: String
     ): LogResponse
 
+    suspend fun searchByName(
+        name: String,
+        token: String,
+        tokenSecret: String
+    ): SearchResponse
 
+    suspend fun geocaches(
+        geocacheCodes: List<String>,
+        token: String,
+        tokenSecret: String
+    ): List<Geocache>
 }

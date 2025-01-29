@@ -5,6 +5,7 @@ import com.shhatrat.loggerek.api.model.LogResponse
 import com.shhatrat.loggerek.api.model.LogTypeResponse
 import com.shhatrat.loggerek.api.model.OpencachingParam
 import com.shhatrat.loggerek.api.model.OpencachingParam.Companion.parseForApi
+import com.shhatrat.loggerek.api.model.SearchResponse
 import com.shhatrat.loggerek.api.model.SubmitLogData
 import com.shhatrat.loggerek.api.oauth.OAuthLogic.buildOAuthHeader
 import com.shhatrat.loggerek.api.oauth.OAuthLogic.generateSignature
@@ -185,3 +186,35 @@ internal suspend inline fun ApiImpl.submitLog(
     )
 }
 
+internal suspend inline fun ApiImpl.searchByName(
+    client: HttpClient,
+    token: String,
+    tokenSecret: String,
+    name: String,
+): SearchResponse {
+    return makeLevel3Request<SearchResponse>(
+        client,
+        token,
+        tokenSecret,
+        OpencachingApi.Url.searchAll(),
+        mapOf(
+            Pair("name", name),
+        ).mapValues { it.value.encodeURLParameter() }
+    )
+}
+
+internal suspend inline fun ApiImpl.getGeocaches(
+    client: HttpClient,
+    token: String,
+    tokenSecret: String,
+    geocacheCodes: List<String>,
+): List<Geocache> {
+    return makeLevel3Request<Map<String, Geocache>>(
+        client,
+        token,
+        tokenSecret,
+        OpencachingApi.Url.geocaches(),
+        mapOf(Pair("cache_codes", geocacheCodes.joinToString(separator = "|", postfix = "", prefix = "").encodeURLParameter())),
+        OpencachingParam.Geocache.getAll()
+    ).map { it.value }
+}

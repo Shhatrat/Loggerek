@@ -21,11 +21,16 @@ class LogManagerImpl(private val api: Api, private val repository: Repository) :
     override suspend fun logCapabilities(id: String) {
         val t = repository.safeTokenAndTokenSecret()
         val re = api.logCapabilities(id, t.token, t.tokenSecret)
-        //TODO
     }
 
     override suspend fun submitLog(logData: SubmitLogData): LogResponse {
         val t = repository.safeTokenAndTokenSecret()
         return api.submitLog(logData, t.token, t.tokenSecret)
+    }
+
+    override suspend fun searchByName(name: String): List<Geocache> {
+        val t = repository.safeTokenAndTokenSecret()
+        val res = api.searchByName("*${name.replace(" ", "*")}*", t.token, t.tokenSecret)
+        return api.geocaches(res.results, t.token, t.tokenSecret)
     }
 }
