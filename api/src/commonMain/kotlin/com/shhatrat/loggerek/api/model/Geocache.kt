@@ -8,12 +8,22 @@ import com.shhatrat.loggerek.api.model.OpencachingParam.GeocacheUser.Companion.G
 import com.shhatrat.loggerek.api.model.OpencachingParam.GeocacheUser.Companion.GEOCACHE_API_USER_UUID
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import loggerek.api.generated.resources.Cache_event
+import loggerek.api.generated.resources.Cache_moving
+import loggerek.api.generated.resources.Cache_multi
+import loggerek.api.generated.resources.Cache_quiz
+import loggerek.api.generated.resources.Cache_traditional
+import loggerek.api.generated.resources.Cache_unknown
+import loggerek.api.generated.resources.Cache_virtual
+import loggerek.api.generated.resources.Cache_webcam
+import loggerek.api.generated.resources.Owncache
 import loggerek.api.generated.resources.Res
 import loggerek.api.generated.resources.log_comment
 import loggerek.api.generated.resources.log_found
 import loggerek.api.generated.resources.log_not_found
 import loggerek.api.generated.resources.log_participated_in_event
 import loggerek.api.generated.resources.log_will_participated_in_event
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 
 @Serializable
@@ -39,16 +49,17 @@ data class Geocache(
     @SerialName(OpencachingParam.Geocache.GEOCACHE_API_REQ_PASSWORD) val requirePassword: Boolean,
 )
 
-enum class GeocacheType(val logType: LogOptions) {
-    Traditional(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))),
-    Multi(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))),
-    Quiz(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))),
-    Moving(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))),
-    Virtual(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))),
-    Other(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))),
-    Own(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))),
-    Webcam(LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))),
-    Event(
+enum class GeocacheType(val iconRes: DrawableResource, val logType: LogOptions) {
+    Traditional(Res.drawable.Cache_traditional,
+            LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))),
+    Multi(Res.drawable.Cache_multi, LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))),
+    Quiz(Res.drawable.Cache_quiz, LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))),
+    Moving(Res.drawable.Cache_moving, LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))),
+    Virtual(Res.drawable.Cache_virtual, LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))),
+    Other(Res.drawable.Cache_unknown, LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))),
+    Own(Res.drawable.Owncache, LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))),
+    Webcam(Res.drawable.Cache_webcam, LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))),
+    Event(Res.drawable.Cache_event,
         LogOptions(
             listOf(
                 LogType.PARTICIPATED_IN_EVENT,

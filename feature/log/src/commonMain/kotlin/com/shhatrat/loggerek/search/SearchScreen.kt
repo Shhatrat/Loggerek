@@ -1,6 +1,8 @@
 package com.shhatrat.loggerek.search
 
 import androidx.compose.animation.Crossfade
+import androidx.compose.desktop.ui.tooling.preview.Preview
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -12,6 +14,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -27,13 +30,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.unit.dp
 import com.shhatrat.loggerek.api.model.Geocache
+import com.shhatrat.loggerek.api.model.GeocacheMock
+import com.shhatrat.loggerek.base.LoggerekTheme
 import com.shhatrat.loggerek.base.MoveToLogCache
 import com.shhatrat.loggerek.base.WindowSizeCallback
 import com.shhatrat.loggerek.base.composable.SnackBarHelper
 import com.shhatrat.loggerek.base.composable.SnackBarHelper.ProvideSnackBar
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun SearchScreen(calculateWindowSizeClass: WindowSizeCallback, searchUiState: SearchUiState) {
@@ -82,20 +91,44 @@ private fun CompactScreenLayout(modifier: Modifier, searchUiState: SearchUiState
 
 @Composable
 private fun CacheItem(geocache: Geocache, move: MoveToLogCache?){
-
     var selectedCache by remember { mutableStateOf<String?>(null) }
 
     if (selectedCache != null) {
         move?.invoke(geocache.code)
     }
 
-    Box(modifier = Modifier.clickable { selectedCache = geocache.code }.padding(8.dp).fillMaxWidth().border(2.dp, MaterialTheme.colors.primary, RoundedCornerShape(10))){
-        Row{
-            Text(text = geocache.code)
-            Spacer(Modifier.size(10.dp))
-            Text(text = geocache.name)
-            Spacer(Modifier.size(10.dp))
-            Text(text = geocache.type.name)
+    Box(modifier = Modifier
+        .clickable { selectedCache = geocache.code }
+        .padding(8.dp)
+        .fillMaxWidth()
+        .clip(RoundedCornerShape(10.dp))
+        .background(MaterialTheme.colors.primary))
+        {
+        Row(verticalAlignment = Alignment.CenterVertically){
+            Image(
+                modifier = Modifier.padding(4.dp).requiredHeight(60.dp),
+                contentDescription = "cache type",
+                painter = painterResource(geocache.type.iconRes)
+            )
+            Text(
+                modifier = Modifier.padding(4.dp),
+                color = MaterialTheme.colors.background, text = geocache.code)
+            Text(
+                modifier = Modifier.padding(4.dp),
+                color = MaterialTheme.colors.background, text = geocache.name)
+        }
+    }
+}
+
+
+@Preview
+@Composable
+private fun p(){
+    LoggerekTheme {
+        Box(Modifier.background(MaterialTheme.colors.background).padding(10.dp).scale(1f)) {
+            Column {
+                CacheItem(GeocacheMock(), {})
+            }
         }
     }
 }
