@@ -21,7 +21,8 @@ object LoggerekColor {
         background = YellowBackground,
         onBackground = Color.Black,
         surface = YellowBackground,
-        onSurface = Color.Black
+        onSurface = Color.Black,
+        secondary = CustomDarkYellow
     )
 }
 

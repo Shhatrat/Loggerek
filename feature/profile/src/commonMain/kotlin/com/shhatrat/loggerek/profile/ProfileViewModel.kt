@@ -29,8 +29,8 @@ class ProfileViewModel(
 
     override fun onStart() {
         super.onStart()
-            viewModelScope.launch {
-                errorHandlingUtil.withSuspendErrorHandling {
+        viewModelScope.launch {
+            errorHandlingUtil.withSuspendErrorHandling {
                 loaderHandlingUtil.withLoader {
                     val user = accountManager.getFullUserData()
                     updateUiState { copy(user = user) }

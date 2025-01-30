@@ -28,5 +28,5 @@ class MainViewModel(private val moveToIntroAction: MoveToIntro) :
         }
     }
 
-    private fun provideNavigationHeaders() = NavigationHeader.values().asList()
+    private fun provideNavigationHeaders() = NavigationHeader.Main.getAll()
 }

@@ -32,18 +32,19 @@ class ProfileScreenshotJvmTest {
     }
 
     @OptIn(ExperimentalTestApi::class)
-    private fun runIntroScreenTest(item: ProfileScreenshotTestSource.TestItem)= runDesktopComposeUiTest(
-        width = item.width,
-        height = item.height
-    ) {
-        setContent {
-            item.content()
-        }
-        onRoot().captureRoboImage(
-            DefaultFileNameGenerator.generateFilePath().addPackagePrefix(
-                Type.ANDROID,
-                this@ProfileScreenshotJvmTest::class.java.packageName
+    private fun runIntroScreenTest(item: ProfileScreenshotTestSource.TestItem) =
+        runDesktopComposeUiTest(
+            width = item.width,
+            height = item.height
+        ) {
+            setContent {
+                item.content()
+            }
+            onRoot().captureRoboImage(
+                DefaultFileNameGenerator.generateFilePath().addPackagePrefix(
+                    Type.ANDROID,
+                    this@ProfileScreenshotJvmTest::class.java.packageName
+                ), roborazziOptions = RoborazziOptions()
             )
-            , roborazziOptions = RoborazziOptions())
-    }
+        }
 }

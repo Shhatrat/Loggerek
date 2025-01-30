@@ -52,14 +52,15 @@ kotlin {
             implementation(compose.components.resources)
             implementation(projects.base)
             implementation(projects.manager.account)
-            implementation(compose.material3AdaptiveNavigationSuite)
+            api(compose.material3AdaptiveNavigationSuite)
             implementation(projects.api)
             implementation(projects.feature.profile)
             implementation(projects.feature.log)
             implementation(projects.feature.settings)
-            implementation(libs.koin.compose.viewmodel)
-            implementation("org.jetbrains.compose.material3.adaptive:adaptive-navigation:1.0.0-alpha03")
+            api("org.jetbrains.compose.material3.adaptive:adaptive-navigation:1.0.0-alpha03")
             implementation(projects.repository)
+            implementation(libs.koin.compose.viewmodel)
+            implementation(libs.koin.compose.viewmodel.navigation)
         }
     }
 }

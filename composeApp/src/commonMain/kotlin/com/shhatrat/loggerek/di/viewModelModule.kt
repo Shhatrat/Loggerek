@@ -9,6 +9,7 @@ import com.shhatrat.loggerek.profile.ProfileViewModel
 import com.shhatrat.loggerek.search.SearchViewModel
 import com.shhatrat.loggerek.settings.SettingsViewModel
 import org.koin.core.module.dsl.viewModel
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val viewModelModule = module {
@@ -20,6 +21,8 @@ val viewModelModule = module {
     viewModel { (navigateToIntro: () -> Unit) -> MainViewModel(navigateToIntro) }
     viewModel { ProfileViewModel(get()) }
     viewModel { (navigateToMain: () -> Unit) -> SettingsViewModel(navigateToMain, get()) }
-    viewModel { (cache: String) -> LogViewModel(cache, get()) }
+    scope(named("LogScope")) {
+        scoped { (cacheId: String) -> LogViewModel(cacheId, get()) }
+    }
     viewModel { ( moveToLogCache: MoveToLogCache) -> SearchViewModel(moveToLogCache, get()) }
 }
