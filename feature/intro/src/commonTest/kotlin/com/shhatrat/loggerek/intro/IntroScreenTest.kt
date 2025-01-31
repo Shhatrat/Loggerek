@@ -44,7 +44,7 @@ class IntroScreenTest {
                 introUiState = if (windowSizeClass.value == WindowWidthSizeClass.Compact) compactUiState else expandedUiState
             )
         }
-        onNodeWithTag("loader").assertDoesNotExist()
+        onNodeWithTag(loaderTestTag).assertDoesNotExist()
     }
 
     @Test
