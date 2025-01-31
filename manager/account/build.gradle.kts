@@ -52,6 +52,9 @@ kotlin {
             implementation(compose.components.resources)
             implementation(projects.repository)
             implementation(projects.api)
+            implementation(projects.base.testing)
+        }
+        commonTest.dependencies {
         }
     }
 }

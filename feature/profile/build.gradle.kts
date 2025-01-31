@@ -68,6 +68,7 @@ kotlin {
             implementation(compose.uiTest)
         }
         androidUnitTest.dependencies {
+            implementation(libs.robolectric)
             implementation(libs.espresso.core)
             implementation(libs.ui.test.junit4)
             implementation("androidx.compose.ui:ui-test-junit4-android:1.7.6")
