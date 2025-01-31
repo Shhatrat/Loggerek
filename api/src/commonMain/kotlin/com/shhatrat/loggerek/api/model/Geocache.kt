@@ -47,6 +47,18 @@ data class Geocache(
     @SerialName(OpencachingParam.Geocache.GEOCACHE_API_RECOMMENDATIONS) val recommendations: Int?,
     @SerialName(OpencachingParam.Geocache.GEOCACHE_API_MY_NOTES) val myNotes: String?,
     @SerialName(OpencachingParam.Geocache.GEOCACHE_API_REQ_PASSWORD) val requirePassword: Boolean,
+    @SerialName(OpencachingParam.Geocache.GEOCACHE_API_LATEST_LOGS) val userLogOnly: List<LogEntry>?,
+)
+
+@Serializable
+data class LogEntry(val type: String, val user: LogUser)
+
+@Serializable
+data class LogUser(
+    val uuid: String,
+    val username: String,
+    @SerialName("profile_url")
+    val profileUrl: String
 )
 
 enum class GeocacheType(val iconRes: DrawableResource, val logType: LogOptions) {

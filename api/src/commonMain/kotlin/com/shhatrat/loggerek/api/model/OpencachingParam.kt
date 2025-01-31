@@ -75,6 +75,8 @@ sealed class OpencachingParam(val apiKey: String) {
             const val GEOCACHE_API_RECOMMENDATIONS = "recommendations"
             const val GEOCACHE_API_MY_NOTES = "my_notes"
             const val GEOCACHE_API_REQ_PASSWORD = "req_passwd"
+            const val GEOCACHE_API_USER_LOGS_ONLY = "latest_logs"
+            const val GEOCACHE_API_LATEST_LOGS = "latest_logs"
 
             fun getAll() = listOf(
                 CODE,
@@ -95,7 +97,8 @@ sealed class OpencachingParam(val apiKey: String) {
                 HINT,
                 RECOMMENDATIONS,
                 MY_NOTES,
-                REQ_PASSWORD
+                REQ_PASSWORD,
+                API_USER_LOGS_ONLY
             )
         }
 
@@ -118,5 +121,6 @@ sealed class OpencachingParam(val apiKey: String) {
         data object RECOMMENDATIONS : Geocache(GEOCACHE_API_RECOMMENDATIONS)
         data object MY_NOTES : Geocache(GEOCACHE_API_MY_NOTES)
         data object REQ_PASSWORD : Geocache(GEOCACHE_API_REQ_PASSWORD)
+        data object API_USER_LOGS_ONLY : Geocache(GEOCACHE_API_USER_LOGS_ONLY)
     }
 }
