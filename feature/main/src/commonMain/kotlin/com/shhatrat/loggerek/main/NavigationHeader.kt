@@ -17,20 +17,19 @@ import org.jetbrains.compose.resources.InternalResourceApi
 import org.jetbrains.compose.resources.StringResource
 
 sealed class NavigationHeader(
-    val icon: DrawableResource,
+    val imagePath: String,
     val nameRes: StringResource
 ) {
-    sealed class Main(checklist: DrawableResource, headerLog: StringResource): NavigationHeader(checklist, headerLog){
-        data object PROFILE:  Main(Res.drawable.profile, Res.string.headerProfile)
-        data object WATCH:  Main(Res.drawable.watch, Res.string.headerWatch)
-        data object CACHES:  Main(Res.drawable.watch, Res.string.headerWatch)
-        data object SETTINGS:  Main(Res.drawable.settings, Res.string.headerSettings)
+    sealed class Main(imagePath: String, headerLog: StringResource): NavigationHeader(imagePath, headerLog){
+        data object PROFILE:  Main("drawable/profile.svg", Res.string.headerProfile)
+        data object CACHES:  Main("drawable/watch.svg", Res.string.headerWatch)
+        data object SETTINGS:  Main("drawable/settings.svg", Res.string.headerSettings)
         companion object {
-            fun getAll() = listOf(PROFILE, CACHES, WATCH, SETTINGS)
+            fun getAll() = listOf(PROFILE, CACHES, SETTINGS)
         }
     }
 
-    sealed class Specific(val onBack: OnBack, checklist: DrawableResource, headerLog: StringResource) : NavigationHeader(checklist, headerLog){
-        class LOG(onBack: OnBack, val cacheId: String):  Specific(onBack, Res.drawable.checklist, Res.string.headerLog)
+    sealed class Specific(val onBack: OnBack, imagePath: String, headerLog: StringResource) : NavigationHeader(imagePath, headerLog){
+        class LOG(onBack: OnBack, val cacheId: String):  Specific(onBack, "drawable/checklist.svg", Res.string.headerLog)
     }
 }

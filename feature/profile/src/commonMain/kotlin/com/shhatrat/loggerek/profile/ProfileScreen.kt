@@ -66,12 +66,6 @@ fun ExpandedScreenLayout(modifier: Modifier, profileUiState: ProfileUiState) {
 @Composable
 fun CompactScreenLayout(modifier: Modifier, profileUiState: ProfileUiState) {
     Box(modifier = modifier.background(MaterialTheme.colors.background).padding(16.dp)) {
-        AnimatedVisibility(profileUiState.loader.active) {
-            CircularIndeterminateProgressBar(
-                modifier = Modifier.align(Alignment.Center),
-                color = MaterialTheme.colors.primary
-            )
-        }
         profileUiState.user?.let { user ->
             Column(
                 Modifier.align(Alignment.Center),
@@ -89,6 +83,13 @@ fun CompactScreenLayout(modifier: Modifier, profileUiState: ProfileUiState) {
                     SingleItem(it.first.get(), it.second)
                 }
             }
+        }
+        AnimatedVisibility(
+            modifier = Modifier.align(Alignment.Center),
+            visible = profileUiState.loader.active) {
+            CircularIndeterminateProgressBar(
+                color = MaterialTheme.colors.primary
+            )
         }
     }
 }

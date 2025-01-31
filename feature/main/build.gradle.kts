@@ -61,6 +61,9 @@ kotlin {
             implementation(projects.repository)
             implementation(libs.koin.compose.viewmodel)
             implementation(libs.koin.compose.viewmodel.navigation)
+            implementation(libs.coil.compose)
+            implementation(libs.coil.svg)
+            implementation(libs.coil.network.ktor3)
         }
     }
 }

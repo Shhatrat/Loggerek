@@ -8,6 +8,7 @@ import com.shhatrat.loggerek.base.Error
 import com.shhatrat.loggerek.base.Loader
 import com.shhatrat.loggerek.base.error.ErrorHandlingUtil
 import com.shhatrat.loggerek.base.loader.LoaderHandlingUtil
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 data class ProfileUiState(
@@ -35,7 +36,6 @@ class ProfileViewModel(
                     val user = accountManager.getFullUserData()
                     updateUiState { copy(user = user) }
                 }
-
             }
         }
     }

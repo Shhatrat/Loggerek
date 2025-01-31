@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalResourceApi::class)
+
 package com.shhatrat.loggerek.main
 
 import androidx.compose.foundation.Image
@@ -22,15 +24,16 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import coil3.compose.rememberAsyncImagePainter
 import com.shhatrat.loggerek.base.MoveToIntro
 import com.shhatrat.loggerek.base.MoveToLogCache
 import com.shhatrat.loggerek.base.OnBack
 import com.shhatrat.loggerek.base.WindowSizeCallback
+import com.shhatrat.loggerek.base.di.LogScope
 import com.shhatrat.loggerek.base.get
 import com.shhatrat.loggerek.log.LogScreen
 import com.shhatrat.loggerek.log.LogViewModel
@@ -42,6 +45,7 @@ import com.shhatrat.loggerek.settings.SettingsViewModel
 import com.shhatrat.loggerek.settings.SettinsScreen
 import loggerek.feature.main.generated.resources.Res
 import loggerek.feature.main.generated.resources.back
+import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
@@ -52,7 +56,7 @@ import org.koin.mp.KoinPlatform.getKoin
 fun MainScreen(calculateWindowSizeClass: WindowSizeCallback, mainUiState: MainUiState) {
 
     val screenStack =
-        rememberSaveable { mutableStateListOf<NavigationHeader>(NavigationHeader.Main.PROFILE) }
+        remember { mutableStateListOf<NavigationHeader>(NavigationHeader.Main.PROFILE) }
 
     Scaffold {
         NavigationSuiteScaffold(
@@ -65,11 +69,12 @@ fun MainScreen(calculateWindowSizeClass: WindowSizeCallback, mainUiState: MainUi
                 mainUiState.navigationTabs.forEach {
                     val selected = screenStack.lastOrNull() == it
                     item(
+
                         icon = {
                             Icon(
                                 modifier = Modifier.size(40.dp),
-                                painter = painterResource(it.icon),
-                                contentDescription = "",
+                                painter = rememberAsyncImagePainter(Res.getUri(it.imagePath)),
+                                contentDescription = "image ${it.imagePath}",
                                 tint = if (selected) MaterialTheme.colors.primary else MaterialTheme.colors.background
                             )
                         },
@@ -138,9 +143,6 @@ private fun handleChangeScreen(
                 openSettingsScreen(calculateWindowSizeClass, moveToMain)
             }
 
-            NavigationHeader.Main.WATCH -> {
-            }
-
             NavigationHeader.Main.CACHES -> {
                 openSearch(calculateWindowSizeClass, moveToOtherScreen, onBack)
             }
@@ -174,7 +176,7 @@ private fun openProfileScreen(calculateWindowSizeClass: WindowSizeCallback) {
 
 @Composable
 private fun openLogScreen(calculateWindowSizeClass: WindowSizeCallback, cacheId: String) {
-    val scope = remember { getKoin().getOrCreateScope(cacheId, named("LogScope")) }
+    val scope = remember { getKoin().getOrCreateScope(cacheId, named(LogScope)) }
     val vm: LogViewModel = scope.get { parametersOf(cacheId) }
     LaunchedEffect(Unit) { vm.onStart() }
     LogScreen(calculateWindowSizeClass, vm.state.collectAsState().value)

@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalResourceApi::class, ExperimentalResourceApi::class)
+
 package com.shhatrat.loggerek.search
 
 import androidx.compose.animation.Crossfade
@@ -36,6 +38,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.unit.dp
+import coil3.compose.rememberAsyncImagePainter
 import com.shhatrat.loggerek.api.model.Geocache
 import com.shhatrat.loggerek.api.model.GeocacheMock
 import com.shhatrat.loggerek.api.model.isFound
@@ -45,7 +48,7 @@ import com.shhatrat.loggerek.base.WindowSizeCallback
 import com.shhatrat.loggerek.base.composable.SnackBarHelper
 import com.shhatrat.loggerek.base.composable.SnackBarHelper.ProvideSnackBar
 import loggerek.feature.log.generated.resources.Res
-import loggerek.feature.log.generated.resources.checkDone
+import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
@@ -123,9 +126,9 @@ private fun CacheItem(geocache: Geocache, move: MoveToLogCache?){
             Spacer(Modifier.weight(1f))
             if(geocache.isFound())
                 Image(
-                    modifier = Modifier.padding(end = 8.dp),
+                    modifier = Modifier.padding(end = 8.dp).size(30.dp),
                     colorFilter = ColorFilter.tint(MaterialTheme.colors.background),
-                    painter = painterResource(Res.drawable.checkDone),
+                    painter = rememberAsyncImagePainter(Res.getUri("drawable/checkDone.svg")),
                     contentDescription = "cache found",)
 
         }
