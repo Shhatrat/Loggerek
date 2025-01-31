@@ -1,6 +1,5 @@
 package com.shhatrat.loggerek.profile
 
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.onRoot

@@ -1,6 +1,5 @@
 package com.shhatrat.loggerek
 
-import androidx.collection.forEach
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -27,7 +26,6 @@ import com.shhatrat.loggerek.intro.splash.IntroViewModel
 import com.shhatrat.loggerek.main.MainScreen
 import com.shhatrat.loggerek.main.MainViewModel
 import com.shhatrat.loggerek.manager.log.di.logManagerModule
-import com.shhatrat.loggerek.repository.di.fakeRepositoryModule
 import com.shhatrat.loggerek.repository.di.repositoryModule
 import org.koin.compose.KoinApplication
 import org.koin.compose.koinInject

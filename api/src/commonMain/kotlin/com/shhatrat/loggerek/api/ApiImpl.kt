@@ -23,7 +23,6 @@ import io.ktor.client.request.headers
 import io.ktor.client.request.parameter
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
-import kotlinx.serialization.Serializable
 
 class ApiImpl(private val client: HttpClient) : Api {
 
@@ -123,7 +122,11 @@ class ApiImpl(private val client: HttpClient) : Api {
         return submitLog(client, token, tokenSecret, submitLogData)
     }
 
-    override suspend fun searchByName(name: String, token: String, tokenSecret: String): SearchResponse {
+    override suspend fun searchByName(
+        name: String,
+        token: String,
+        tokenSecret: String
+    ): SearchResponse {
         return searchByName(client, token, tokenSecret, name)
     }
 

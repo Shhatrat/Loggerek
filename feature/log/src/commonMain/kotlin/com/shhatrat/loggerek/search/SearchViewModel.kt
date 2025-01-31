@@ -15,7 +15,7 @@ data class SearchUiState(
     val error: Error? = null,
     val search: MultiTextFieldModel = MultiTextFieldModel(),
     val caches: List<Geocache> = listOf(),
-    val move : MoveToLogCache? = null
+    val move: MoveToLogCache? = null
 )
 
 class SearchViewModel(
@@ -28,7 +28,7 @@ class SearchViewModel(
         updateUiState { copy(move = moveToLogCache) }
         viewModelScope.launch {
             updateUiState {
-                copy(search = MultiTextFieldModel{
+                copy(search = MultiTextFieldModel {
                     viewModelScope.launch {
                         updateUiState {
                             copy(search = search.copy(text = it))

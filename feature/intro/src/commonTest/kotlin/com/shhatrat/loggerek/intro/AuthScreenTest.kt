@@ -14,8 +14,6 @@ import androidx.compose.ui.unit.dp
 import com.shhatrat.loggerek.base.Loader
 import com.shhatrat.loggerek.intro.authorizate.AuthUiState
 import com.shhatrat.loggerek.intro.authorizate.AuthorizeScreen
-import com.shhatrat.loggerek.intro.splash.IntroScreen
-import com.shhatrat.loggerek.intro.splash.IntroUiState
 import kotlin.test.Test
 
 class AuthScreenTest {

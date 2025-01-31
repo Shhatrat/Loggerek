@@ -6,7 +6,6 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -86,9 +85,15 @@ private fun ExpandedScreenLayout(modifier: Modifier, searchUiState: SearchUiStat
 @Composable
 private fun CompactScreenLayout(modifier: Modifier, searchUiState: SearchUiState) {
     Column(modifier = modifier.fillMaxSize()) {
-        TextField(modifier = Modifier.fillMaxWidth(), value = searchUiState.search.text, onValueChange = searchUiState.search.onChange)
-        Column(modifier = Modifier.verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        TextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = searchUiState.search.text,
+            onValueChange = searchUiState.search.onChange
+        )
+        Column(
+            modifier = Modifier.verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
             searchUiState.caches.forEach {
                 CacheItem(it, searchUiState.move)
             }
@@ -97,7 +102,7 @@ private fun CompactScreenLayout(modifier: Modifier, searchUiState: SearchUiState
 }
 
 @Composable
-private fun CacheItem(geocache: Geocache, move: MoveToLogCache?){
+private fun CacheItem(geocache: Geocache, move: MoveToLogCache?) {
     var selectedCache by remember { mutableStateOf<String?>(null) }
 
     if (selectedCache != null) {
@@ -110,8 +115,8 @@ private fun CacheItem(geocache: Geocache, move: MoveToLogCache?){
         .fillMaxWidth()
         .clip(RoundedCornerShape(10.dp))
         .background(MaterialTheme.colors.primary))
-        {
-        Row(verticalAlignment = Alignment.CenterVertically){
+    {
+        Row(verticalAlignment = Alignment.CenterVertically) {
             Image(
                 modifier = Modifier.padding(4.dp).requiredHeight(60.dp),
                 contentDescription = "cache type",
@@ -119,17 +124,20 @@ private fun CacheItem(geocache: Geocache, move: MoveToLogCache?){
             )
             Text(
                 modifier = Modifier.padding(4.dp),
-                color = MaterialTheme.colors.background, text = geocache.code)
+                color = MaterialTheme.colors.background, text = geocache.code
+            )
             Text(
                 modifier = Modifier.padding(4.dp),
-                color = MaterialTheme.colors.background, text = geocache.name)
+                color = MaterialTheme.colors.background, text = geocache.name
+            )
             Spacer(Modifier.weight(1f))
-            if(geocache.isFound())
+            if (geocache.isFound())
                 Image(
                     modifier = Modifier.padding(end = 8.dp).size(30.dp),
                     colorFilter = ColorFilter.tint(MaterialTheme.colors.background),
                     painter = rememberAsyncImagePainter(Res.getUri("drawable/checkDone.svg")),
-                    contentDescription = "cache found",)
+                    contentDescription = "cache found",
+                )
 
         }
     }
@@ -138,7 +146,7 @@ private fun CacheItem(geocache: Geocache, move: MoveToLogCache?){
 
 @Preview
 @Composable
-private fun p(){
+private fun p() {
     LoggerekTheme {
         Box(Modifier.background(MaterialTheme.colors.background).padding(10.dp).scale(1f)) {
             Column {

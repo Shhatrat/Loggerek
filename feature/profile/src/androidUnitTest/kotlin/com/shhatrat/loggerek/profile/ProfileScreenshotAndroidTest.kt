@@ -6,15 +6,8 @@ import android.app.Application
 import android.content.ComponentName
 import android.content.ContentProvider
 import androidx.activity.ComponentActivity
-import androidx.compose.foundation.background
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.test.ExperimentalTestApi
-import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.junit4.createAndroidComposeRule
-import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.runComposeUiTest
 import androidx.test.core.app.ApplicationProvider
@@ -23,7 +16,6 @@ import com.github.takahirom.roborazzi.Dump
 import com.github.takahirom.roborazzi.InternalRoborazziApi
 import com.github.takahirom.roborazzi.RoborazziOptions
 import com.github.takahirom.roborazzi.captureRoboImage
-import com.shhatrat.loggerek.base.LoggerekTheme
 import com.shhatrat.loggerek.base.Type
 import com.shhatrat.loggerek.base.addPackagePrefix
 import org.junit.Rule

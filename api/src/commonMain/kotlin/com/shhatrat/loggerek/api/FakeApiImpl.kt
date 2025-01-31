@@ -77,7 +77,11 @@ class FakeApiImpl : Api {
         TODO("Not yet implemented")
     }
 
-    override suspend fun searchByName(name: String, token: String, tokenSecret: String): SearchResponse {
+    override suspend fun searchByName(
+        name: String,
+        token: String,
+        tokenSecret: String
+    ): SearchResponse {
         TODO("Not yet implemented")
     }
 

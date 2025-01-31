@@ -25,5 +25,5 @@ val viewModelModule = module {
     scope(named(LogScope)) {
         scoped { (cacheId: String) -> LogViewModel(cacheId, get()) }
     }
-    viewModel { ( moveToLogCache: MoveToLogCache) -> SearchViewModel(moveToLogCache, get()) }
+    viewModel { (moveToLogCache: MoveToLogCache) -> SearchViewModel(moveToLogCache, get()) }
 }

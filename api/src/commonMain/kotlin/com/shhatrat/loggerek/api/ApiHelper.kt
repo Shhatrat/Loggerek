@@ -214,7 +214,14 @@ internal suspend inline fun ApiImpl.getGeocaches(
         token,
         tokenSecret,
         OpencachingApi.Url.geocaches(),
-        mapOf(Pair("user_logs_only", "true"), Pair("cache_codes", geocacheCodes.joinToString(separator = "|", postfix = "", prefix = "").encodeURLParameter())),
+        mapOf(
+            Pair("user_logs_only", "true"),
+            Pair(
+                "cache_codes",
+                geocacheCodes.joinToString(separator = "|", postfix = "", prefix = "")
+                    .encodeURLParameter()
+            )
+        ),
         OpencachingParam.Geocache.getAll()
     ).map { it.value }
 }

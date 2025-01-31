@@ -86,7 +86,8 @@ fun CompactScreenLayout(modifier: Modifier, profileUiState: ProfileUiState) {
         }
         AnimatedVisibility(
             modifier = Modifier.align(Alignment.Center),
-            visible = profileUiState.loader.active) {
+            visible = profileUiState.loader.active
+        ) {
             CircularIndeterminateProgressBar(
                 color = MaterialTheme.colors.primary
             )
