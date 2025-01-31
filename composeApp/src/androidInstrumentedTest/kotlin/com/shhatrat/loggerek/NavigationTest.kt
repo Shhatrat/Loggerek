@@ -44,7 +44,7 @@ class NavigationTest {
         setContent {
             navController = rememberNavController()
             LoggerekTheme {
-                AppNavigation(modifier = Modifier, navController = navController)
+                AppNavigation(modifier = Modifier, navController = navController!!)
             }
         }
         onNodeWithTag(IntroScreenTestTag.buttonTag).performClick()
@@ -85,7 +85,7 @@ class NavigationTest {
         setContent {
             navController = rememberNavController()
             LoggerekTheme {
-                AppNavigation(modifier = Modifier, navController = navController)
+                AppNavigation(modifier = Modifier, navController = navController!!)
             }
         }
         waitForIdle()
