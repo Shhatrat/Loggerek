@@ -110,7 +110,7 @@ class AuthViewModelTest {
     @Test
     fun `loader_activates_during_start_button_click`() = runTest {
         fakeAccountManager.onPastePinAction = { throw RuntimeException("Invalid PIN") }
-        fakeAccountManager.startAuthorizationDelay = 1000L
+        fakeAccountManager.startAuthorizationProcessHelper.delay = 1000L
         viewModel.onStart()
 
         viewModel.state.value.startButton?.invoke()
