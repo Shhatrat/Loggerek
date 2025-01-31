@@ -20,11 +20,8 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.unit.dp
+import coil3.compose.rememberAsyncImagePainter
 import com.shhatrat.loggerek.base.LoggerekTheme
-import loggerek.base.generated.resources.Res
-import loggerek.base.generated.resources.falseSwitch
-import loggerek.base.generated.resources.trueSwitch
-import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun Switch(modifier: Modifier = Modifier, checked: Boolean = false) {
@@ -46,7 +43,7 @@ fun Switch(modifier: Modifier = Modifier, checked: Boolean = false) {
                 modifier = Modifier.align(Alignment.Center),
                 contentDescription = "",
                 colorFilter = ColorFilter.tint(color = MaterialTheme.colors.background),
-                painter = painterResource(if (checked) Res.drawable.trueSwitch else Res.drawable.falseSwitch)
+                painter = rememberAsyncImagePainter("drawable/${if (checked) "trueSwitch.svg" else "falseSwitch.svg"}")
             )
         }
     }

@@ -7,6 +7,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 
 const val loaderTestTag = "com.shhatrat.loggerek.base.composable.loaderTestTag"
@@ -14,7 +15,7 @@ const val loaderTestTag = "com.shhatrat.loggerek.base.composable.loaderTestTag"
 @Composable
 fun CircularIndeterminateProgressBar(modifier: Modifier = Modifier, color: Color? = null) {
     Box(
-        modifier = modifier.size(48.dp),
+        modifier = modifier.size(48.dp).testTag(loaderTestTag),
         contentAlignment = androidx.compose.ui.Alignment.Center
     ) {
         CircularProgressIndicator(
