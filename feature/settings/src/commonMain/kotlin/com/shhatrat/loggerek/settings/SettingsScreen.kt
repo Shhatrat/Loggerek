@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalResourceApi::class)
+
 package com.shhatrat.loggerek.settings
 
 import androidx.compose.animation.AnimatedVisibility
@@ -28,6 +30,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
+import coil3.compose.rememberAsyncImagePainter
 import com.shhatrat.loggerek.base.WindowSizeCallback
 import com.shhatrat.loggerek.base.composable.CircularIndeterminateProgressBar
 import com.shhatrat.loggerek.base.composable.Header
@@ -35,7 +38,8 @@ import com.shhatrat.loggerek.base.composable.SnackBarHelper
 import com.shhatrat.loggerek.base.composable.SnackBarHelper.ProvideSnackBar
 import com.shhatrat.loggerek.base.composable.Switch
 import com.shhatrat.loggerek.base.get
-import org.jetbrains.compose.resources.painterResource
+import loggerek.feature.settings.generated.resources.Res
+import org.jetbrains.compose.resources.ExperimentalResourceApi
 
 @Composable
 fun SettinsScreen(calculateWindowSizeClass: WindowSizeCallback, settingsUiState: SettingsUiState) {
@@ -104,6 +108,7 @@ private fun handleMapper(settingsItem: SettingsItem) {
     }
 }
 
+@ExperimentalResourceApi
 @Composable
 fun SettingsButton(settingsItem: SettingsItem.SettingsButton) {
     Row(
@@ -122,7 +127,7 @@ fun SettingsButton(settingsItem: SettingsItem.SettingsButton) {
         Spacer(Modifier.weight(1f))
         Image(
             colorFilter = ColorFilter.tint(MaterialTheme.colors.background),
-            painter = painterResource(settingsItem.iconRes),
+            painter = rememberAsyncImagePainter(Res.getUri(settingsItem.iconResPath)),
             contentDescription = null
         )
     }

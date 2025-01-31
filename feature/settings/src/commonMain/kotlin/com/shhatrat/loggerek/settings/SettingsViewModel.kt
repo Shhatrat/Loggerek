@@ -35,7 +35,7 @@ sealed class SettingsItem(open val descriptionRes: StringResource) {
 
     data class SettingsButton(
         override val descriptionRes: StringResource,
-        val iconRes: DrawableResource,
+        val iconResPath: String,
         val action: () -> Unit
     ) : SettingsItem(descriptionRes)
 }
@@ -61,7 +61,7 @@ class SettingsViewModel(
 
                     },
                     SettingsItem.SettingsTitle(Res.string.accountTitle),
-                    SettingsItem.SettingsButton(Res.string.logout, Res.drawable.logout, {
+                    SettingsItem.SettingsButton(Res.string.logout, "drawable/logout.svg", {
                         accountManager.logout()
                         moveToIntro()
                     })
