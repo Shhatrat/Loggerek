@@ -5,10 +5,10 @@ import com.russhwolf.settings.Settings
 class StringSettingsDelegate(
     private val settings: Settings,
     private val key: String
-) : RepositoryItem<String> {
+) : RepositoryItem<String?> {
 
-    override fun save(obj: String) {
-        settings.putString(key, obj)
+    override fun save(obj: String?) {
+        obj?.let { settings.putString(key, it) }
     }
 
     override fun get(): String? {

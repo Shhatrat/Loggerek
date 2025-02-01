@@ -3,4 +3,5 @@
     <string name="logsTitle">Logs</string>
     <string name="savePasswordToMyNotes">Save password to cache notes</string>
     <string name="accountTitle">Profile</string>
+    <string name="tryMixedPassword">Try different password formats</string>
 </resources>

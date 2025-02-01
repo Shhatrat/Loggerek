@@ -4,6 +4,7 @@ package com.shhatrat.loggerek.settings
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
+import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -16,6 +17,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.SnackbarHostState
@@ -27,10 +29,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil3.compose.rememberAsyncImagePainter
+import com.shhatrat.loggerek.base.LoggerekTheme
 import com.shhatrat.loggerek.base.WindowSizeCallback
 import com.shhatrat.loggerek.base.composable.CircularIndeterminateProgressBar
 import com.shhatrat.loggerek.base.composable.Header
@@ -39,6 +44,7 @@ import com.shhatrat.loggerek.base.composable.SnackBarHelper.ProvideSnackBar
 import com.shhatrat.loggerek.base.composable.Switch
 import com.shhatrat.loggerek.base.get
 import loggerek.feature.settings.generated.resources.Res
+import loggerek.feature.settings.generated.resources.logsTitle
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 
 @Composable
@@ -82,7 +88,7 @@ fun CompactScreenLayout(modifier: Modifier, settingsUiState: SettingsUiState) {
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            settingsUiState.settings.forEach { handleMapper(it) }
+            settingsUiState.settings().forEach { handleMapper(it) }
         }
     }
 }
@@ -112,7 +118,8 @@ private fun handleMapper(settingsItem: SettingsItem) {
 @Composable
 fun SettingsButton(settingsItem: SettingsItem.SettingsButton) {
     Row(
-        Modifier
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(10.dp))
             .background(MaterialTheme.colors.primary)
@@ -122,10 +129,12 @@ fun SettingsButton(settingsItem: SettingsItem.SettingsButton) {
         Text(
             color = MaterialTheme.colors.background,
             modifier = Modifier,
-            text = settingsItem.descriptionRes.get()
+            text = settingsItem.descriptionRes.get(),
+            textAlign = TextAlign.Center
         )
         Spacer(Modifier.weight(1f))
         Image(
+            modifier = Modifier.size(40.dp),
             colorFilter = ColorFilter.tint(MaterialTheme.colors.background),
             painter = rememberAsyncImagePainter(Res.getUri(settingsItem.iconResPath)),
             contentDescription = null
@@ -156,5 +165,26 @@ private fun SwitchWithLabel(label: String, state: Boolean, onStateChange: (Boole
         Text(color = MaterialTheme.colors.background, text = label)
         Spacer(modifier = Modifier.fillMaxWidth().weight(1f))
         Switch(checked = state)
+    }
+}
+
+@Preview
+@Composable
+fun SwitchPreview() {
+    LoggerekTheme {
+        Box(Modifier.background(MaterialTheme.colors.background).padding(100.dp).scale(1f)) {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+            ) {
+                SwitchWithLabel("label", true) {}
+                SwitchWithLabel("label", false) {}
+                SettingsButton(
+                    SettingsItem.SettingsButton(
+                        Res.string.logsTitle,
+                        "drawable/logout.svg"
+                    ) {})
+                Header(Modifier, "Logout")
+            }
+        }
     }
 }

@@ -17,6 +17,8 @@ import kotlinx.coroutines.delay
  * - Provides an overridable callback for handling PIN input during authentication.
  * - Supports configurable delays for testing asynchronous behavior.
  * - Tracks method calls for verification in unit tests.
+ * - Allows configuration of password-saving behavior.
+ * - Supports mixed password attempts for testing purposes.
  *
  * @property logoutHelper Tracks and configures the behavior of the `logout()` function.
  * @property getFullUserDataHelper Tracks and configures the behavior of the `getFullUserData()` function.
@@ -26,6 +28,8 @@ import kotlinx.coroutines.delay
  * @property isLogged Determines whether the user is currently logged in.
  * @property responseUrl The URL returned during the authorization process.
  * @property onPastePinAction A lambda function that handles the behavior when a PIN is entered.
+ * @property savePassword Determines whether the password should be saved. Default is `true`.
+ * @property tryMixedPassword Determines whether mixed password attempts should be allowed. Default is `true`.
  */
 class FakeAccountManagerImpl(
 
@@ -98,4 +102,16 @@ class FakeAccountManagerImpl(
         getFullUserDataHelper.doAfterDelayBeforeLogic()
         return FullUser.mock()
     }
+
+    /**
+     * Determines whether the password should be saved.
+     * This property can be used to simulate different password-saving behaviors in tests.
+     */
+    override var savePassword: Boolean = true
+
+    /**
+     * Determines whether mixed password attempts should be allowed.
+     * This property can be used to simulate scenarios where mixed password attempts are enabled or disabled.
+     */
+    override var tryMixedPassword: Boolean = true
 }

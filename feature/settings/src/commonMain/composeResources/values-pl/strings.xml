@@ -3,4 +3,5 @@
     <string name="logsTitle">Logi</string>
     <string name="savePasswordToMyNotes">Zapisz hasło do notatek skrzynki</string>
     <string name="accountTitle">Profil</string>
+    <string name="tryMixedPassword">Próbuj różne zapisy hasła</string>
 </resources>

@@ -218,7 +218,7 @@ fun LogScreenPreview() {
                 logTypeData = LogTypeData(
                     0,
                     cache.type.logType.logTypes.map { it.textRes },
-                    onChangedIndex = {}),
+                    onChangedIndex = {  }),
                 description = MultiTextFieldModel(),
                 myNotes = MultiTextFieldModel(),
                 password = MultiTextFieldModel(),

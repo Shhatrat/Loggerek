@@ -4,8 +4,10 @@ import com.shhatrat.loggerek.base.exception.NoTokenException
 
 
 interface Repository {
-    val token: RepositoryItem<String>
-    val tokenSecret: RepositoryItem<String>
+    val token: RepositoryItem<String?>
+    val tokenSecret: RepositoryItem<String?>
+    val savePassword: RepositoryItem<Boolean>
+    val tryMixedPassword: RepositoryItem<Boolean>
 
     fun safeTokenAndTokenSecret(): TokenData {
         try {

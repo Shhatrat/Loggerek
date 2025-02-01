@@ -12,14 +12,24 @@ import loggerek.feature.settings.generated.resources.accountTitle
 import loggerek.feature.settings.generated.resources.logout
 import loggerek.feature.settings.generated.resources.logsTitle
 import loggerek.feature.settings.generated.resources.savePasswordToMyNotes
-import org.jetbrains.compose.resources.DrawableResource
+import loggerek.feature.settings.generated.resources.tryMixedPassword
 import org.jetbrains.compose.resources.StringResource
 
 data class SettingsUiState(
-    val settings: List<SettingsItem> = emptyList(),
+    val savePassword: SettingsItem.SettingsSwitch? = null,
+    val mixedPassword: SettingsItem.SettingsSwitch? = null,
+    val logout: SettingsItem.SettingsButton? = null,
     val loader: Loader = Loader(),
     val error: Error? = null,
-)
+) {
+    fun settings() = listOfNotNull(
+        SettingsItem.SettingsTitle(Res.string.logsTitle),
+        savePassword,
+        mixedPassword,
+        SettingsItem.SettingsTitle(Res.string.accountTitle),
+        logout
+    )
+}
 
 sealed class SettingsItem(open val descriptionRes: StringResource) {
 
@@ -55,17 +65,28 @@ class SettingsViewModel(
         super.onStart()
         updateUiState {
             copy(
-                settings = listOf(
-                    SettingsItem.SettingsTitle(Res.string.logsTitle),
-                    SettingsItem.SettingsSwitch(Res.string.savePasswordToMyNotes, checked = true) {
-
-                    },
-                    SettingsItem.SettingsTitle(Res.string.accountTitle),
-                    SettingsItem.SettingsButton(Res.string.logout, "drawable/logout.svg", {
-                        accountManager.logout()
-                        moveToIntro()
-                    })
-                )
+                savePassword = SettingsItem.SettingsSwitch(
+                    Res.string.savePasswordToMyNotes,
+                    checked = true
+                ) { isChecked ->
+                    updateUiState {
+                        copy(savePassword = savePassword?.copy(checked = isChecked))
+                    }
+                    accountManager.savePassword = isChecked
+                },
+                mixedPassword = SettingsItem.SettingsSwitch(
+                    Res.string.tryMixedPassword,
+                    checked = true
+                ) { isChecked ->
+                    updateUiState {
+                        copy(mixedPassword = mixedPassword?.copy(checked = isChecked))
+                    }
+                    accountManager.tryMixedPassword = isChecked
+                },
+                logout = SettingsItem.SettingsButton(Res.string.logout, "drawable/logout.svg") {
+                    accountManager.logout()
+                    moveToIntro()
+                }
             )
         }
     }

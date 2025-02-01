@@ -2,23 +2,28 @@ package com.shhatrat.loggerek.repository
 
 class FakeRepositoryImpl : Repository {
 
-    private val fakeStorage = mutableMapOf<String, String?>()
+    private val fakeStorage = mutableMapOf<String, Any?>()
 
-    override val token: RepositoryItem<String> = FakeRepositoryItem(fakeStorage, "Token")
-    override val tokenSecret: RepositoryItem<String> =
+    override val token: RepositoryItem<String?> = FakeRepositoryItem(fakeStorage, "Token")
+
+    override val tokenSecret: RepositoryItem<String?> =
         FakeRepositoryItem(fakeStorage, "TokenSecret")
 
-    private class FakeRepositoryItem(
-        private val storage: MutableMap<String, String?>,
-        private val key: String
-    ) : RepositoryItem<String> {
+    override val savePassword: RepositoryItem<Boolean> = FakeRepositoryItem(fakeStorage, "savePassword")
 
-        override fun save(obj: String) {
+    override val tryMixedPassword: RepositoryItem<Boolean> = FakeRepositoryItem(fakeStorage, "tryMixedPassword")
+
+    private class FakeRepositoryItem<T>(
+        private val storage: MutableMap<String, Any?>,
+        private val key: String
+    ) : RepositoryItem<T> {
+
+        override fun save(obj: T) {
             storage[key] = obj
         }
 
-        override fun get(): String? {
-            return storage[key]
+        override fun get(): T {
+            return storage[key] as T
         }
 
         override fun remove() {
