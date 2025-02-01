@@ -1,4 +1,4 @@
-package com.shhatrat.loggerek.profile
+package com.shhatrat.loggerek.settings
 
 import androidx.compose.runtime.Composable
 import com.shhatrat.loggerek.api.model.FullUser
@@ -14,7 +14,6 @@ class ProfileScreenshotTestSource {
         val width: Int,
         val height: Int,
     )
-
 
     fun provideProfileScreensWithUser(): List<TestItem> {
         return getProfileScreens(

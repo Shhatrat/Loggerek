@@ -1,4 +1,4 @@
-package com.shhatrat.loggerek.profile
+package com.shhatrat.loggerek.settings
 
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.onRoot
@@ -8,31 +8,32 @@ import com.github.takahirom.roborazzi.RoborazziOptions
 import com.shhatrat.loggerek.base.Type
 import com.shhatrat.loggerek.base.addPackagePrefix
 import io.github.takahirom.roborazzi.captureRoboImage
-import org.junit.Test
+import kotlin.test.Test
+
 
 @OptIn(ExperimentalTestApi::class)
-class ProfileScreenshotJvmTest {
+class SettingsJvmScreenshotTest {
 
-    private val screenshotTestSource = ProfileScreenshotTestSource()
+    private val screenshotTestSource = SettingsScreenshotTestSource()
 
     @Test
-    fun authScreenWithError() {
-        screenshotTestSource.provideProfileScreensWithError().forEach {
+    fun settingsScreen() {
+        screenshotTestSource.settingsScreen().forEach {
             runIntroScreenTest(it)
         }
 
     }
 
     @Test
-    fun authScreenWithUser() {
-        screenshotTestSource.provideProfileScreensWithUser().forEach {
+    fun real() {
+        screenshotTestSource.realOnStart().forEach {
             runIntroScreenTest(it)
         }
 
     }
 
     @OptIn(ExperimentalTestApi::class)
-    private fun runIntroScreenTest(item: ProfileScreenshotTestSource.TestItem) =
+    private fun runIntroScreenTest(item: SettingsScreenshotTestSource.TestItem) =
         runDesktopComposeUiTest(
             width = item.width,
             height = item.height
@@ -43,7 +44,7 @@ class ProfileScreenshotJvmTest {
             onRoot().captureRoboImage(
                 DefaultFileNameGenerator.generateFilePath().addPackagePrefix(
                     Type.ANDROID,
-                    this@ProfileScreenshotJvmTest::class.java.packageName
+                    this@SettingsJvmScreenshotTest::class.java.packageName
                 ), roborazziOptions = RoborazziOptions()
             )
         }

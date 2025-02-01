@@ -1,4 +1,4 @@
-package com.shhatrat.loggerek.profile
+package com.shhatrat.loggerek.settings
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade

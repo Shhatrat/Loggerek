@@ -1,4 +1,4 @@
-package com.shhatrat.loggerek.profile
+package com.shhatrat.loggerek.settings
 
 import androidx.lifecycle.viewModelScope
 import com.shhatrat.loggerek.account.AccountManager

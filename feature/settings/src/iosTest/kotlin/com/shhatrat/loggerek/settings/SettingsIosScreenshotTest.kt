@@ -1,33 +1,32 @@
-package com.shhatrat.loggerek.profile
+package com.shhatrat.loggerek.settings
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.runComposeUiTest
-import com.github.takahirom.roborazzi.ExperimentalRoborazziApi
 import com.shhatrat.loggerek.base.Type
 import com.shhatrat.loggerek.base.addPackagePrefix
 import io.github.takahirom.roborazzi.captureRoboImage
 import kotlin.test.Test
 
-@OptIn(ExperimentalRoborazziApi::class)
-class ProfileScreenshotIosTest {
 
-    private val screenshotTestSource = ProfileScreenshotTestSource()
+@OptIn(ExperimentalTestApi::class)
+class SettingsIosScreenshotTest {
+
+    private val screenshotTestSource = SettingsScreenshotTestSource()
 
     @Test
-    fun authScreenWithError() {
-        screenshotTestSource.provideProfileScreensWithError().forEach { item ->
-            runIntroScreenTest(item.content, item.description)
+    fun settingsScreen() {
+        screenshotTestSource.settingsScreen().forEach {
+            runIntroScreenTest(it.content, it.description)
         }
     }
 
     @Test
-    fun authScreenWithUser() {
-        screenshotTestSource.provideProfileScreensWithUser().forEach { item ->
-            runIntroScreenTest(item.content, item.description)
+    fun real() {
+        screenshotTestSource.realOnStart().forEach {
+            runIntroScreenTest(it.content, it.description)
         }
-
     }
 
     @OptIn(ExperimentalTestApi::class)

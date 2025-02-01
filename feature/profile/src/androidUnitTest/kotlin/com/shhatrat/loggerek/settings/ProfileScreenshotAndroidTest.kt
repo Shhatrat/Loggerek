@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalTestApi::class, InternalRoborazziApi::class)
 
-package com.shhatrat.loggerek.profile
+package com.shhatrat.loggerek.settings
 
 import android.app.Application
 import android.content.ComponentName

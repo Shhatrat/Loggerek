@@ -1,4 +1,4 @@
-package com.shhatrat.loggerek.profile
+package com.shhatrat.loggerek.settings
 
 import com.shhatrat.loggerek.account.FakeAccountManagerImpl
 import com.shhatrat.loggerek.api.model.FullUser
