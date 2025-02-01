@@ -1,3 +1,15 @@
 <resources>
     <string name="logout">Logout</string>
+    <string name="recommend">Recommendation</string>
+    <string name="logContent">Log entry content</string>
+    <string name="notes">Notes</string>
+    <string name="password">Password</string>
+    <string name="sendButton">Send</string>
+    <string name="cleanButton">Clear</string>
+    <string name="rate1">Poor</string>
+    <string name="rate2">Below average</string>
+    <string name="rate3">Normal</string>
+    <string name="rate4">Good</string>
+    <string name="rate5">Excellent</string>
+    <string name="searchPlaceholder">Enter cache name...</string>
 </resources>

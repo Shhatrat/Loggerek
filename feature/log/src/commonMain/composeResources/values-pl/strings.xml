@@ -1,6 +1,6 @@
 <resources>
     <string name="logout">Wyloguj</string>
-    <string name="reccomend">Rekomendacja</string>
+    <string name="recommend">Rekomendacja</string>
     <string name="logContent">Treść wpisu</string>
     <string name="notes">Notatki</string>
     <string name="password">Hasło</string>
@@ -11,4 +11,5 @@
     <string name="rate3">Normalna</string>
     <string name="rate4">Dobra</string>
     <string name="rate5">Znakomita</string>
+    <string name="searchPlaceholder">Wpisz nazwę keszy...</string>
 </resources>

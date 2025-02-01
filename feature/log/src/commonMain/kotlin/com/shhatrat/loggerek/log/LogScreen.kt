@@ -58,7 +58,7 @@ import loggerek.feature.log.generated.resources.rate2
 import loggerek.feature.log.generated.resources.rate3
 import loggerek.feature.log.generated.resources.rate4
 import loggerek.feature.log.generated.resources.rate5
-import loggerek.feature.log.generated.resources.reccomend
+import loggerek.feature.log.generated.resources.recommend
 import loggerek.feature.log.generated.resources.sendButton
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 
@@ -141,7 +141,7 @@ fun CompactScreenLayout(modifier: Modifier, settingsUiState: LogUiState) {
                     }
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         if (rating.recommendationPossible && rating.showRating) {
-                            Text(Res.string.reccomend.get())
+                            Text(Res.string.recommend.get())
                             StarSwitch(selected = rating.recommendation, onClicked = {
                                 rating.recommendationChanged(!rating.recommendation)
                             })
@@ -210,7 +210,7 @@ fun CompactScreenLayout(modifier: Modifier, settingsUiState: LogUiState) {
 @Composable
 fun LogScreenPreview() {
     LoggerekTheme {
-        val gd = GeocacheMock().let { cache ->
+        val gd = GeocacheMock().tranditional().let { cache ->
             GeocacheData(
                 title = cache.name,
                 titleLink = cache.url,
