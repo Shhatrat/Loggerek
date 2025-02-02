@@ -12,7 +12,6 @@ import androidx.compose.ui.test.runComposeUiTest
 import androidx.test.core.app.ApplicationProvider
 import com.github.takahirom.roborazzi.DefaultFileNameGenerator
 import com.github.takahirom.roborazzi.Dump
-import com.github.takahirom.roborazzi.InternalRoborazziApi
 import com.github.takahirom.roborazzi.RoborazziOptions
 import com.github.takahirom.roborazzi.captureRoboImage
 import com.shhatrat.loggerek.base.Type

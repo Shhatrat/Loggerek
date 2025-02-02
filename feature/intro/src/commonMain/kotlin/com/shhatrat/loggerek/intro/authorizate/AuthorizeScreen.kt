@@ -47,6 +47,8 @@ import loggerek.feature.intro.generated.resources.AuthDescription
 import loggerek.feature.intro.generated.resources.AuthStep2Description
 import loggerek.feature.intro.generated.resources.Res
 import loggerek.feature.intro.generated.resources.introStartButton
+import loggerek.feature.intro.generated.resources.openBrowser
+import loggerek.feature.intro.generated.resources.setPin
 
 @Composable
 fun AuthorizeScreen(calculateWindowSizeClass: WindowSizeCallback, authUiState: AuthUiState) {
@@ -96,6 +98,12 @@ private fun Logic(modifier: Modifier, authUiState: AuthUiState) {
             }
         }
         authUiState.pastePinAction?.let {
+            authUiState.openBrowserAction?.let {
+                Button(colors = ButtonDefaults.buttonColors(
+                    backgroundColor = MaterialTheme.colors.background,
+                    contentColor = MaterialTheme.colors.primary,
+                ), onClick = { it.invoke() }, content = { Text(Res.string.openBrowser.get()) })
+            }
             authUiState.browserLink?.let { link ->
                 SelectionContainer {
                     val customTextSelectionColors = TextSelectionColors(
@@ -128,7 +136,7 @@ private fun Logic(modifier: Modifier, authUiState: AuthUiState) {
             Button(colors = ButtonDefaults.buttonColors(
                 backgroundColor = MaterialTheme.colors.background,
                 contentColor = MaterialTheme.colors.primary,
-            ), onClick = { it.invoke(text) }, content = { Text("set PIN") })
+            ), onClick = { it.invoke(text) }, content = { Text(Res.string.setPin.get()) })
         }
         AnimatedVisibility(authUiState.startButton != null) {
             Button(

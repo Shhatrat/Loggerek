@@ -1,7 +1,6 @@
 package com.shhatrat.loggerek.settings
 
 import com.shhatrat.loggerek.account.FakeAccountManagerImpl
-import com.shhatrat.loggerek.base.MoveToIntro
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher

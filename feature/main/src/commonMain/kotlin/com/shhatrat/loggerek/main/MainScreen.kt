@@ -37,10 +37,10 @@ import com.shhatrat.loggerek.base.di.LogScope
 import com.shhatrat.loggerek.base.get
 import com.shhatrat.loggerek.log.LogScreen
 import com.shhatrat.loggerek.log.LogViewModel
-import com.shhatrat.loggerek.settings.ProfileScreen
-import com.shhatrat.loggerek.settings.ProfileViewModel
 import com.shhatrat.loggerek.search.SearchScreen
 import com.shhatrat.loggerek.search.SearchViewModel
+import com.shhatrat.loggerek.settings.ProfileScreen
+import com.shhatrat.loggerek.settings.ProfileViewModel
 import com.shhatrat.loggerek.settings.SettingsViewModel
 import com.shhatrat.loggerek.settings.SettinsScreen
 import loggerek.feature.main.generated.resources.Res

@@ -13,7 +13,7 @@ data class TestItem(
 fun getTestItems(
     content: @Composable (DeviceScreen) -> Unit,
     description: String,
-): List<TestItem>{
+): List<TestItem> {
     return DeviceScreen.entries.map { deviceScreen ->
         TestItem(
             content = {

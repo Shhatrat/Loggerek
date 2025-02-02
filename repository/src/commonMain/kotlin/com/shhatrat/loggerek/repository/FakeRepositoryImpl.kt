@@ -9,9 +9,11 @@ class FakeRepositoryImpl : Repository {
     override val tokenSecret: RepositoryItem<String?> =
         FakeRepositoryItem(fakeStorage, "TokenSecret")
 
-    override val savePassword: RepositoryItem<Boolean> = FakeRepositoryItem(fakeStorage, "savePassword")
+    override val savePassword: RepositoryItem<Boolean> =
+        FakeRepositoryItem(fakeStorage, "savePassword")
 
-    override val tryMixedPassword: RepositoryItem<Boolean> = FakeRepositoryItem(fakeStorage, "tryMixedPassword")
+    override val tryMixedPassword: RepositoryItem<Boolean> =
+        FakeRepositoryItem(fakeStorage, "tryMixedPassword")
 
     private class FakeRepositoryItem<T>(
         private val storage: MutableMap<String, Any?>,

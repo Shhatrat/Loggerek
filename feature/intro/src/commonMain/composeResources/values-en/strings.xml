@@ -1,8 +1,10 @@
 <resources>
     <string name="appName">Loggerek</string>
-    <string name="introDescription">Uprość swoje geocacherskie życie!</string>
-    <string name="introStartButton">Rozpocznij...</string>
-    <string name="AuthDescription">Zaraz rozpocznie się autoryzacja, Twoje konto Opencaching zostanie połączone z aplikacją. W każdej chwili można je odłączyć.</string>
-    <string name="AuthStep1Description">Skopiuj link do przeglądarki, lub przyciśnij przycisk by otworzyć link w domyślnej przeglądarce</string>
-    <string name="AuthStep2Description">Wklej pin ze strony Opencaching i kliknij przycisk</string>
+    <string name="introDescription">Simplify your geocaching life!</string>
+    <string name="introStartButton">Get started...</string>
+    <string name="AuthDescription">Authorization will begin shortly. Your Opencaching account will be linked to the app. You can disconnect it at any time.</string>
+    <string name="AuthStep1Description">Copy the link to your browser or press the button to open the link in your default browser.</string>
+    <string name="AuthStep2Description">Paste the PIN from the Opencaching website and click the button.</string>
+    <string name="setPin">Enter PIN</string>
+    <string name="openBrowser">Open browser</string>
 </resources>

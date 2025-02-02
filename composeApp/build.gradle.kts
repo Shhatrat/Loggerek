@@ -86,6 +86,7 @@ kotlin {
             implementation(projects.feature.settings)
             implementation(projects.feature.log)
             implementation(projects.base)
+            implementation(projects.base.browser)
             implementation(projects.manager.account)
             implementation(projects.manager.log)
             implementation(libs.navigation.compose)
