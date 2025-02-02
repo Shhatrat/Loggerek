@@ -1,19 +1,12 @@
 package com.shhatrat.loggerek.settings
 
-import androidx.compose.runtime.Composable
 import com.shhatrat.loggerek.api.model.FullUser
 import com.shhatrat.loggerek.base.Error
 import com.shhatrat.loggerek.base.LoggerekTheme
 import com.shhatrat.loggerek.base.testing.DeviceScreen
+import com.shhatrat.loggerek.base.testing.TestItem
 
 class ProfileScreenshotTestSource {
-
-    data class TestItem(
-        val content: @Composable () -> Unit,
-        val description: String,
-        val width: Int,
-        val height: Int,
-    )
 
     fun provideProfileScreensWithUser(): List<TestItem> {
         return getProfileScreens(

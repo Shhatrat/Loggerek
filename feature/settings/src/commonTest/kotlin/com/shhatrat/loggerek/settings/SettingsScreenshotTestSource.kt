@@ -4,20 +4,11 @@ import androidx.compose.runtime.Composable
 import com.shhatrat.loggerek.account.FakeAccountManagerImpl
 import com.shhatrat.loggerek.base.LoggerekTheme
 import com.shhatrat.loggerek.base.testing.DeviceScreen
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.setMain
+import com.shhatrat.loggerek.base.testing.TestItem
 import loggerek.feature.settings.generated.resources.Res
 import loggerek.feature.settings.generated.resources.tryMixedPassword
 
 class SettingsScreenshotTestSource {
-
-    data class TestItem(
-        val content: @Composable () -> Unit,
-        val description: String,
-        val width: Int,
-        val height: Int,
-    )
 
     fun settingsScreen(): List<TestItem> {
         return getProfileScreens(
