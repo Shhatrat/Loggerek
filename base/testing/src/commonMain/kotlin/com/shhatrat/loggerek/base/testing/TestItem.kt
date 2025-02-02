@@ -1,6 +1,7 @@
 package com.shhatrat.loggerek.base.testing
 
 import androidx.compose.runtime.Composable
+import com.shhatrat.loggerek.base.LoggerekTheme
 
 data class TestItem(
     val content: @Composable () -> Unit,
@@ -16,7 +17,9 @@ fun getTestItems(
     return DeviceScreen.entries.map { deviceScreen ->
         TestItem(
             content = {
-                content(deviceScreen)
+                LoggerekTheme {
+                    content(deviceScreen)
+                }
             },
             description = "${deviceScreen.name}-$description",
             width = deviceScreen.width,
