@@ -8,3 +8,20 @@ data class TestItem(
     val width: Int,
     val height: Int,
 )
+
+fun getTestItems(
+    content: @Composable (DeviceScreen) -> Unit,
+    description: String,
+): List<TestItem>{
+    return DeviceScreen.entries.map { deviceScreen ->
+        TestItem(
+            content = {
+                content(deviceScreen)
+            },
+            description = "${deviceScreen.name}-$description",
+            width = deviceScreen.width,
+            height = deviceScreen.height,
+        )
+    }
+
+}

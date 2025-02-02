@@ -5,23 +5,30 @@ import com.shhatrat.loggerek.base.Error
 import com.shhatrat.loggerek.base.LoggerekTheme
 import com.shhatrat.loggerek.base.testing.DeviceScreen
 import com.shhatrat.loggerek.base.testing.TestItem
+import com.shhatrat.loggerek.base.testing.getTestItems
 
 class ProfileScreenshotTestSource {
 
     fun provideProfileScreensWithUser(): List<TestItem> {
-        return getProfileScreens(
-            ProfileUiState(
-                user = FullUser.mock()
-            ), "User"
-        )
+        return getTestItems({ deviceScreen ->
+            ProfileScreen(
+                calculateWindowSizeClass = { deviceScreen.getWindowSizeClass() },
+                profileUiState = ProfileUiState(
+                    user = FullUser.mock()
+                )
+            )
+        }, "User")
     }
 
     fun provideProfileScreensWithError(): List<TestItem> {
-        return getProfileScreens(
-            ProfileUiState(
-                error = Error("Error")
-            ), "Error"
-        )
+        return getTestItems({ deviceScreen ->
+            ProfileScreen(
+                calculateWindowSizeClass = { deviceScreen.getWindowSizeClass() },
+                profileUiState = ProfileUiState(
+                    error = Error("Error")
+                )
+            )
+        }, "Error")
     }
 
     private fun getProfileScreens(
