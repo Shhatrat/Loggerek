@@ -7,6 +7,7 @@ import com.github.takahirom.roborazzi.DefaultFileNameGenerator
 import com.github.takahirom.roborazzi.RoborazziOptions
 import com.shhatrat.loggerek.base.Type
 import com.shhatrat.loggerek.base.addPackagePrefix
+import com.shhatrat.loggerek.base.testing.TestItem
 import io.github.takahirom.roborazzi.captureRoboImage
 import kotlin.test.Test
 
@@ -33,7 +34,7 @@ class SettingsJvmScreenshotTest {
     }
 
     @OptIn(ExperimentalTestApi::class)
-    private fun runIntroScreenTest(item: SettingsScreenshotTestSource.TestItem) =
+    private fun runIntroScreenTest(item: TestItem) =
         runDesktopComposeUiTest(
             width = item.width,
             height = item.height
