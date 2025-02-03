@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalResourceApi::class)
+
 package com.shhatrat.loggerek.base.composable
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
@@ -16,10 +18,12 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.unit.dp
+import coil3.compose.rememberAsyncImagePainter
 import com.shhatrat.loggerek.base.LoggerekTheme
 import loggerek.base.generated.resources.Res
 import loggerek.base.generated.resources.star
 import loggerek.base.generated.resources.starFull
+import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
@@ -36,7 +40,7 @@ fun StarFiller(
                 colorFilter = ColorFilter.tint(MaterialTheme.colors.primary),
                 painter = if ((currentSelectedIndex
                         ?: 0) >= it && currentSelectedIndex!=null)
-                    painterResource(Res.drawable.starFull) else painterResource(Res.drawable.star),
+                    rememberAsyncImagePainter(Res.getUri("drawable/starFull.svg")) else rememberAsyncImagePainter(Res.getUri("drawable/star.svg")),
                 contentDescription = "Single star item"
             )
         }

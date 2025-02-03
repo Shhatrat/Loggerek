@@ -3,6 +3,8 @@ package com.shhatrat.loggerek.log
 import androidx.lifecycle.viewModelScope
 import com.shhatrat.loggerek.account.AccountManager
 import com.shhatrat.loggerek.api.model.Geocache
+import com.shhatrat.loggerek.api.model.LogResponse
+import com.shhatrat.loggerek.api.model.LogType
 import com.shhatrat.loggerek.api.model.SubmitLogData
 import com.shhatrat.loggerek.api.model.isFound
 import com.shhatrat.loggerek.base.BaseViewModel
@@ -154,34 +156,67 @@ class LogViewModel(
                                             state.value.geocacheData?.myNotes?.text ?: "",
                                             cache.myNotes ?: ""
                                         )
-                                        val response = logManager.submitLog(
-                                            SubmitLogData(
-                                                cacheId = cacheId,
-                                                logType = cache.type.logType.logTypes[state.value.geocacheData?.logTypeData?.selectedIndex
-                                                    ?: defaultLogTypeIndex],
-                                                rating = state.value.geocacheData?.ratingData?.rating,
-                                                comment = state.value.geocacheData?.description?.text
-                                                    ?: "",
-                                                reccomend = state.value.geocacheData?.ratingData?.recommendation
-                                                    ?: false,
-                                                password = state.value.geocacheData?.password?.text
-                                            )
-                                        )
-                                        if(accountManager.savePassword && cache.requirePassword && response.success){
-                                            logManager.saveNote(
-                                                cacheId,
-                                                (state.value.geocacheData?.myNotes?.text ?: "").plus("\n${state.value.geocacheData?.password?.text}"),
-                                                state.value.geocacheData?.myNotes?.text ?: ""
-                                            )
-                                        }
-                                        if (response.success) {
-                                            updateUiState {
-                                                copy(success = Success {
-                                                    updateUiState { copy(success = null) }
-                                                })
+                                        val logType: LogType = cache.type.logType.logTypes[state.value.geocacheData?.logTypeData?.selectedIndex
+                                            ?: defaultLogTypeIndex]
+                                        if(logType == LogType.FOUND && cache.requirePassword && accountManager.tryMixedPassword){
+                                            var response: LogResponse? = null
+                                            for (alternative in PasswordHelper.getAlternatives(state.value.geocacheData?.password?.text ?: "")) {
+                                                response= logManager.submitLog(
+                                                    SubmitLogData(
+                                                        cacheId = cacheId,
+                                                        logType = logType,
+                                                        rating = state.value.geocacheData?.ratingData?.rating,
+                                                        comment = state.value.geocacheData?.description?.text
+                                                            ?: "",
+                                                        reccomend = state.value.geocacheData?.ratingData?.recommendation
+                                                            ?: false,
+                                                        password = alternative
+                                                    )
+                                                )
+                                                if(response.success){
+                                                    break
+                                                }
                                             }
-                                        } else {
-                                            updateUiState { copy(error = Error(response.message)) }
+                                            if(accountManager.savePassword && cache.requirePassword && response!!.success){
+                                                logManager.saveNote(
+                                                    cacheId,
+                                                    (state.value.geocacheData?.myNotes?.text ?: "").plus("\n${state.value.geocacheData?.password?.text}"),
+                                                    state.value.geocacheData?.myNotes?.text ?: ""
+                                                )
+                                            }
+                                            if (response!!.success) {
+                                                updateUiState {
+                                                    copy(success = Success {
+                                                        updateUiState { copy(success = null) }
+                                                    })
+                                                }
+                                            } else {
+                                                updateUiState { copy(error = Error(response.message)) }
+                                            }
+                                        }else{
+                                            val response = logManager.submitLog(
+                                                SubmitLogData(
+                                                    cacheId = cacheId,
+                                                    logType = cache.type.logType.logTypes[state.value.geocacheData?.logTypeData?.selectedIndex
+                                                        ?: defaultLogTypeIndex],
+                                                    rating = state.value.geocacheData?.ratingData?.rating,
+                                                    comment = state.value.geocacheData?.description?.text
+                                                        ?: "",
+                                                    reccomend = state.value.geocacheData?.ratingData?.recommendation
+                                                        ?: false,
+                                                    password = state.value.geocacheData?.password?.text
+                                                )
+                                            )
+                                            if (response.success) {
+                                                updateUiState {
+                                                    copy(success = Success {
+                                                        updateUiState { copy(success = null) }
+                                                        onStart()
+                                                    })
+                                                }
+                                            } else {
+                                                updateUiState { copy(error = Error(response.message)) }
+                                            }
                                         }
                                     }
                                 }

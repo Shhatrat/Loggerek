@@ -2,6 +2,7 @@
 
 package com.shhatrat.loggerek.search
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
 import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.Image
@@ -47,6 +48,7 @@ import com.shhatrat.loggerek.api.model.isFound
 import com.shhatrat.loggerek.base.LoggerekTheme
 import com.shhatrat.loggerek.base.MoveToLogCache
 import com.shhatrat.loggerek.base.WindowSizeCallback
+import com.shhatrat.loggerek.base.composable.CircularIndeterminateProgressBar
 import com.shhatrat.loggerek.base.composable.SnackBarHelper
 import com.shhatrat.loggerek.base.composable.SnackBarHelper.ProvideSnackBar
 import com.shhatrat.loggerek.base.get
@@ -79,6 +81,17 @@ fun SearchScreen(calculateWindowSizeClass: WindowSizeCallback, searchUiState: Se
                 )
             }
         }
+
+        AnimatedVisibility(
+            modifier = Modifier.align(Alignment.Center),
+            visible = searchUiState.loader.active
+        ) {
+            CircularIndeterminateProgressBar(
+                color = MaterialTheme.colors.primary
+            )
+        }
+
+
         ProvideSnackBar(snackBarHostState)
     }
 }

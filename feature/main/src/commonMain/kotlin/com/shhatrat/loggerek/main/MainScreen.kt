@@ -154,7 +154,7 @@ private fun HeaderContent(
     ) {
         Image(
             modifier = Modifier.fillMaxHeight().clickable { onBack() },
-            painter = painterResource(Res.drawable.back),
+            painter = rememberAsyncImagePainter(Res.getUri("drawable/back.svg")),
             colorFilter = ColorFilter.tint(MaterialTheme.colors.background),
             contentDescription = "back arrow"
         )

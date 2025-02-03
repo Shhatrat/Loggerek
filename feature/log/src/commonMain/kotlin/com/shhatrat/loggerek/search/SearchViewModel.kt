@@ -7,6 +7,7 @@ import com.shhatrat.loggerek.base.Error
 import com.shhatrat.loggerek.base.Loader
 import com.shhatrat.loggerek.base.MoveToLogCache
 import com.shhatrat.loggerek.base.composable.MultiTextFieldModel
+import com.shhatrat.loggerek.base.loader.LoaderHandlingUtil
 import com.shhatrat.loggerek.manager.log.LogManager
 import kotlinx.coroutines.launch
 
@@ -23,6 +24,9 @@ class SearchViewModel(
     private val logManager: LogManager
 ) : BaseViewModel<SearchUiState>(SearchUiState()) {
 
+    private val loaderHandlingUtil =
+        LoaderHandlingUtil { loaderAction -> updateUiState { copy(loader = Loader(loaderAction)) } }
+
     override fun onStart() {
         super.onStart()
         updateUiState { copy(move = moveToLogCache) }
@@ -33,8 +37,10 @@ class SearchViewModel(
                         updateUiState {
                             copy(search = search.copy(text = it))
                         }
-                        val results = logManager.searchByName(it)
-                        updateUiState { copy(caches = results) }
+                        loaderHandlingUtil.withLoader {
+                            val results = logManager.searchByName(it)
+                            updateUiState { copy(caches = results) }
+                        }
                     }
                 })
             }

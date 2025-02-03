@@ -80,15 +80,6 @@ fun LogScreen(calculateWindowSizeClass: WindowSizeCallback, logUiState: LogUiSta
             modifier = Modifier.fillMaxSize().background(MaterialTheme.colors.background)
                 .padding(16.dp)
         ) {
-            AnimatedVisibility(
-                modifier = Modifier.align(Alignment.Center),
-                visible = logUiState.loader.active
-            ) {
-                CircularIndeterminateProgressBar(
-                    modifier = Modifier,
-                    color = MaterialTheme.colors.primary
-                )
-            }
             Column(
                 Modifier.fillMaxSize().align(Alignment.TopCenter)
                     .verticalScroll(rememberScrollState()),
@@ -201,6 +192,16 @@ fun LogScreen(calculateWindowSizeClass: WindowSizeCallback, logUiState: LogUiSta
                     }
                 }
             }
+            AnimatedVisibility(
+                modifier = Modifier.align(Alignment.Center),
+                visible = logUiState.loader.active
+            ) {
+                CircularIndeterminateProgressBar(
+                    modifier = Modifier,
+                    color = MaterialTheme.colors.primary
+                )
+            }
+
 
             if (logUiState.success != null) {
                 Box(Modifier.fillMaxSize()) {

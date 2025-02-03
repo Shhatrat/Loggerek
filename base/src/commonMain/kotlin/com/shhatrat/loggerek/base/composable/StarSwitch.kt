@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalResourceApi::class)
+
 package com.shhatrat.loggerek.base.composable
 
 import androidx.compose.desktop.ui.tooling.preview.Preview
@@ -14,10 +16,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.unit.dp
+import coil3.compose.rememberAsyncImagePainter
 import com.shhatrat.loggerek.base.LoggerekTheme
 import loggerek.base.generated.resources.Res
 import loggerek.base.generated.resources.star
 import loggerek.base.generated.resources.starFull
+import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
@@ -29,8 +33,8 @@ fun StarSwitch(
     Image(
         modifier = modifier.size(60.dp).clickable { onClicked() },
         colorFilter = ColorFilter.tint(MaterialTheme.colors.primary),
-        painter = if (selected) painterResource(Res.drawable.starFull) else painterResource(
-            Res.drawable.star
+        painter = if (selected) rememberAsyncImagePainter(Res.getUri("drawable/starFull.svg")) else rememberAsyncImagePainter(
+            Res.getUri("drawable/star.svg")
         ),
         contentDescription = "Star Switch"
     )
