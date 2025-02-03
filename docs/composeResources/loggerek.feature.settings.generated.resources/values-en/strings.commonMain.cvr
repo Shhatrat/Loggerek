@@ -1,2 +1,6 @@
 version:0
-string|logout|TG9nb3V0
+string|accountTitle|UHJvZmlsZQ==
+string|logout|TG9nIG91dA==
+string|logsTitle|TG9ncw==
+string|savePasswordToMyNotes|U2F2ZSBwYXNzd29yZCB0byBjYWNoZSBub3Rlcw==
+string|tryMixedPassword|VHJ5IGRpZmZlcmVudCBwYXNzd29yZCBmb3JtYXRz
