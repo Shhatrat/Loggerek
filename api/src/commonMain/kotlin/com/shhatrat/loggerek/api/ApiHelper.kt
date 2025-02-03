@@ -115,7 +115,9 @@ internal suspend inline fun ApiImpl.getCache(
         token,
         tokenSecret,
         OpencachingApi.Url.geocache(),
-        mapOf(Pair("cache_code", geocacheId)),
+        mapOf(
+            Pair("user_logs_only", "true"),
+            Pair("cache_code", geocacheId)),
         OpencachingParam.Geocache.getAll()
     )
 }

@@ -9,6 +9,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -51,6 +52,7 @@ import com.shhatrat.loggerek.base.composable.SnackBarHelper.ProvideSnackBar
 import com.shhatrat.loggerek.base.get
 import loggerek.feature.log.generated.resources.Res
 import loggerek.feature.log.generated.resources.searchPlaceholder
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 
@@ -126,27 +128,7 @@ private fun CacheItem(geocache: Geocache, move: MoveToLogCache?) {
                 modifier = Modifier.clip(RoundedCornerShape(100))
                     .background(MaterialTheme.colors.background).padding(4.dp).size(45.dp)
             ) {
-                Image(
-//                    contentScale = ContentScale.FillBounds,
-                    modifier = Modifier.align(Alignment.Center).padding(4.dp).size(50.dp),
-                    contentDescription = "cache type",
-                    painter = painterResource(geocache.type.iconRes)
-                )
-                if (geocache.isFound()) {
-                    Box(
-                        modifier = Modifier
-                            .align(Alignment.BottomEnd)
-                            .size(25.dp)
-                            .clip(RoundedCornerShape(100))
-                            .background(MaterialTheme.colors.background),
-                    )
-                    Image(
-                        modifier = Modifier.align(Alignment.BottomEnd).size(25.dp),
-                        colorFilter = ColorFilter.tint(MaterialTheme.colors.primary),
-                        painter = rememberAsyncImagePainter(Res.getUri("drawable/checkDone.svg")),
-                        contentDescription = "cache found",
-                    )
-                }
+                TypeCircle(geocache.type.iconRes, geocache.isFound())
             }
             Text(
                 modifier = Modifier.padding(4.dp),
@@ -160,10 +142,34 @@ private fun CacheItem(geocache: Geocache, move: MoveToLogCache?) {
     }
 }
 
+@Composable
+fun BoxScope.TypeCircle(icon: DrawableResource, isFound: Boolean) {
+    Image(
+        modifier = Modifier.Companion.align(Alignment.Center).padding(4.dp).size(50.dp),
+        contentDescription = "cache type",
+        painter = painterResource(icon)
+    )
+    if (isFound) {
+        Box(
+            modifier = Modifier.Companion
+                .align(Alignment.BottomEnd)
+                .size(25.dp)
+                .clip(RoundedCornerShape(100))
+                .background(MaterialTheme.colors.background),
+        )
+        Image(
+            modifier = Modifier.Companion.align(Alignment.BottomEnd).size(25.dp),
+            colorFilter = ColorFilter.tint(MaterialTheme.colors.primary),
+            painter = rememberAsyncImagePainter(Res.getUri("drawable/checkDone.svg")),
+            contentDescription = "cache found",
+        )
+    }
+}
+
 
 @Preview
 @Composable
-private fun p() {
+private fun CacheItemPreview() {
     LoggerekTheme {
         Box(Modifier.background(MaterialTheme.colors.background).padding(10.dp).scale(1f)) {
             Column {

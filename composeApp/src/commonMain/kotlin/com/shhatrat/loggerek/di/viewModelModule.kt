@@ -23,7 +23,7 @@ val viewModelModule = module {
     viewModel { ProfileViewModel(get()) }
     viewModel { (navigateToMain: () -> Unit) -> SettingsViewModel(navigateToMain, get()) }
     scope(named(LogScope)) {
-        scoped { (cacheId: String) -> LogViewModel(cacheId, get()) }
+        scoped { (cacheId: String) -> LogViewModel(cacheId, get(), get(), get()) }
     }
     viewModel { (moveToLogCache: MoveToLogCache) -> SearchViewModel(moveToLogCache, get()) }
 }

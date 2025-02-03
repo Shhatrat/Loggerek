@@ -1,17 +1,21 @@
 package com.shhatrat.loggerek.log
 
 import androidx.lifecycle.viewModelScope
+import com.shhatrat.loggerek.account.AccountManager
 import com.shhatrat.loggerek.api.model.Geocache
 import com.shhatrat.loggerek.api.model.SubmitLogData
+import com.shhatrat.loggerek.api.model.isFound
 import com.shhatrat.loggerek.base.BaseViewModel
 import com.shhatrat.loggerek.base.ButtonAction
 import com.shhatrat.loggerek.base.Error
 import com.shhatrat.loggerek.base.Loader
+import com.shhatrat.loggerek.base.browser.BrowserUtil
 import com.shhatrat.loggerek.base.composable.MultiTextFieldModel
 import com.shhatrat.loggerek.base.error.ErrorHandlingUtil
 import com.shhatrat.loggerek.base.loader.LoaderHandlingUtil
 import com.shhatrat.loggerek.manager.log.LogManager
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 
 data class LogUiState(
@@ -25,7 +29,9 @@ class Success(val onFinished: (() -> Unit)? = null)
 
 data class GeocacheData(
     val title: String,
-    val titleLink: String,
+    val typeIcon: DrawableResource,
+    val isFound: Boolean,
+    val onClick: () -> Unit,
     val ratingData: RatingData? = null,
     val logTypeData: LogTypeData,
     val description: MultiTextFieldModel,
@@ -53,7 +59,9 @@ data class LogTypeData(
 
 class LogViewModel(
     private val cacheId: String,
-    private val logManager: LogManager
+    private val logManager: LogManager,
+    private val accountManager: AccountManager,
+    private val browserUtil: BrowserUtil
 ) : BaseViewModel<LogUiState>(LogUiState()) {
 
     private val loaderHandlingUtil =
@@ -74,7 +82,7 @@ class LogViewModel(
                 copy(
                     geocacheData = GeocacheData(
                         title = cache.name,
-                        titleLink = cache.url,
+                        onClick = { browserUtil.openWithUrl(cache.url) },
                         ratingData = RatingData(
                             showRating = cache.type.logType.logTypes[defaultLogTypeIndex].canRate,
                             starsOnChanged = {
@@ -159,6 +167,13 @@ class LogViewModel(
                                                 password = state.value.geocacheData?.password?.text
                                             )
                                         )
+                                        if(accountManager.savePassword && cache.requirePassword && response.success){
+                                            logManager.saveNote(
+                                                cacheId,
+                                                (state.value.geocacheData?.myNotes?.text ?: "").plus("\n${state.value.geocacheData?.password?.text}"),
+                                                state.value.geocacheData?.myNotes?.text ?: ""
+                                            )
+                                        }
                                         if (response.success) {
                                             updateUiState {
                                                 copy(success = Success {
@@ -175,6 +190,8 @@ class LogViewModel(
                         resetAction = {
                             resetData()
                         },
+                        typeIcon = cache.type.iconRes,
+                        isFound = cache.isFound()
                     )
                 )
             }

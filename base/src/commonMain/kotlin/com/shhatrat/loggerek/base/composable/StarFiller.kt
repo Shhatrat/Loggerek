@@ -35,8 +35,8 @@ fun StarFiller(
                 modifier = Modifier.size(60.dp).clickable { onChange(it) },
                 colorFilter = ColorFilter.tint(MaterialTheme.colors.primary),
                 painter = if ((currentSelectedIndex
-                        ?: 0) >= it
-                ) painterResource(Res.drawable.starFull) else painterResource(Res.drawable.star),
+                        ?: 0) >= it && currentSelectedIndex!=null)
+                    painterResource(Res.drawable.starFull) else painterResource(Res.drawable.star),
                 contentDescription = "Single star item"
             )
         }
@@ -47,10 +47,14 @@ fun StarFiller(
 @Composable
 fun StarPreview() {
     LoggerekTheme {
-        Box(Modifier.background(Color.Black).padding(100.dp).scale(1f)) {
+        Box(Modifier.background(MaterialTheme.colors.background).padding(100.dp).scale(1f)) {
             Column {
-                StarFiller(currentSelectedIndex = 2, size = 5) {}
+                StarFiller(currentSelectedIndex = 4, size = 5) {}
                 StarFiller(currentSelectedIndex = 3, size = 5) {}
+                StarFiller(currentSelectedIndex = 2, size = 5) {}
+                StarFiller(currentSelectedIndex = 1, size = 5) {}
+                StarFiller(currentSelectedIndex = 0, size = 5) {}
+                StarFiller(currentSelectedIndex = null, size = 5) {}
             }
         }
     }

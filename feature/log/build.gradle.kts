@@ -52,7 +52,7 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation("io.github.alexzhirkevich:compottie:2.0.0-rc02")
+            implementation(libs.compottie)
             implementation(libs.koin.compose)
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -61,6 +61,7 @@ kotlin {
             implementation(compose.components.resources)
             implementation(projects.base)
             implementation(projects.base.color)
+            implementation(projects.base.browser)
             implementation(projects.base.testing)
             implementation(projects.api)
             implementation(libs.coil.compose)

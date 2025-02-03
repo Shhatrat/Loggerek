@@ -2,6 +2,7 @@
 
 package com.shhatrat.loggerek.main
 
+import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -24,11 +25,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil3.compose.rememberAsyncImagePainter
+import com.shhatrat.loggerek.base.LoggerekTheme
 import com.shhatrat.loggerek.base.MoveToIntro
 import com.shhatrat.loggerek.base.MoveToLogCache
 import com.shhatrat.loggerek.base.OnBack
@@ -117,22 +120,7 @@ private fun handleChangeScreen(
 ) {
     Column {
         if (navigationHeader is NavigationHeader.Specific) {
-            Row(
-                modifier = Modifier.height(60.dp).fillMaxWidth()
-                    .background(MaterialTheme.colors.primary)
-            ) {
-                Image(
-                    modifier = Modifier.fillMaxHeight().clickable { onBack() },
-                    painter = painterResource(Res.drawable.back),
-                    colorFilter = ColorFilter.tint(MaterialTheme.colors.background),
-                    contentDescription = "back arrow"
-                )
-                Text(
-                    modifier = Modifier.fillMaxSize(),
-                    textAlign = TextAlign.Center,
-                    color = MaterialTheme.colors.background, text = navigationHeader.nameRes.get()
-                )
-            }
+            HeaderContent(onBack, navigationHeader)
         }
         when (navigationHeader) {
             NavigationHeader.Main.PROFILE -> {
@@ -151,6 +139,38 @@ private fun handleChangeScreen(
                 openLogScreen(calculateWindowSizeClass, navigationHeader.cacheId)
             }
         }
+    }
+}
+
+@Composable
+private fun HeaderContent(
+    onBack: OnBack,
+    navigationHeader: NavigationHeader
+) {
+    Row(
+        modifier = Modifier.height(60.dp).fillMaxWidth()
+            .background(MaterialTheme.colors.primary),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Image(
+            modifier = Modifier.fillMaxHeight().clickable { onBack() },
+            painter = painterResource(Res.drawable.back),
+            colorFilter = ColorFilter.tint(MaterialTheme.colors.background),
+            contentDescription = "back arrow"
+        )
+        Text(
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Center,
+            color = MaterialTheme.colors.background, text = navigationHeader.nameRes.get()
+        )
+    }
+}
+
+@Preview
+@Composable
+fun HeaderContentPreview(){
+    LoggerekTheme {
+        HeaderContent({}, NavigationHeader.Specific.LOG({}, ""))
     }
 }
 

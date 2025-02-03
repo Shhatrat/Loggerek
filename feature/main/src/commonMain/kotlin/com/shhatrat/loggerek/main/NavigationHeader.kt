@@ -18,7 +18,7 @@ sealed class NavigationHeader(
     sealed class Main(imagePath: String, headerLog: StringResource) :
         NavigationHeader(imagePath, headerLog) {
         data object PROFILE : Main("drawable/profile.svg", Res.string.headerProfile)
-        data object CACHES : Main("drawable/watch.svg", Res.string.headerWatch)
+        data object CACHES : Main("drawable/checklist.svg", Res.string.headerLog)
         data object SETTINGS : Main("drawable/settings.svg", Res.string.headerSettings)
         companion object {
             fun getAll() = listOf(PROFILE, CACHES, SETTINGS)
