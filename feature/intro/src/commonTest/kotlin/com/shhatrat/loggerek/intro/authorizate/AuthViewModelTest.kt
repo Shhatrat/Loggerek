@@ -1,6 +1,7 @@
 package com.shhatrat.loggerek.intro.authorizate
 
 import com.shhatrat.loggerek.account.FakeAccountManagerImpl
+import com.shhatrat.loggerek.base.browser.IBrowserUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
@@ -34,7 +35,10 @@ class AuthViewModelTest {
         )
         viewModel = AuthViewModel(
             navigateToMain = { /* No-op */ },
-            accountManager = fakeAccountManager
+            accountManager = fakeAccountManager,
+            browserUtil = object : IBrowserUtil {
+                override fun openWithUrl(url: String) {}
+            }
         )
     }
 
