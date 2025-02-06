@@ -6,6 +6,7 @@ import com.shhatrat.loggerek.base.BaseViewModel
 import com.shhatrat.loggerek.base.Error
 import com.shhatrat.loggerek.base.Loader
 import com.shhatrat.loggerek.base.browser.BrowserUtil
+import com.shhatrat.loggerek.base.browser.IBrowserUtil
 import com.shhatrat.loggerek.base.error.ErrorHandlingUtil
 import com.shhatrat.loggerek.base.loader.LoaderHandlingUtil
 import kotlinx.coroutines.launch
@@ -22,7 +23,7 @@ data class AuthUiState(
 class AuthViewModel(
     private val navigateToMain: () -> Unit,
     private val accountManager: AccountManager,
-    private val browserUtil: BrowserUtil
+    private val browserUtil: IBrowserUtil
 ) : BaseViewModel<AuthUiState>(AuthUiState()) {
 
     private val loaderHandlingUtil =
