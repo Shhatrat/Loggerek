@@ -29,13 +29,8 @@ import com.shhatrat.loggerek.intro.splash.IntroScreen
 import com.shhatrat.loggerek.intro.splash.IntroViewModel
 import com.shhatrat.loggerek.main.MainScreen
 import com.shhatrat.loggerek.main.MainViewModel
-import com.shhatrat.loggerek.manager.garmin.GarminManager
-import com.shhatrat.loggerek.manager.garmin.GarminPlatformSpecificModule
-import com.shhatrat.loggerek.manager.garmin.WatchCache
-import com.shhatrat.loggerek.manager.garmin.WatchData
-import com.shhatrat.loggerek.manager.garmin.WatchLog
-import com.shhatrat.loggerek.manager.garmin.WatchSendKeys
 import com.shhatrat.loggerek.manager.log.di.logManagerModule
+import com.shhatrat.loggerek.manager.watch.WatchPlatformSpecificModule
 import com.shhatrat.loggerek.repository.di.repositoryModule
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -59,51 +54,51 @@ fun App(
             setupModules(calculateWindowSizeClass)
         }
         ) {
-//            AppNavigation(modifier = Modifier)
-            val garmin by getKoin().inject<GarminManager>()
-            Column {
-                Button(onClick = {
-                    GlobalScope.launch(Dispatchers.Main) {
-                        garmin.init()
-                    }
-                }) {
-                    Text("init")
-                }
-                Button(onClick = {
-                    GlobalScope.launch() {
-                        garmin.sendData(
-                            WatchSendKeys.GET_DATA(
-                                watchData = WatchData(
-                                    items = listOf(
-                                        WatchCache("[OH] #6 Biblioteka", "OPE4EA"),
-                                        WatchCache("Staw Schrödingera", "OPE40A"),
-                                        WatchCache("Staw na ulicy Fiołkowej", "OPA00A"),
-                                        WatchCache("GORUSZKA", "OPAEFA"),
-                                        WatchCache("Cerkwiska i Cmentarze -Smerek", "OPA34D"),
-                                    ),
-                                    logs = listOf(
-                                        WatchLog("Wszystko gra", "1", "found"),
-                                        WatchLog("super skrzyneczka", "2", "found"),
-                                        WatchLog("cos tam", "3", "comment"),
-                                        WatchLog("ni ma", "4", "not found")
-                                    )
-                                )
-                            )
-                        )
-                    }
-                }) {
-                    Text("sendData")
-                }
-                Button(onClick = {
-                    GlobalScope.launch() {
-                        garmin.getData().collect {
-                            println(it)
-                        }
-                    }
-                }) {
-                    Text("getData")
-                }
-            }
+            AppNavigation(modifier = Modifier)
+//            val garmin by getKoin().inject<GarminManager>()
+//            Column {
+//                Button(onClick = {
+//                    GlobalScope.launch(Dispatchers.Main) {
+//                        garmin.init()
+//                    }
+//                }) {
+//                    Text("init")
+//                }
+//                Button(onClick = {
+//                    GlobalScope.launch() {
+//                        garmin.sendData(
+//                            WatchSendKeys.GET_DATA(
+//                                watchData = WatchData(
+//                                    items = listOf(
+//                                        WatchCache("[OH] #6 Biblioteka", "OPE4EA"),
+//                                        WatchCache("Staw Schrödingera", "OPE40A"),
+//                                        WatchCache("Staw na ulicy Fiołkowej", "OPA00A"),
+//                                        WatchCache("GORUSZKA", "OPAEFA"),
+//                                        WatchCache("Cerkwiska i Cmentarze -Smerek", "OPA34D"),
+//                                    ),
+//                                    logs = listOf(
+//                                        WatchLog("Wszystko gra", "1", "found"),
+//                                        WatchLog("super skrzyneczka", "2", "found"),
+//                                        WatchLog("cos tam", "3", "comment"),
+//                                        WatchLog("ni ma", "4", "not found")
+//                                    )
+//                                )
+//                            )
+//                        )
+//                    }
+//                }) {
+//                    Text("sendData")
+//                }
+//                Button(onClick = {
+//                    GlobalScope.launch() {
+//                        garmin.getData().collect {
+//                            println(it)
+//                        }
+//                    }
+//                }) {
+//                    Text("getData")
+//                }
+//            }
         }
     }
 }
@@ -112,8 +107,9 @@ private fun KoinApplication.setupModules(calculateWindowSizeClass: WindowSizeCal
     modules(repositoryModule, apiModule, accountModule, logManagerModule, viewModelModule).modules(
         PlatformSpecificModule().getModules().plus(
             BrowserPlatformSpecificModule().getModules()
-        ).plus(
-            GarminPlatformSpecificModule().getModules()
+        )
+            .plus(
+            WatchPlatformSpecificModule().getModules()
         )
     ).modules(module {
         single<WindowSizeCallback> {
