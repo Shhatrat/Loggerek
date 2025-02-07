@@ -66,6 +66,7 @@ kotlin {
             implementation(libs.coil.svg)
             implementation(libs.coil.network.ktor3)
             implementation(projects.manager.account)
+            implementation(projects.manager.watch)
             implementation("org.jetbrains.compose.material3:material3-window-size-class:1.7.3")
             @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
             implementation(compose.uiTest)

@@ -55,50 +55,6 @@ fun App(
         }
         ) {
             AppNavigation(modifier = Modifier)
-//            val garmin by getKoin().inject<GarminManager>()
-//            Column {
-//                Button(onClick = {
-//                    GlobalScope.launch(Dispatchers.Main) {
-//                        garmin.init()
-//                    }
-//                }) {
-//                    Text("init")
-//                }
-//                Button(onClick = {
-//                    GlobalScope.launch() {
-//                        garmin.sendData(
-//                            WatchSendKeys.GET_DATA(
-//                                watchData = WatchData(
-//                                    items = listOf(
-//                                        WatchCache("[OH] #6 Biblioteka", "OPE4EA"),
-//                                        WatchCache("Staw Schrödingera", "OPE40A"),
-//                                        WatchCache("Staw na ulicy Fiołkowej", "OPA00A"),
-//                                        WatchCache("GORUSZKA", "OPAEFA"),
-//                                        WatchCache("Cerkwiska i Cmentarze -Smerek", "OPA34D"),
-//                                    ),
-//                                    logs = listOf(
-//                                        WatchLog("Wszystko gra", "1", "found"),
-//                                        WatchLog("super skrzyneczka", "2", "found"),
-//                                        WatchLog("cos tam", "3", "comment"),
-//                                        WatchLog("ni ma", "4", "not found")
-//                                    )
-//                                )
-//                            )
-//                        )
-//                    }
-//                }) {
-//                    Text("sendData")
-//                }
-//                Button(onClick = {
-//                    GlobalScope.launch() {
-//                        garmin.getData().collect {
-//                            println(it)
-//                        }
-//                    }
-//                }) {
-//                    Text("getData")
-//                }
-//            }
         }
     }
 }

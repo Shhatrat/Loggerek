@@ -7,6 +7,6 @@ import org.koin.dsl.module
 actual class WatchPlatformSpecificModule: PlatformSpecific {
 
     override fun getModules(): List<Module> {
-        return listOf(module { single { GarminManager(get()) } })
+        return listOf(module { single<Watch> { GarminManager(get()) } })
     }
 }

@@ -8,6 +8,8 @@ typealias WindowSizeCallback = @Composable () -> WindowSizeClass
 
 typealias MoveToIntro = () -> Unit
 
+typealias MoveToWatch = () -> Unit
+
 typealias OnBack = () -> Unit
 
 typealias MoveToLogCache = @Composable (String) -> Unit

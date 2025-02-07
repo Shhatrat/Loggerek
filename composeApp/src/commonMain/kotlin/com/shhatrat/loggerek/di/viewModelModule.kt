@@ -1,6 +1,8 @@
 package com.shhatrat.loggerek.di
 
+import com.shhatrat.loggerek.base.MoveToIntro
 import com.shhatrat.loggerek.base.MoveToLogCache
+import com.shhatrat.loggerek.base.MoveToWatch
 import com.shhatrat.loggerek.base.di.LogScope
 import com.shhatrat.loggerek.intro.authorizate.AuthViewModel
 import com.shhatrat.loggerek.intro.splash.IntroViewModel
@@ -21,7 +23,7 @@ val viewModelModule = module {
     viewModel { (navigateToMain: () -> Unit) -> AuthViewModel(navigateToMain, get(), get()) }
     viewModel { (navigateToIntro: () -> Unit) -> MainViewModel(navigateToIntro) }
     viewModel { ProfileViewModel(get()) }
-    viewModel { (navigateToMain: () -> Unit) -> SettingsViewModel(navigateToMain, get()) }
+    viewModel { (moveToIntro: MoveToIntro, moveToWatch: MoveToWatch) -> SettingsViewModel(moveToIntro, moveToWatch, get(), getOrNull()) }
     scope(named(LogScope)) {
         scoped { (cacheId: String) -> LogViewModel(cacheId, get(), get(), get()) }
     }

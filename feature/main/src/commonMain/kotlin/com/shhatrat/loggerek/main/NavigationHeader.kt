@@ -29,5 +29,7 @@ sealed class NavigationHeader(
         NavigationHeader(imagePath, headerLog) {
         class LOG(onBack: OnBack, val cacheId: String) :
             Specific(onBack, "drawable/checklist.svg", Res.string.headerLog)
+        class WATCH(onBack: OnBack) :
+            Specific(onBack, "drawable/watch.svg", Res.string.headerWatch)
     }
 }

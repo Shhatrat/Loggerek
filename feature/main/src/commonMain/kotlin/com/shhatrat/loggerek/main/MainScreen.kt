@@ -34,6 +34,7 @@ import coil3.compose.rememberAsyncImagePainter
 import com.shhatrat.loggerek.base.LoggerekTheme
 import com.shhatrat.loggerek.base.MoveToIntro
 import com.shhatrat.loggerek.base.MoveToLogCache
+import com.shhatrat.loggerek.base.MoveToWatch
 import com.shhatrat.loggerek.base.OnBack
 import com.shhatrat.loggerek.base.WindowSizeCallback
 import com.shhatrat.loggerek.base.di.LogScope
@@ -47,9 +48,7 @@ import com.shhatrat.loggerek.settings.ProfileViewModel
 import com.shhatrat.loggerek.settings.SettingsViewModel
 import com.shhatrat.loggerek.settings.SettinsScreen
 import loggerek.feature.main.generated.resources.Res
-import loggerek.feature.main.generated.resources.back
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 import org.koin.core.qualifier.named
@@ -128,7 +127,10 @@ private fun handleChangeScreen(
             }
 
             NavigationHeader.Main.SETTINGS -> {
-                openSettingsScreen(calculateWindowSizeClass, moveToMain)
+                openSettingsScreen(
+                    calculateWindowSizeClass,
+                    moveToMain
+                ) { moveToOtherScreen.invoke(NavigationHeader.Specific.WATCH(onBack)) }
             }
 
             NavigationHeader.Main.CACHES -> {
@@ -137,6 +139,10 @@ private fun handleChangeScreen(
 
             is NavigationHeader.Specific.LOG -> {
                 openLogScreen(calculateWindowSizeClass, navigationHeader.cacheId)
+            }
+
+            is NavigationHeader.Specific.WATCH -> {
+                openWatchScreen(calculateWindowSizeClass)
             }
         }
     }
@@ -168,11 +174,13 @@ private fun HeaderContent(
 
 @Preview
 @Composable
-fun HeaderContentPreview(){
+fun HeaderContentPreview() {
     LoggerekTheme {
         HeaderContent({}, NavigationHeader.Specific.LOG({}, ""))
     }
 }
+
+
 
 @Composable
 private fun openSearch(
@@ -185,6 +193,18 @@ private fun openSearch(
     val vm: SearchViewModel = koinViewModel { parametersOf(moveToLogCache) }
     LaunchedEffect(Unit) { vm.onStart() }
     SearchScreen(calculateWindowSizeClass, vm.state.collectAsState().value)
+}
+
+@Composable
+private fun openWatchScreen(
+    calculateWindowSizeClass: WindowSizeCallback,
+) {
+    TODO()
+//    val moveToLogCache: MoveToLogCache =
+//        { cache: String -> moveToOtherScreen(NavigationHeader.Specific.LOG(onBack, cache)) }
+//    val vm: SearchViewModel = koinViewModel { parametersOf(moveToLogCache) }
+//    LaunchedEffect(Unit) { vm.onStart() }
+//    SearchScreen(calculateWindowSizeClass, vm.state.collectAsState().value)
 }
 
 @Composable
@@ -205,9 +225,10 @@ private fun openLogScreen(calculateWindowSizeClass: WindowSizeCallback, cacheId:
 @Composable
 private fun openSettingsScreen(
     calculateWindowSizeClass: WindowSizeCallback,
-    moveToIntro: MoveToIntro
+    moveToIntro: MoveToIntro,
+    moveToWatch: MoveToWatch,
 ) {
-    val vm: SettingsViewModel = koinViewModel { parametersOf(moveToIntro) }
+    val vm: SettingsViewModel = koinViewModel { parametersOf(moveToIntro, moveToWatch) }
     LaunchedEffect(Unit) { vm.onStart() }
     SettinsScreen(calculateWindowSizeClass, vm.state.collectAsState().value)
 }
