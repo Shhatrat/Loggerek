@@ -1,0 +1,7 @@
+<resources>
+    <string name="cachesFound">Caches Found:</string>
+    <string name="cachesNotFound">Caches Not Found:</string>
+    <string name="cachesHidden">Caches Hidden:</string>
+    <string name="recommendationsGiven">Recommendations Given:</string>
+    <string name="recommendationsLeft">Recommendations Left:</string>
+</resources>

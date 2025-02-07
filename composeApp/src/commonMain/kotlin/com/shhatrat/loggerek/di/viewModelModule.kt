@@ -11,6 +11,7 @@ import com.shhatrat.loggerek.main.MainViewModel
 import com.shhatrat.loggerek.search.SearchViewModel
 import com.shhatrat.loggerek.settings.ProfileViewModel
 import com.shhatrat.loggerek.settings.SettingsViewModel
+import com.shhatrat.loggerek.watch.WatchViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -28,4 +29,5 @@ val viewModelModule = module {
         scoped { (cacheId: String) -> LogViewModel(cacheId, get(), get(), get()) }
     }
     viewModel { (moveToLogCache: MoveToLogCache) -> SearchViewModel(moveToLogCache, get()) }
+    viewModel { WatchViewModel(get()) }
 }

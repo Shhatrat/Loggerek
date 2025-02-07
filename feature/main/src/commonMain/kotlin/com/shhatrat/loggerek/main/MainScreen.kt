@@ -47,6 +47,8 @@ import com.shhatrat.loggerek.settings.ProfileScreen
 import com.shhatrat.loggerek.settings.ProfileViewModel
 import com.shhatrat.loggerek.settings.SettingsViewModel
 import com.shhatrat.loggerek.settings.SettingsScreen
+import com.shhatrat.loggerek.watch.WatchScreen
+import com.shhatrat.loggerek.watch.WatchViewModel
 import loggerek.feature.main.generated.resources.Res
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.koin.compose.viewmodel.koinViewModel
@@ -199,12 +201,9 @@ private fun openSearch(
 private fun openWatchScreen(
     calculateWindowSizeClass: WindowSizeCallback,
 ) {
-    TODO()
-//    val moveToLogCache: MoveToLogCache =
-//        { cache: String -> moveToOtherScreen(NavigationHeader.Specific.LOG(onBack, cache)) }
-//    val vm: SearchViewModel = koinViewModel { parametersOf(moveToLogCache) }
-//    LaunchedEffect(Unit) { vm.onStart() }
-//    SearchScreen(calculateWindowSizeClass, vm.state.collectAsState().value)
+    val vm: WatchViewModel = koinViewModel()
+    LaunchedEffect(Unit) { vm.onStart() }
+    WatchScreen(calculateWindowSizeClass, vm.state.collectAsState().value)
 }
 
 @Composable

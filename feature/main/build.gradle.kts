@@ -52,6 +52,7 @@ kotlin {
             implementation(compose.components.resources)
             implementation(projects.base)
             implementation(projects.manager.account)
+            implementation(projects.feature.watch)
             api(compose.material3AdaptiveNavigationSuite)
             implementation(projects.api)
             implementation(projects.feature.profile)

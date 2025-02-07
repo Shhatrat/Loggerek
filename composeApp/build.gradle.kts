@@ -85,6 +85,7 @@ kotlin {
             implementation(projects.feature.main)
             implementation(projects.feature.profile)
             implementation(projects.feature.settings)
+            implementation(projects.feature.watch)
             implementation(projects.feature.log)
             implementation(projects.base)
             implementation(projects.base.browser)

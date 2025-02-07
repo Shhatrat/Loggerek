@@ -1,8 +1,5 @@
 package com.shhatrat.loggerek
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.material.Button
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -32,11 +29,7 @@ import com.shhatrat.loggerek.main.MainViewModel
 import com.shhatrat.loggerek.manager.log.di.logManagerModule
 import com.shhatrat.loggerek.manager.watch.WatchPlatformSpecificModule
 import com.shhatrat.loggerek.repository.di.repositoryModule
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import org.koin.compose.KoinApplication
-import org.koin.compose.getKoin
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.KoinApplication
