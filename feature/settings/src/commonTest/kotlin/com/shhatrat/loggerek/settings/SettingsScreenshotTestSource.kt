@@ -11,7 +11,7 @@ class SettingsScreenshotTestSource {
     fun settingsScreen(): List<TestItem> {
         return getTestItems(
             { deviceScreen ->
-                SettinsScreen(
+                SettingsScreen(
                     calculateWindowSizeClass = { deviceScreen.getWindowSizeClass() },
                     settingsUiState = SettingsUiState(
                         mixedPassword = SettingsItem.SettingsSwitch(
@@ -36,7 +36,7 @@ class SettingsScreenshotTestSource {
         )
         viewModel.onStart()
         return getTestItems({ deviceScreen ->
-            SettinsScreen(
+            SettingsScreen(
                 calculateWindowSizeClass = { deviceScreen.getWindowSizeClass() },
                 settingsUiState = viewModel.state.value
             )

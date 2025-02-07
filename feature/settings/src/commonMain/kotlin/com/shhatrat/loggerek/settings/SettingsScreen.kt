@@ -8,8 +8,6 @@ import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -22,6 +20,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Text
@@ -51,14 +50,14 @@ import loggerek.feature.settings.generated.resources.logsTitle
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 
 @Composable
-fun SettinsScreen(calculateWindowSizeClass: WindowSizeCallback, settingsUiState: SettingsUiState) {
+fun SettingsScreen(calculateWindowSizeClass: WindowSizeCallback, settingsUiState: SettingsUiState) {
 
     val snackBarHostState = remember { SnackbarHostState() }
     LaunchedEffect(settingsUiState.error) {
         SnackBarHelper.handle(snackBarHostState, settingsUiState.error)
     }
 
-    Crossfade(targetState = (calculateWindowSizeClass.invoke().widthSizeClass)) { screenClass ->
+    Crossfade(modifier = Modifier.fillMaxSize(), targetState = (calculateWindowSizeClass.invoke().widthSizeClass)) { screenClass ->
         when (screenClass) {
             WindowWidthSizeClass.Compact, WindowWidthSizeClass.Medium ->
                 CompactScreenLayout(modifier = Modifier.fillMaxSize(), settingsUiState)
@@ -87,7 +86,7 @@ fun CompactScreenLayout(modifier: Modifier, settingsUiState: SettingsUiState) {
             )
         }
         Column(
-            Modifier.align(Alignment.TopCenter).scrollable(rememberScrollState(), orientation = Orientation.Vertical),
+            Modifier.align(Alignment.TopCenter).verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

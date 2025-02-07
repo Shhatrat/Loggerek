@@ -46,7 +46,7 @@ import com.shhatrat.loggerek.search.SearchViewModel
 import com.shhatrat.loggerek.settings.ProfileScreen
 import com.shhatrat.loggerek.settings.ProfileViewModel
 import com.shhatrat.loggerek.settings.SettingsViewModel
-import com.shhatrat.loggerek.settings.SettinsScreen
+import com.shhatrat.loggerek.settings.SettingsScreen
 import loggerek.feature.main.generated.resources.Res
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.koin.compose.viewmodel.koinViewModel
@@ -230,6 +230,6 @@ private fun openSettingsScreen(
 ) {
     val vm: SettingsViewModel = koinViewModel { parametersOf(moveToIntro, moveToWatch) }
     LaunchedEffect(Unit) { vm.onStart() }
-    SettinsScreen(calculateWindowSizeClass, vm.state.collectAsState().value)
+    SettingsScreen(calculateWindowSizeClass, vm.state.collectAsState().value)
 }
 
