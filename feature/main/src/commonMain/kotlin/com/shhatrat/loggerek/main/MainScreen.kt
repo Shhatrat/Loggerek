@@ -6,6 +6,7 @@ import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
@@ -155,19 +157,19 @@ private fun HeaderContent(
     onBack: OnBack,
     navigationHeader: NavigationHeader
 ) {
-    Row(
+    Box(
         modifier = Modifier.height(60.dp).fillMaxWidth()
             .background(MaterialTheme.colors.primary),
-        verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
-            modifier = Modifier.fillMaxHeight().clickable { onBack() },
+            modifier = Modifier.size(40.dp).clickable { onBack() }
+                .align(Alignment.CenterStart),
             painter = rememberAsyncImagePainter(Res.getUri("drawable/back.svg")),
             colorFilter = ColorFilter.tint(MaterialTheme.colors.background),
             contentDescription = "back arrow"
         )
         Text(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().align(Alignment.Center),
             textAlign = TextAlign.Center,
             color = MaterialTheme.colors.background, text = navigationHeader.nameRes.get()
         )
@@ -178,7 +180,12 @@ private fun HeaderContent(
 @Composable
 fun HeaderContentPreview() {
     LoggerekTheme {
-        HeaderContent({}, NavigationHeader.Specific.LOG({}, ""))
+        Box(modifier = Modifier.size(300.dp)) {
+            Column {
+                HeaderContent({}, NavigationHeader.Specific.WATCH({}))
+                HeaderContent({}, NavigationHeader.Specific.LOG( {},""))
+            }
+        }
     }
 }
 
