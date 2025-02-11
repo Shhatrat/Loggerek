@@ -1,3 +1,3 @@
 package com.shhatrat.loggerek.manager.watch
 
-expect class GarminManager: Watch
+expect class GarminManager: GarminWatch

@@ -5,9 +5,11 @@ import android.util.Log
 import com.garmin.android.connectiq.ConnectIQ
 import com.garmin.android.connectiq.ConnectIQ.ConnectIQListener
 import com.garmin.android.connectiq.ConnectIQ.IQApplicationEventListener
-import com.garmin.android.connectiq.ConnectIQ.IQMessageStatus.*
+import com.garmin.android.connectiq.ConnectIQ.IQApplicationInfoListener
+import com.garmin.android.connectiq.ConnectIQ.IQMessageStatus.SUCCESS
 import com.garmin.android.connectiq.ConnectIQ.IQSendMessageListener
 import com.garmin.android.connectiq.IQApp
+import com.garmin.android.connectiq.IQApp.IQAppStatus.INSTALLED
 import com.garmin.android.connectiq.IQDevice
 import com.shhatrat.loggerek.manager.watch.model.WatchSendKeys
 import kotlinx.coroutines.channels.awaitClose
@@ -15,19 +17,71 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.suspendCancellableCoroutine
 
-actual class GarminManager(private val context: Context): Watch {
+actual class GarminManager(
+    private val context: Context,
+    private val garminInitType: GarminInitType
+) : GarminWatch {
 
-    lateinit var connectIQ: ConnectIQ
-    lateinit var device : IQDevice
-    lateinit var app : IQApp
+    private lateinit var connectIQ: ConnectIQ
+    private val deviceList = mutableListOf<Pair<IQDevice, GarminWatch.GarminDevice>>()
+    private var selectedDevice: Pair<IQDevice, GarminWatch.GarminDevice>? = null
+
+    private var app: IQApp? = when(garminInitType){
+        GarminInitType.REAL -> null
+        GarminInitType.FAKE -> IQApp("")
+    }
+
+    private val device: IQDevice
+        get() {
+            return selectedDevice?.first ?: deviceList.first().first
+        }
+
+    override fun selectDevice(garminDevice: GarminWatch.GarminDevice) {
+        selectedDevice = deviceList.find { it.second.identifier == garminDevice.identifier }
+    }
+
+    override suspend fun loadApp(): Boolean {
+        return suspendCancellableCoroutine { continuation ->
+            connectIQ.getApplicationInfo(
+                garminInitType.appId,
+                selectedDevice?.first,
+                object : IQApplicationInfoListener {
+                    override fun onApplicationInfoReceived(p0: IQApp?) {
+                        if(p0!=null) {
+                            app = p0
+                            continuation.resumeWith(Result.success(true))
+                        }
+                        else
+                            continuation.resumeWith(Result.success(false))
+                    }
+
+                    override fun onApplicationNotInstalled(p0: String?) {
+                        continuation.resumeWith(Result.success(false))
+                    }
+                })
+        }
+    }
+
+    private fun saveDevices(list: List<IQDevice>) {
+        deviceList.clear()
+        deviceList.addAll(list.map {
+            Pair(
+                it,
+                GarminWatch.GarminDevice(
+                    name = it.friendlyName,
+                    identifier = it.deviceIdentifier,
+                    connectedState = it.status.name)
+            )
+        })
+    }
 
     override suspend fun init(): Boolean {
         return suspendCancellableCoroutine { continuation ->
-            connectIQ = ConnectIQ.getInstance(context, ConnectIQ.IQConnectType.TETHERED)
+            connectIQ = ConnectIQ.getInstance(context, garminInitType.type)
             connectIQ.initialize(context, true, object : ConnectIQListener {
                 override fun onSdkReady() {
                     Log.d("TAGgarmin", "onSdkReady: Success")
-                    device = connectIQ.knownDevices.first()
+                    saveDevices(connectIQ.knownDevices)
                     continuation.resumeWith(Result.success(true))
                 }
 
@@ -43,6 +97,36 @@ actual class GarminManager(private val context: Context): Watch {
         }
     }
 
+    override fun getListOfDevices(): List<GarminWatch.GarminDevice> {
+        return connectIQ.knownDevices
+            .apply { saveDevices(this) }
+            .map {
+                GarminWatch.GarminDevice(
+                    name = it.friendlyName,
+                    identifier = it.deviceIdentifier,
+                    connectedState  = connectIQ.getDeviceStatus(it).name
+                )
+            }
+    }
+
+    override suspend fun isAppInstalled(garminDevice: GarminWatch.GarminDevice): Boolean {
+        return suspendCancellableCoroutine { continuation ->
+            val dev = deviceList.find { it.second.identifier == garminDevice.identifier }?.first
+            connectIQ.getApplicationInfo(garminInitType.appId, dev, object : IQApplicationInfoListener {
+                override fun onApplicationInfoReceived(p0: IQApp?) {
+                    when (p0?.status) {
+                        INSTALLED -> continuation.resumeWith(Result.success(true))
+                        else -> continuation.resumeWith(Result.success(false))
+                    }
+                }
+
+                override fun onApplicationNotInstalled(p0: String?) {
+                    continuation.resumeWith(Result.success(false))
+                }
+            })
+        }
+    }
+
     override fun getData(): Flow<Any> {
         return callbackFlow {
             val listener =
@@ -51,33 +135,29 @@ actual class GarminManager(private val context: Context): Watch {
                     Log.d("TAGgarmin", "onMessageReceived: ${p2?.joinToString()}")
                     p2?.let { trySend(it).isSuccess }
                 }
-            connectIQ.registerForAppEvents(device, IQApp(""), listener)
+            connectIQ.registerForAppEvents(device, app, listener)
             awaitClose {
                 connectIQ.unregisterForApplicationEvents(device, IQApp(""))
             }
         }
     }
 
-//             connectIQ.getApplicationInfo("10b02fda-7fd6-4174-a292-0602f1eb9886", it, object: IQApplicationInfoListener{
-//                 override fun onApplicationInfoReceived(p0: IQApp?) {
-//                     app = p0!!
-//                     Log.d("TAGgarmin", "---> ${p0?.status}")
-//                     Log.d("TAGgarmin", "---> ${p0?.applicationId}")
-//                     Log.d("TAGgarmin", "---> ${p0?.displayName}")
-//                     Log.d("TAGgarmin", "---> ${p0?.version()}")
-//                     trySend(it, p0)
-//                 }
-
-    override suspend fun sendData(watchSendKeys: WatchSendKeys): Boolean{
+    override suspend fun sendData(watchSendKeys: WatchSendKeys): Boolean {
         val message = watchSendKeys.mapString()
+        Log.d("TAGgarmin", "to send ${message}")
         return suspendCancellableCoroutine { continuation ->
-            connectIQ.sendMessage(device, IQApp(""), message,  object :IQSendMessageListener{
+            Log.d("TAGgarmin", "go!!!!!")
+            connectIQ.sendMessage(device, app, message, object : IQSendMessageListener {
                 override fun onMessageStatus(
                     p0: IQDevice?,
                     p1: IQApp?,
                     p2: ConnectIQ.IQMessageStatus?
                 ) {
-                    when(p2){
+
+                    Log.d("TAGgarmin", "sended")
+                    Log.d("TAGgarmin", p2?.name?:"cos nie ma nic")
+
+                    when (p2) {
                         SUCCESS -> continuation.resumeWith(Result.success(true))
                         else -> continuation.resumeWith(Result.success(false))
                     }

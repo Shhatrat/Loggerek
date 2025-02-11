@@ -8,6 +8,7 @@ import com.shhatrat.loggerek.base.MoveToIntro
 import com.shhatrat.loggerek.base.MoveToWatch
 import com.shhatrat.loggerek.base.error.ErrorHandlingUtil
 import com.shhatrat.loggerek.base.loader.LoaderHandlingUtil
+import com.shhatrat.loggerek.manager.watch.GarminWatch
 import com.shhatrat.loggerek.manager.watch.Watch
 import loggerek.feature.settings.generated.resources.Res
 import loggerek.feature.settings.generated.resources.accountTitle
@@ -59,7 +60,7 @@ class SettingsViewModel(
     private val moveToIntro: MoveToIntro,
     private val moveToWatch: MoveToWatch,
     private val accountManager: AccountManager,
-    private val watchManager: Watch?
+    private val watchManager: GarminWatch?
 ) : BaseViewModel<SettingsUiState>(SettingsUiState()) {
 
     private val loaderHandlingUtil =
