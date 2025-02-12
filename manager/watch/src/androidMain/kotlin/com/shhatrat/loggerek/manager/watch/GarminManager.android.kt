@@ -9,7 +9,6 @@ import com.garmin.android.connectiq.ConnectIQ.IQApplicationInfoListener
 import com.garmin.android.connectiq.ConnectIQ.IQMessageStatus.SUCCESS
 import com.garmin.android.connectiq.ConnectIQ.IQSendMessageListener
 import com.garmin.android.connectiq.IQApp
-import com.garmin.android.connectiq.IQApp.IQAppStatus.INSTALLED
 import com.garmin.android.connectiq.IQDevice
 import com.shhatrat.loggerek.manager.watch.model.WatchSendKeys
 import kotlinx.coroutines.channels.awaitClose
@@ -26,10 +25,12 @@ actual class GarminManager(
     private val deviceList = mutableListOf<Pair<IQDevice, GarminWatch.GarminDevice>>()
     private var selectedDevice: Pair<IQDevice, GarminWatch.GarminDevice>? = null
 
-    private var app: IQApp? = when(garminInitType){
+    private var app: IQApp? = when (garminInitType) {
         GarminInitType.REAL -> null
         GarminInitType.FAKE -> IQApp("")
     }
+
+    private var alreadyInited = false
 
     private val device: IQDevice
         get() {
@@ -47,11 +48,10 @@ actual class GarminManager(
                 selectedDevice?.first,
                 object : IQApplicationInfoListener {
                     override fun onApplicationInfoReceived(p0: IQApp?) {
-                        if(p0!=null) {
+                        if (p0 != null) {
                             app = p0
                             continuation.resumeWith(Result.success(true))
-                        }
-                        else
+                        } else
                             continuation.resumeWith(Result.success(false))
                     }
 
@@ -70,17 +70,24 @@ actual class GarminManager(
                 GarminWatch.GarminDevice(
                     name = it.friendlyName,
                     identifier = it.deviceIdentifier,
-                    connectedState = it.status.name)
+                    connectedState = it.status.toGarminWatchState()
+                )
             )
         })
     }
 
     override suspend fun init(): Boolean {
+        if (alreadyInited) {
+            saveDevices(connectIQ.knownDevices)
+            return true
+        }
+
         return suspendCancellableCoroutine { continuation ->
             connectIQ = ConnectIQ.getInstance(context, garminInitType.type)
             connectIQ.initialize(context, true, object : ConnectIQListener {
                 override fun onSdkReady() {
                     Log.d("TAGgarmin", "onSdkReady: Success")
+                    alreadyInited = true
                     saveDevices(connectIQ.knownDevices)
                     continuation.resumeWith(Result.success(true))
                 }
@@ -104,26 +111,35 @@ actual class GarminManager(
                 GarminWatch.GarminDevice(
                     name = it.friendlyName,
                     identifier = it.deviceIdentifier,
-                    connectedState  = connectIQ.getDeviceStatus(it).name
+                    connectedState = connectIQ.getDeviceStatus(it).toGarminWatchState()
                 )
             }
     }
 
-    override suspend fun isAppInstalled(garminDevice: GarminWatch.GarminDevice): Boolean {
+    override suspend fun isAppInstalled(garminDevice: GarminWatch.GarminDevice): GarminWatch.InstalledAppState {
         return suspendCancellableCoroutine { continuation ->
             val dev = deviceList.find { it.second.identifier == garminDevice.identifier }?.first
-            connectIQ.getApplicationInfo(garminInitType.appId, dev, object : IQApplicationInfoListener {
-                override fun onApplicationInfoReceived(p0: IQApp?) {
-                    when (p0?.status) {
-                        INSTALLED -> continuation.resumeWith(Result.success(true))
-                        else -> continuation.resumeWith(Result.success(false))
-                    }
-                }
+            if(dev?.status != IQDevice.IQDeviceStatus.CONNECTED){
+                continuation.resumeWith(Result.success(GarminWatch.InstalledAppState.UNKNOWN))
+            }else {
+                connectIQ.getApplicationInfo(
+                    garminInitType.appId,
+                    dev,
+                    object : IQApplicationInfoListener {
+                        override fun onApplicationInfoReceived(p0: IQApp?) {
+                            continuation.resumeWith(
+                                Result.success(
+                                    p0?.status?.toInstalledAppState()
+                                        ?: GarminWatch.InstalledAppState.UNKNOWN
+                                )
+                            )
+                        }
 
-                override fun onApplicationNotInstalled(p0: String?) {
-                    continuation.resumeWith(Result.success(false))
-                }
-            })
+                        override fun onApplicationNotInstalled(p0: String?) {
+                            continuation.resumeWith(Result.success(GarminWatch.InstalledAppState.NOT_INSTALLED))
+                        }
+                    })
+            }
         }
     }
 
@@ -155,7 +171,7 @@ actual class GarminManager(
                 ) {
 
                     Log.d("TAGgarmin", "sended")
-                    Log.d("TAGgarmin", p2?.name?:"cos nie ma nic")
+                    Log.d("TAGgarmin", p2?.name ?: "cos nie ma nic")
 
                     when (p2) {
                         SUCCESS -> continuation.resumeWith(Result.success(true))

@@ -15,6 +15,9 @@ class FakeRepositoryImpl : Repository {
     override val tryMixedPassword: RepositoryItem<Boolean> =
         FakeRepositoryItem(fakeStorage, "tryMixedPassword")
 
+    override val garminIdentifier: RepositoryItem<Long?> =
+        FakeRepositoryItem(fakeStorage, "garminIdentifier")
+
     private class FakeRepositoryItem<T>(
         private val storage: MutableMap<String, Any?>,
         private val key: String

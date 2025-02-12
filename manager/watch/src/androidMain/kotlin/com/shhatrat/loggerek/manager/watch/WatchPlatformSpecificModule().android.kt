@@ -1,12 +1,16 @@
 package com.shhatrat.loggerek.manager.watch
 
 import com.shhatrat.loggerek.di.PlatformSpecific
+import com.shhatrat.loggerek.manager.watch.config.ConfigManager
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
 actual class WatchPlatformSpecificModule: PlatformSpecific {
 
     override fun getModules(): List<Module> {
-        return listOf(module { single<GarminWatch> { GarminManager(get(), GarminInitType.REAL) } })
+        return listOf(module {
+            single<GarminWatch> { GarminManager(get(), GarminInitType.REAL) }
+            single<ConfigManager<GarminWatch.GarminDevice, GarminWatch.InstalledAppState>> { GarminConfigManager(get(), get()) }
+        })
     }
 }

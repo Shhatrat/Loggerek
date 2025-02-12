@@ -10,5 +10,4 @@ interface Watch {
     fun getData(): Flow<Any>
 
     suspend fun sendData(watchSendKeys: WatchSendKeys): Boolean
-
 }
