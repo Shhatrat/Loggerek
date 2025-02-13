@@ -67,7 +67,10 @@ class WatchViewModel(
                     onSelect = { onSelectedDevice(it.device) }
                 )
             }?.let {
-                updateUiState { copy(savedDevice = it) }
+                updateUiState {
+                    copy(savedDevice = it,
+                        removeSavedDeviceButtonAction = { garminConfigManager.saveDevice(null); loadSavedDevice() })
+                }
             }
         }
 

@@ -64,6 +64,11 @@ fun WatchScreen(calculateWindowSizeClass: WindowSizeCallback, watchUiState: Watc
                         Text("select")
                     }
                 }
+                watchUiState.removeSavedDeviceButtonAction?.let { button ->
+                    Button(onClick = { button.invoke() }) {
+                        Text("delete")
+                    }
+                }
             }
 
             watchUiState.devices.forEach { item ->
