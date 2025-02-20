@@ -1,5 +1,6 @@
 package com.shhatrat.loggerek
 
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -18,6 +19,8 @@ import com.shhatrat.loggerek.api.di.apiModule
 import com.shhatrat.loggerek.base.LoggerekTheme
 import com.shhatrat.loggerek.base.WindowSizeCallback
 import com.shhatrat.loggerek.base.browser.BrowserPlatformSpecificModule
+import com.shhatrat.loggerek.di.KoinHelper.setupBaseModules
+import com.shhatrat.loggerek.di.KoinHelper.setupWindowSizeModules
 import com.shhatrat.loggerek.di.PlatformSpecificModule
 import com.shhatrat.loggerek.di.viewModelModule
 import com.shhatrat.loggerek.intro.authorizate.AuthViewModel
@@ -27,44 +30,43 @@ import com.shhatrat.loggerek.intro.splash.IntroViewModel
 import com.shhatrat.loggerek.main.MainScreen
 import com.shhatrat.loggerek.main.MainViewModel
 import com.shhatrat.loggerek.manager.log.di.logManagerModule
+import com.shhatrat.loggerek.manager.watch.IGarminService
 import com.shhatrat.loggerek.manager.watch.WatchPlatformSpecificModule
 import com.shhatrat.loggerek.repository.di.repositoryModule
 import org.koin.compose.KoinApplication
+import org.koin.compose.KoinContext
+import org.koin.compose.currentKoinScope
+import org.koin.compose.getKoin
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.Koin
 import org.koin.core.KoinApplication
+import org.koin.core.context.KoinContext
+import org.koin.core.context.startKoin
 import org.koin.core.parameter.parametersOf
 import org.koin.dsl.module
 
 @Composable
 fun App(
     calculateWindowSizeClass: WindowSizeCallback,
-    additionalKoinConfig: KoinApplication.() -> Unit = { }
+    additionalKoinConfig: KoinApplication.() -> Unit = { },
+    startKoin: Boolean = true
 ) {
     LoggerekTheme {
-        KoinApplication(application = {
+        if(startKoin)
+        startKoin {
             additionalKoinConfig.invoke(this)
-            setupModules(calculateWindowSizeClass)
+            setupBaseModules()
+            setupWindowSizeModules(calculateWindowSizeClass)
         }
-        ) {
-            AppNavigation(modifier = Modifier)
-        }
+        setupServices()
+        AppNavigation(modifier = Modifier)
     }
 }
 
-private fun KoinApplication.setupModules(calculateWindowSizeClass: WindowSizeCallback) {
-    modules(repositoryModule, apiModule, accountModule, logManagerModule, viewModelModule).modules(
-        PlatformSpecificModule().getModules().plus(
-            BrowserPlatformSpecificModule().getModules()
-        )
-            .plus(
-            WatchPlatformSpecificModule().getModules()
-        )
-    ).modules(module {
-        single<WindowSizeCallback> {
-            { calculateWindowSizeClass() }
-        }
-    })
+@Composable
+private fun setupServices(){
+//    koinInject<IGarminService>().dod()
 }
 
 @Composable

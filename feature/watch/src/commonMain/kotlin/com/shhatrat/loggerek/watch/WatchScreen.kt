@@ -44,6 +44,7 @@ fun WatchScreen(calculateWindowSizeClass: WindowSizeCallback, watchUiState: Watc
             .padding(10.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
+            LocalizationPermission()
             Header(modifier = Modifier, "Garmin")
             if(watchUiState.savedDevice!=null){
                 Row {

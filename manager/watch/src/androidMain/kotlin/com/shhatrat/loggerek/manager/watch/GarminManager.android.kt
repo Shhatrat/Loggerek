@@ -1,7 +1,6 @@
 package com.shhatrat.loggerek.manager.watch
 
 import android.content.Context
-import android.util.Log
 import com.garmin.android.connectiq.ConnectIQ
 import com.garmin.android.connectiq.ConnectIQ.ConnectIQListener
 import com.garmin.android.connectiq.ConnectIQ.IQApplicationEventListener
@@ -86,20 +85,16 @@ actual class GarminManager(
             connectIQ = ConnectIQ.getInstance(context, garminInitType.type)
             connectIQ.initialize(context, true, object : ConnectIQListener {
                 override fun onSdkReady() {
-                    Log.d("TAGgarmin", "onSdkReady: Success")
                     alreadyInited = true
                     saveDevices(connectIQ.knownDevices)
                     continuation.resumeWith(Result.success(true))
                 }
 
                 override fun onInitializeError(error: ConnectIQ.IQSdkErrorStatus?) {
-                    Log.d("TAGgarmin", "onInitializeError: $error")
                     continuation.resumeWith(Result.success(false))
                 }
 
-                override fun onSdkShutDown() {
-                    Log.d("TAGgarmin", "onSdkShutDown:")
-                }
+                override fun onSdkShutDown() {}
             })
         }
     }
@@ -147,8 +142,6 @@ actual class GarminManager(
         return callbackFlow {
             val listener =
                 IQApplicationEventListener { p0, p1, p2, p3 ->
-                    Log.d("TAGgarmin", "onMessageReceived WOW")
-                    Log.d("TAGgarmin", "onMessageReceived: ${p2?.joinToString()}")
                     p2?.let { trySend(it).isSuccess }
                 }
             connectIQ.registerForAppEvents(device, app, listener)
@@ -160,19 +153,13 @@ actual class GarminManager(
 
     override suspend fun sendData(watchSendKeys: WatchSendKeys): Boolean {
         val message = watchSendKeys.mapString()
-        Log.d("TAGgarmin", "to send ${message}")
         return suspendCancellableCoroutine { continuation ->
-            Log.d("TAGgarmin", "go!!!!!")
             connectIQ.sendMessage(device, app, message, object : IQSendMessageListener {
                 override fun onMessageStatus(
                     p0: IQDevice?,
                     p1: IQApp?,
                     p2: ConnectIQ.IQMessageStatus?
                 ) {
-
-                    Log.d("TAGgarmin", "sended")
-                    Log.d("TAGgarmin", p2?.name ?: "cos nie ma nic")
-
                     when (p2) {
                         SUCCESS -> continuation.resumeWith(Result.success(true))
                         else -> continuation.resumeWith(Result.success(false))

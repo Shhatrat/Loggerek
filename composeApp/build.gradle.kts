@@ -61,6 +61,7 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.koin.android)
+            implementation("androidx.lifecycle:lifecycle-process:2.8.7")
         }
         commonMain.dependencies {
             implementation(compose.runtime)

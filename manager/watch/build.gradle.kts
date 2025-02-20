@@ -51,11 +51,13 @@ kotlin {
             implementation(compose.foundation)
             implementation(compose.material)
             implementation(compose.ui)
+            implementation(libs.koin.core)
             implementation(compose.components.resources)
             implementation(projects.repository)
             implementation(projects.api)
             implementation(projects.di)
-            implementation("io.ktor:ktor-serialization-kotlinx-json:3.0.0")
+            implementation(projects.manager.account)
+            implementation(libs.ktor.serialization.kotlinx.json)
         }
 
         val mobile by creating {
@@ -81,6 +83,7 @@ kotlin {
         val androidMain by getting{
             dependsOn(mobile)
             dependencies {
+                implementation("com.google.android.gms:play-services-location:21.0.1")
                 implementation("com.garmin.connectiq:ciq-companion-app-sdk:2.2.0")
             }
         }

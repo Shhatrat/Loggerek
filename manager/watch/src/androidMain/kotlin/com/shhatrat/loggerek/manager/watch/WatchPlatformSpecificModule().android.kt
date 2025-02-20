@@ -11,6 +11,8 @@ actual class WatchPlatformSpecificModule: PlatformSpecific {
         return listOf(module {
             single<GarminWatch> { GarminManager(get(), GarminInitType.REAL) }
             single<ConfigManager<GarminWatch.GarminDevice, GarminWatch.InstalledAppState>> { GarminConfigManager(get(), get()) }
+//            single<IGarminService> { GarminService(get(), get(), get(), get()) }
+            single<IGarminService> { GarminService(get()) }
         })
     }
 }
