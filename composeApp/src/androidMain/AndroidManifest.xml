@@ -22,7 +22,7 @@
         android:name=".AndroidApp"
         android:theme="@android:style/Theme.Material.Light.NoActionBar">
         <service
-            android:name=".GarminBackgroundService"
+            android:name=".manager.watch.GarminBackgroundService"
             android:foregroundServiceType="location"
             android:exported="false"/>
         <activity

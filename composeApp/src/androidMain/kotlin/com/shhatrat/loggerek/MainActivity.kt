@@ -6,13 +6,29 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
+import com.shhatrat.base.BaseData
 import com.shhatrat.loggerek.base.WindowSizeCallback
+import com.shhatrat.loggerek.manager.watch.GarminBackgroundService
 import com.shhatrat.loggerek.manager.watch.LocationService
 import org.koin.android.ext.koin.androidContext
 import org.koin.compose.getKoin
 import org.koin.dsl.module
+import org.koin.java.KoinJavaComponent.inject
 
 class MainActivity : ComponentActivity() {
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        startServiceIfRequired(intent)
+    }
+
+    private fun startServiceIfRequired(intent: Intent) {
+        val baseData by inject<BaseData>(BaseData::class.java)
+        if(intent.hasExtra(baseData.notificationKey())) {
+            startService(Intent(this, GarminBackgroundService::class.java))
+        }
+    }
+
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

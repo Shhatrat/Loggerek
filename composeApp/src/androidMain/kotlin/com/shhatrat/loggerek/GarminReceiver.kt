@@ -3,7 +3,9 @@ package com.shhatrat.loggerek
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.shhatrat.loggerek.NotificationHelper.createNotificationForStartAppWithService
+import com.shhatrat.loggerek.manager.watch.NotificationHelper.createNotificationForStartAppWithService
+import com.shhatrat.loggerek.manager.watch.GarminBackgroundService
+import com.shhatrat.loggerek.manager.watch.model.WatchRetrieveKeys
 import okio.internal.commonToUtf8String
 
 class GarminReceiver : BroadcastReceiver() {
@@ -16,7 +18,7 @@ class GarminReceiver : BroadcastReceiver() {
     private fun checkIsGetDataRequest(intent: Intent): Boolean {
         if (intent.hasExtra(EXTRA_PAYLOAD))
             return intent.extras?.getByteArray(EXTRA_PAYLOAD)?.commonToUtf8String()
-                ?.contains("GET_DATA") == true
+                ?.contains(WatchRetrieveKeys.GET_DATA.key) == true
         return false
     }
 

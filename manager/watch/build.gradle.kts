@@ -45,6 +45,9 @@ kotlin {
     }
 
     sourceSets {
+        androidMain.dependencies {
+            implementation(libs.koin.android)
+        }
         commonMain.dependencies {
             implementation(libs.koin.compose)
             implementation(compose.runtime)
@@ -57,6 +60,7 @@ kotlin {
             implementation(projects.api)
             implementation(projects.di)
             implementation(projects.manager.account)
+            implementation(projects.base)
             implementation(libs.ktor.serialization.kotlinx.json)
         }
 

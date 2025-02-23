@@ -1,11 +1,10 @@
-package com.shhatrat.loggerek
+package com.shhatrat.loggerek.manager.watch
 
 import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.os.IBinder
-import com.shhatrat.loggerek.NotificationHelper.createGarminServiceNotification
-import com.shhatrat.loggerek.manager.watch.LocationService
+import com.shhatrat.loggerek.manager.watch.NotificationHelper.createGarminServiceNotification
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
