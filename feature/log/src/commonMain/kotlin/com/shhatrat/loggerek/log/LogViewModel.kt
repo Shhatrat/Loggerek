@@ -12,6 +12,7 @@ import com.shhatrat.loggerek.base.ButtonAction
 import com.shhatrat.loggerek.base.Error
 import com.shhatrat.loggerek.base.Loader
 import com.shhatrat.loggerek.base.browser.BrowserUtil
+import com.shhatrat.loggerek.base.browser.IBrowserUtil
 import com.shhatrat.loggerek.base.composable.MultiTextFieldModel
 import com.shhatrat.loggerek.base.error.ErrorHandlingUtil
 import com.shhatrat.loggerek.base.loader.LoaderHandlingUtil
@@ -63,7 +64,7 @@ class LogViewModel(
     private val cacheId: String,
     private val logManager: LogManager,
     private val accountManager: AccountManager,
-    private val browserUtil: BrowserUtil
+    private val browserUtil: IBrowserUtil
 ) : BaseViewModel<LogUiState>(LogUiState()) {
 
     private val loaderHandlingUtil =

@@ -12,20 +12,19 @@ import org.koin.dsl.module
 
 object KoinHelper {
 
-    fun KoinApplication.setupBaseModules(){
+    fun KoinApplication.setupBaseModules() {
         modules(
             repositoryModule,
             apiModule,
             accountModule,
             logManagerModule,
-            viewModelModule
+            viewModelModule,
         ).modules(
             PlatformSpecificModule().getModules().plus(
                 BrowserPlatformSpecificModule().getModules()
+            ).plus(
+                WatchPlatformSpecificModule().getModules()
             )
-                .plus(
-                    WatchPlatformSpecificModule().getModules()
-                )
         )
     }
 

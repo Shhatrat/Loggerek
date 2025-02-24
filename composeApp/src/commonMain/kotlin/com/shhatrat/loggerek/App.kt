@@ -42,14 +42,8 @@ fun App(
                 setupBaseModules()
                 setupWindowSizeModules(calculateWindowSizeClass)
             }
-        setupServices()
         AppNavigation(modifier = Modifier)
     }
-}
-
-@Composable
-private fun setupServices() {
-//    koinInject<IGarminService>().dod()
 }
 
 @Composable
