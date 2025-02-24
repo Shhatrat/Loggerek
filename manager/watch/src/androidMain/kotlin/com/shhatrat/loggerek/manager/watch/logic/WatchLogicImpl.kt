@@ -19,6 +19,7 @@ import com.shhatrat.loggerek.manager.watch.model.toWatchCache
 import com.shhatrat.loggerek.repository.Repository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -32,7 +33,7 @@ class WatchLogicImpl(
 ) : WatchLogic {
 
     private val scope = CoroutineScope(Dispatchers.IO)
-
+    private var mainJob: Job? = null
 
     override suspend fun isAvailable(): Boolean {
         garminManager.init()
@@ -65,7 +66,8 @@ class WatchLogicImpl(
 
 
     override fun start() {
-        scope.launch(Dispatchers.Main) {
+        mainJob?.cancel()
+        mainJob = scope.launch(Dispatchers.Main) {
             if (isAvailable()) {
                 garminManager.selectDevice(
                     garminManager.getListOfDevices()
@@ -128,6 +130,6 @@ class WatchLogicImpl(
         LocationService.getLocationFlow(context).first()
 
     override fun stop() {
-        scope.cancel()
+        mainJob?.cancel()
     }
 }

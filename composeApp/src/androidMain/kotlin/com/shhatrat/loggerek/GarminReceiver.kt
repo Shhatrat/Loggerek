@@ -45,6 +45,6 @@ class GarminReceiver : BroadcastReceiver() {
         checkIsGetDataRequest(intent) && isAppIdCorrect(intent)
 
     private fun showNotificationToStartService(context: Context) {
-        context.createNotificationForStartAppWithService()
+        context.createNotificationForStartAppWithService(context)
     }
 }

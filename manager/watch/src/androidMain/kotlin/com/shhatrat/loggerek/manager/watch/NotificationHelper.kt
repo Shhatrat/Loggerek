@@ -12,18 +12,18 @@ import org.koin.java.KoinJavaComponent.inject
 
 object NotificationHelper {
 
-    fun Context.createGarminServiceNotification(stopPendingIntent: PendingIntent): Notification {
+    fun Context.createGarminServiceNotification(context: Context, stopPendingIntent: PendingIntent): Notification {
         return NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle("Location Service")
-            .setContentText("Running in background")
-            .setSmallIcon(R.drawable.ic_launcher_background)
+            .setContentTitle(context.getString(R.string.serviceTitle))
+            .setContentText(context.getString(R.string.serviceDescription))
+            .setSmallIcon(R.drawable.walk)
             .setPriority(NotificationCompat.PRIORITY_MAX)
             .setOngoing(true)
-            .addAction(R.drawable.ic_launcher_background, "Stop Service", stopPendingIntent)
+            .addAction(R.drawable.stop, context.getString(R.string.stopService), stopPendingIntent)
             .build()
     }
 
-    fun Context.createNotificationForStartAppWithService() {
+    fun Context.createNotificationForStartAppWithService(context: Context) {
         val baseData by inject<BaseData>(BaseData::class.java)
         val intent = Intent(this, baseData.getMainActivity()).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP
@@ -35,9 +35,9 @@ object NotificationHelper {
         )
 
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_launcher_background)
-            .setContentTitle("Title")
-            .setContentText("Content text")
+            .setSmallIcon(R.drawable.walk)
+            .setContentTitle(context.getString(R.string.openAppTitle))
+            .setContentText(context.getString(R.string.openAppDescription))
             .setContentIntent(pendingIntent)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setAutoCancel(true)

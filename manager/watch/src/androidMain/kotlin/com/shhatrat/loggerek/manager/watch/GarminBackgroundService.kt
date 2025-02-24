@@ -57,7 +57,7 @@ class GarminBackgroundService : Service() {
         val stopPendingIntent = PendingIntent.getService(
             this, 0, stopIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
-        val notification = createGarminServiceNotification(stopPendingIntent)
+        val notification = createGarminServiceNotification(this, stopPendingIntent)
         startForeground(NOTIFICATION_ID, notification)
     }
 
