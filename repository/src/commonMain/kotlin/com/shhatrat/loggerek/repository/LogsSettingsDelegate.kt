@@ -16,9 +16,14 @@ class LogsSettingsDelegate(
 
     override fun get(): List<QuickLog> {
         val json = settings.getStringOrNull(key)
-        return if(json==null)
-            listOf()
-        else{
+        return if (json == null)
+            listOf(
+                QuickLog("1", "Szybko i sprawnie, TFTC", "Found it"),
+                QuickLog("2", "Troche mi zajęło, ale ostatecznie kesz znaleziony", "Found it"),
+                QuickLog("3", "Jak dla mnie nie ma", "Didn't find it"),
+                QuickLog("4", "Do sprawdzenia", "Comment")
+            )
+        else {
             Json.decodeFromString<List<QuickLog>>(json)
         }
     }
