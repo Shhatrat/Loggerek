@@ -35,4 +35,7 @@ class FakeRepositoryImpl : Repository {
             storage.remove(key)
         }
     }
+
+    override val logs: RepositoryItem<List<QuickLog>> =
+        FakeRepositoryItem(fakeStorage, "logs")
 }

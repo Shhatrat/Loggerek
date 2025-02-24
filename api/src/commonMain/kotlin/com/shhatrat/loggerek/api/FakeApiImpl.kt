@@ -92,4 +92,13 @@ class FakeApiImpl : Api {
     ): List<Geocache> {
         TODO("Not yet implemented")
     }
+
+    override suspend fun nearestGeocaches(
+        center: String,
+        limit: Int,
+        token: String,
+        tokenSecret: String
+    ): List<Geocache> {
+        TODO("Not yet implemented")
+    }
 }

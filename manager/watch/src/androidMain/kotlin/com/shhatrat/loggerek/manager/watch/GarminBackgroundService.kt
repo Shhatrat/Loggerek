@@ -1,21 +1,21 @@
 package com.shhatrat.loggerek.manager.watch
 
-import android.app.*
+import android.app.ActivityManager
+import android.app.PendingIntent
+import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.os.IBinder
 import com.shhatrat.loggerek.manager.watch.NotificationHelper.createGarminServiceNotification
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import com.shhatrat.loggerek.manager.watch.logic.WatchLogic
+import org.koin.java.KoinJavaComponent.inject
 
 class GarminBackgroundService : Service() {
 
     private val STOP_KEY = "STOP_KEY_GarminBackgroundService"
     private val NOTIFICATION_ID = 1
 
-    companion object{
+    companion object {
 
         fun isServiceRunning(context: Context): Boolean {
             val manager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
@@ -31,24 +31,27 @@ class GarminBackgroundService : Service() {
     private fun Intent.shouldStop() = extras?.getBoolean(STOP_KEY) == true
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        if(intent?.shouldStop() == true){
+        if (intent?.shouldStop() == true) {
             stopSelf()
-        }else{
+        } else {
             addServiceNotification()
             startObservingGarminActions()
         }
         return START_STICKY
     }
 
-    private fun startObservingGarminActions(){
-        CoroutineScope(Job()).launch(Dispatchers.Main) {
-            LocationService.getLocationFlow(this@GarminBackgroundService).collect {
-                println("Downloaded ${'$'}{it.time}")
-            }
-        }
+    override fun onDestroy() {
+        super.onDestroy()
+        val watchLogic by inject<WatchLogic>(WatchLogic::class.java)
+        watchLogic.stop()
     }
 
-    private fun addServiceNotification(){
+    private fun startObservingGarminActions() {
+        val watchLogic by inject<WatchLogic>(WatchLogic::class.java)
+        watchLogic.start()
+    }
+
+    private fun addServiceNotification() {
         val stopIntent = Intent(this, GarminBackgroundService::class.java)
         stopIntent.putExtra(STOP_KEY, true)
         val stopPendingIntent = PendingIntent.getService(

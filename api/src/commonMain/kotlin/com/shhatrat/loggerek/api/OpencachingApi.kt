@@ -31,6 +31,8 @@ internal object OpencachingApi {
     private const val submitLog = "services/logs/submit"
     private const val searchAll = "services/caches/search/all"
     private const val geocaches = "services/caches/geocaches"
+    private const val nearest = "services/caches/search/nearest"
+
 
     /**
      * Provides methods for building URLs to specific API endpoints.
@@ -73,5 +75,7 @@ internal object OpencachingApi {
         fun searchAll() = "$baseUrl${searchAll}"
 
         fun geocaches() = "$baseUrl${geocaches}"
+
+        fun nearest() = "$baseUrl$nearest"
     }
 }

@@ -7,6 +7,8 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
     id("io.gitlab.arturbosch.detekt") version "1.23.7"
+    kotlin("plugin.serialization") version "2.0.0"
+
 }
 
 kotlin {
@@ -46,6 +48,7 @@ kotlin {
             implementation(projects.di)
             implementation(projects.base)
             implementation(libs.multiplatform.settings)
+            implementation("io.ktor:ktor-serialization-kotlinx-json:3.0.0")
         }
     }
 }

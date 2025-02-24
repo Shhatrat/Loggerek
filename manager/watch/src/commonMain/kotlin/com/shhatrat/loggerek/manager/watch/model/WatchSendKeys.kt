@@ -1,5 +1,6 @@
 package com.shhatrat.loggerek.manager.watch.model
 
+import com.shhatrat.loggerek.api.model.Geocache
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -39,3 +40,5 @@ data class WatchCache(
     val title: String,
     val cacheId: String,
 )
+
+fun Geocache.toWatchCache() = WatchCache(this.name, this.code)

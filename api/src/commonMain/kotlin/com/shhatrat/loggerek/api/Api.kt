@@ -84,4 +84,11 @@ interface Api {
         token: String,
         tokenSecret: String
     ): List<Geocache>
+
+    suspend fun nearestGeocaches(
+        center: String,
+        limit: Int,
+        token: String,
+        tokenSecret: String
+    ): List<Geocache>
 }

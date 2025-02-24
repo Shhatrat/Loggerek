@@ -23,6 +23,7 @@ import io.ktor.client.request.headers
 import io.ktor.client.request.parameter
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
+import io.ktor.http.encodeURLParameter
 
 class ApiImpl(private val client: HttpClient) : Api {
 
@@ -136,5 +137,14 @@ class ApiImpl(private val client: HttpClient) : Api {
         tokenSecret: String
     ): List<Geocache> {
         return getGeocaches(client, token, tokenSecret, geocacheCodes)
+    }
+
+    override suspend fun nearestGeocaches(
+        center: String,
+        limit: Int,
+        token: String,
+        tokenSecret: String
+    ): List<Geocache> {
+        return getNearest(client, token, tokenSecret, center.encodeURLParameter(), limit)
     }
 }

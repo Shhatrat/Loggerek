@@ -3,6 +3,7 @@ package com.shhatrat.loggerek.api
 import com.shhatrat.loggerek.api.model.Geocache
 import com.shhatrat.loggerek.api.model.LogResponse
 import com.shhatrat.loggerek.api.model.LogTypeResponse
+import com.shhatrat.loggerek.api.model.NearestResponse
 import com.shhatrat.loggerek.api.model.OpencachingParam
 import com.shhatrat.loggerek.api.model.OpencachingParam.Companion.parseForApi
 import com.shhatrat.loggerek.api.model.SearchResponse
@@ -226,4 +227,27 @@ internal suspend inline fun ApiImpl.getGeocaches(
         ),
         OpencachingParam.Geocache.getAll()
     ).map { it.value }
+}
+
+internal suspend inline fun ApiImpl.getNearest(
+    client: HttpClient,
+    token: String,
+    tokenSecret: String,
+    center: String,
+    limit: Int,
+): List<Geocache> {
+    return makeLevel3Request<NearestResponse>(
+        client,
+        token,
+        tokenSecret,
+        OpencachingApi.Url.nearest(),
+        mapOf(
+            Pair("center", center),
+            Pair("limit", limit.toString())
+        )
+    ).let {
+        getGeocaches(
+            client, token, tokenSecret, it.results
+        )
+    }
 }
