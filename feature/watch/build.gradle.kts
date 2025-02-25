@@ -67,6 +67,7 @@ kotlin {
             implementation(projects.base.testing)
             implementation(projects.api)
             implementation(projects.manager.watch)
+            implementation("com.google.android.gms:play-services-wearable:18.1.0")
             implementation("org.jetbrains.compose.material3:material3-window-size-class:1.7.3")
             @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
             implementation(compose.uiTest)

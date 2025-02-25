@@ -23,6 +23,20 @@ espresso-core = "3.6.1"
 roborazzi = "1.37.0"
 uiToolingPreview = "1.7.3"
 navigationTesting = "2.8.5"
+playServicesWearable = "19.0.0"
+composeBom = "2024.04.01"
+composeMaterial = "1.2.1"
+composeFoundation = "1.2.1"
+wearToolingPreview = "1.0.0"
+coreSplashscreen = "1.0.1"
+tiles = "1.4.0"
+tilesMaterial = "1.4.0"
+tilesTooling = "1.4.0"
+tilesToolingPreview = "1.4.0"
+horologistComposeTools = "0.6.17"
+horologistTiles = "0.6.17"
+watchfaceComplicationsDataSourceKtx = "1.2.1"
+composeMaterial3 = "1.0.0-alpha32"
 
 
 [libraries]
@@ -60,6 +74,25 @@ roborazziCompose = { module = "io.github.takahirom.roborazzi:roborazzi-compose",
 roborazziRule = { module = "io.github.takahirom.roborazzi:roborazzi-junit-rule", version.ref = "roborazzi" }
 ui-tooling-preview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "uiToolingPreview" }
 androidx-navigation-testing = { group = "androidx.navigation", name = "navigation-testing", version.ref = "navigationTesting" }
+play-services-wearable = { group = "com.google.android.gms", name = "play-services-wearable", version.ref = "playServicesWearable" }
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-ui = { group = "androidx.compose.ui", name = "ui" }
+androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidx-compose-material = { group = "androidx.wear.compose", name = "compose-material", version.ref = "composeMaterial" }
+androidx-compose-foundation = { group = "androidx.wear.compose", name = "compose-foundation", version.ref = "composeFoundation" }
+androidx-wear-tooling-preview = { group = "androidx.wear", name = "wear-tooling-preview", version.ref = "wearToolingPreview" }
+androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "coreSplashscreen" }
+androidx-tiles = { group = "androidx.wear.tiles", name = "tiles", version.ref = "tiles" }
+androidx-tiles-material = { group = "androidx.wear.tiles", name = "tiles-material", version.ref = "tilesMaterial" }
+androidx-tiles-tooling = { group = "androidx.wear.tiles", name = "tiles-tooling", version.ref = "tilesTooling" }
+androidx-tiles-tooling-preview = { group = "androidx.wear.tiles", name = "tiles-tooling-preview", version.ref = "tilesToolingPreview" }
+horologist-compose-tools = { group = "com.google.android.horologist", name = "horologist-compose-tools", version.ref = "horologistComposeTools" }
+horologist-tiles = { group = "com.google.android.horologist", name = "horologist-tiles", version.ref = "horologistTiles" }
+androidx-watchface-complications-data-source-ktx = { group = "androidx.wear.watchface", name = "watchface-complications-data-source-ktx", version.ref = "watchfaceComplicationsDataSourceKtx" }
+androidx-compose-material3 = { group = "androidx.wear.compose", name = "compose-material3", version.ref = "composeMaterial3" }
 
 
 [plugins]
@@ -71,3 +104,4 @@ kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 ktor = { id = "io.ktor.plugin", version.ref = "ktor" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 roborazzi = { id = "io.github.takahirom.roborazzi", version.ref = "roborazzi" }
+kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
