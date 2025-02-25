@@ -44,28 +44,17 @@ repositories {
 }
 
 dependencies {
-
-    implementation(libs.play.services.wearable)
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.ui)
-    implementation(libs.androidx.ui.graphics)
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.compose.material)
-    implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.wear.tooling.preview)
-    implementation(libs.androidx.activity.compose)
-    implementation(libs.androidx.core.splashscreen)
-    implementation(libs.androidx.tiles)
-    implementation(libs.androidx.tiles.material)
-    implementation(libs.androidx.tiles.tooling.preview)
-    implementation(libs.horologist.compose.tools)
-    implementation(libs.horologist.tiles)
-    implementation(libs.androidx.watchface.complications.data.source.ktx)
-    implementation(libs.androidx.compose.material3)
-    implementation("com.google.android.horologist:horologist-compose-layout:0.6.22")
+    val composeBom = platform(libs.androidx.compose.bom)
+    // General compose dependencies
+    implementation(composeBom)
+
+
+//    implementation("androidx.compose.compose-bom:2025.02.00")
+    implementation(libs.play.services.wearable)
     implementation("androidx.wear.compose:compose-navigation:1.4.1")
-
-
+    implementation("com.google.android.horologist:horologist-compose-layout:0.7.5-alpha")
+    implementation("com.google.android.horologist:horologist-compose-material:0.7.5-alpha")
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)

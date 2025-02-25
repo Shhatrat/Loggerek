@@ -8,6 +8,7 @@ androidx-activityCompose = "1.9.3"
 androidx-lifecycle = "2.8.4"
 coilNetworkKtor3 = "3.0.4"
 compose-multiplatform = "1.7.3"
+composeNavigation = "1.4.1"
 compottie = "2.0.0-rc02"
 koinAndroid = "4.1.0-Beta1"
 kotlin = "2.1.0"
@@ -37,10 +38,23 @@ horologistComposeTools = "0.6.17"
 horologistTiles = "0.6.17"
 watchfaceComplicationsDataSourceKtx = "1.2.1"
 composeMaterial3 = "1.0.0-alpha32"
+androidx-wear-compose = "1.4.1"
+
+android-gradle-plugin = "8.8.1"
+androidx-activity = "1.10.0"
+androidx-compose-bom = "2025.02.00"
+compose-compiler = "1.5.15"
+compose-ui-tooling = "1.4.1"
+horologist = "0.7.5-alpha"
+ktlint = "0.50.0"
+org-jetbrains-kotlin = "1.9.25"
+ui-test-junit4 = "1.7.8"
+ui-test-manifest = "1.7.8"
 
 
 [libraries]
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
+androidx-compose-navigation = { module = "androidx.wear.compose:compose-navigation", version.ref = "composeNavigation" }
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilNetworkKtor3" }
 coil-network-ktor3 = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coilNetworkKtor3" }
 coil-svg = { module = "io.coil-kt.coil3:coil-svg", version.ref = "coilNetworkKtor3" }
@@ -93,6 +107,17 @@ horologist-compose-tools = { group = "com.google.android.horologist", name = "ho
 horologist-tiles = { group = "com.google.android.horologist", name = "horologist-tiles", version.ref = "horologistTiles" }
 androidx-watchface-complications-data-source-ktx = { group = "androidx.wear.watchface", name = "watchface-complications-data-source-ktx", version.ref = "watchfaceComplicationsDataSourceKtx" }
 androidx-compose-material3 = { group = "androidx.wear.compose", name = "compose-material3", version.ref = "composeMaterial3" }
+
+androidx-splashscreen =  "androidx.core:core-splashscreen:1.0.1"
+wear-compose-material = { module = "androidx.wear.compose:compose-material", version.ref = "androidx-wear-compose" }
+wear-compose-foundation = { module = "androidx.wear.compose:compose-foundation", version.ref = "androidx-wear-compose" }
+wear-compose-navigation = { module = "androidx.wear.compose:compose-navigation", version.ref = "androidx-wear-compose" }
+desugar-jdk-libs = "com.android.tools:desugar_jdk_libs:2.1.4"
+compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
+
+horologist-compose-layout = { module = "com.google.android.horologist:horologist-compose-layout", version.ref = "horologist" }
+horologist-compose-material = { module = "com.google.android.horologist:horologist-compose-material", version.ref = "horologist" }
 
 
 [plugins]
