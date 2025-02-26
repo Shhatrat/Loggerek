@@ -38,7 +38,7 @@ actual fun LocalizationPermission() {
 
 @Composable
 @Preview
-private fun LocalizationPermissionPreview(){
+private fun LocalizationPermissionPreview() {
     LoggerekTheme {
         LocalizationPermission()
     }

@@ -58,8 +58,13 @@ object CommunicationManager {
         awaitClose { dataClient.removeListener(listener) }
     }
 
-    suspend fun Context.isConnected(): Boolean{
+    suspend fun Context.isConnected(): Boolean {
         val nodes = Wearable.getNodeClient(this).connectedNodes.await()
         return nodes.any { it.isNearby }
+    }
+
+    suspend fun Context.getConnectedWearNames(): List<String> {
+        val nodes = Wearable.getNodeClient(this).connectedNodes.await()
+        return nodes.filter { it.isNearby }.map { it.displayName }
     }
 }
