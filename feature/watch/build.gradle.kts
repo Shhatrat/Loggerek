@@ -54,6 +54,7 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.accompanist.permissions)
+            implementation(projects.wearShared)
         }
         commonMain.dependencies {
             implementation(libs.koin.compose)
