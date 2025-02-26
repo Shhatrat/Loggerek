@@ -54,6 +54,7 @@ dependencies {
     implementation(projects.manager.watch)
     implementation(projects.wearShared)
     implementation(projects.api)
+    implementation(projects.base.color)
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.10.1")
     implementation("androidx.wear.compose:compose-navigation:1.4.1")
     implementation("com.google.android.horologist:horologist-compose-layout:0.7.5-alpha")

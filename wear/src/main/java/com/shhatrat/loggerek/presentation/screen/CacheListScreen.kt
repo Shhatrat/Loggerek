@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.res.stringResource
 import androidx.wear.compose.material.Text
 import androidx.wear.compose.material.TitleCard
 import com.google.android.horologist.annotations.ExperimentalHorologistApi
@@ -17,6 +17,7 @@ import com.google.android.horologist.compose.layout.ScreenScaffold
 import com.google.android.horologist.compose.layout.rememberResponsiveColumnState
 import com.google.android.horologist.compose.material.ListHeaderDefaults.firstItemPadding
 import com.google.android.horologist.compose.material.ResponsiveListHeader
+import com.shhatrat.loggerek.R
 import com.shhatrat.loggerek.api.model.GeocacheMock
 import com.shhatrat.loggerek.api.model.GeocacheType
 import com.shhatrat.loggerek.manager.watch.model.WatchData
@@ -51,7 +52,7 @@ fun ListScreen(watchData: WatchData, moveToLog: (String, List<WatchLog>) -> Unit
         ) {
             item {
                 ResponsiveListHeader(contentPadding = firstItemPadding()) {
-                    Text(text = "Caches")
+                    Text(text = stringResource(R.string.cache))
                 }
             }
             watchData.items.forEach { cache ->

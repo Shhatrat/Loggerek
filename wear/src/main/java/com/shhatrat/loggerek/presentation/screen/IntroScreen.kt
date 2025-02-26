@@ -17,12 +17,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.wear.compose.foundation.rememberActiveFocusRequester
 import androidx.wear.compose.foundation.rotary.RotaryScrollableDefaults.behavior
 import androidx.wear.compose.foundation.rotary.rotaryScrollable
+import androidx.wear.compose.material.ChipColors
+import androidx.wear.compose.material.ChipDefaults
 import androidx.wear.compose.material.CircularProgressIndicator
 import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Text
@@ -33,6 +37,8 @@ import com.google.android.horologist.compose.layout.ScreenScaffold
 import com.google.android.horologist.compose.material.Chip
 import com.google.android.horologist.compose.material.ListHeaderDefaults.firstItemPadding
 import com.google.android.horologist.compose.material.ResponsiveListHeader
+import com.shhatrat.loggerek.R
+import com.shhatrat.loggerek.base.color.LoggerekColor.YellowBackground
 import com.shhatrat.loggerek.manager.watch.model.WatchRetrieveKeys
 import com.shhatrat.loggerek.presentation.WearPreviewDevices
 import com.shhatrat.wearshared.CommunicationManager
@@ -66,18 +72,25 @@ fun IntroScreen() {
                 Text(
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Center,
-                    color = MaterialTheme.colors.primary,
-                    text = "Hello in Loggerek App"
+                    color = YellowBackground,
+                    text = stringResource(R.string.introTitle)
                 )
             }
-            Chip(label = "Show caches", onClick = {
+            Chip(
+                colors = ChipDefaults.chipColors(
+                    backgroundColor = YellowBackground,
+                    contentColor = Color.Black,
+                ),
+                label = stringResource(R.string.showCaches), onClick = {
                 loader = true
                 scope.launch {
                     CommunicationManager.sendDataToPhone(context, WatchRetrieveKeys.GET_DATA.key)
                 }
             })
             AnimatedVisibility(modifier = Modifier.fillMaxWidth().padding(top = 4.dp), visible = loader) {
-                CircularProgressIndicator()
+                CircularProgressIndicator(
+                    indicatorColor = YellowBackground
+                )
             }
         }
     }
