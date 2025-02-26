@@ -84,7 +84,7 @@ fun IntroScreen() {
                 label = stringResource(R.string.showCaches), onClick = {
                 loader = true
                 scope.launch {
-                    CommunicationManager.sendDataToPhone(context, WatchRetrieveKeys.GET_DATA.key)
+                    CommunicationManager.sendDataToWatch(context, WatchRetrieveKeys.GET_DATA.key)
                 }
             })
             AnimatedVisibility(modifier = Modifier.fillMaxWidth().padding(top = 4.dp), visible = loader) {

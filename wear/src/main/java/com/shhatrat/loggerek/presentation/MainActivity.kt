@@ -37,7 +37,17 @@ fun WearApp() {
     LaunchedEffect(Unit) {
         CommunicationManager.observeDataFromPhone(context).collect {
             if (it != null) {
-                navController.navigate(NavigationScreen.CACHE_LIST.key)
+                val parsedData = WatchData(
+                    items = GeocacheType.entries
+                        .map { GeocacheMock().getByType(it) }
+                        .map { it.toWatchCache() },
+                    logs = listOf(
+                        WatchLog("OK", "1", "Found it"),
+                        WatchLog("Super skrzyneczka wszystko sie udalo", "2", "Found it"),
+                        WatchLog("Po trudach sie udalo", "2", "Found it")
+                    )
+                )
+                navController.navigate(NavigationScreen.CACHE_LIST.createRoute(parsedData))
             }
         }
     }
@@ -50,24 +60,25 @@ fun WearApp() {
             composable(NavigationScreen.INTRO.key) {
                 IntroScreen()
             }
-            composable(NavigationScreen.CACHE_LIST.key) {
-
+            composable(NavigationScreen.CACHE_LIST.key) { args ->
                 CacheListScreen(
-                    WatchData(
-                        items = GeocacheType.entries
-                            .map { GeocacheMock().getByType(it) }
-                            .map { it.toWatchCache() },
-                        logs = listOf()
-                    ),
-                    { cacheId , logs -> navController.navigate(NavigationScreen.LOG_LIST.key) })
+                    NavigationScreen.CACHE_LIST.encodeWatchData(args),
+                    { cacheId, logs ->
+                        navController.navigate(
+                            NavigationScreen.LOG_LIST.createRoute(
+                                cacheId,
+                                logs
+                            )
+                        )
+                    })
             }
             composable(NavigationScreen.LOG_LIST.key) {
-                LogListScreen("OP0001", listOf(
-                    WatchLog("OK", "1", "Found it"),
-                    WatchLog("Super skrzyneczka wszystko sie udalo", "2", "Found it"),
-                    WatchLog("Po trudach sie udalo", "2", "Found it"),
-
-                ), { navController.navigate(NavigationScreen.INTRO.key) })
+                val data = NavigationScreen.LOG_LIST.encodeWatchData(it)
+                LogListScreen(data.first, data.second) {
+                    navController.navigate(NavigationScreen.INTRO.key) {
+                        popUpTo(0)
+                    }
+                }
             }
         }
     }

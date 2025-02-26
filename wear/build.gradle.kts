@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
     alias(libs.plugins.composeCompiler)
+    kotlin("plugin.serialization") version "2.0.0"
 }
 
 android {
@@ -55,6 +56,7 @@ dependencies {
     implementation(projects.wearShared)
     implementation(projects.api)
     implementation(projects.base.color)
+    implementation("io.ktor:ktor-serialization-kotlinx-json:3.0.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.10.1")
     implementation("androidx.wear.compose:compose-navigation:1.4.1")
     implementation("com.google.android.horologist:horologist-compose-layout:0.7.5-alpha")
