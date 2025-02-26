@@ -25,10 +25,8 @@ import androidx.compose.ui.unit.dp
 import androidx.wear.compose.foundation.rememberActiveFocusRequester
 import androidx.wear.compose.foundation.rotary.RotaryScrollableDefaults.behavior
 import androidx.wear.compose.foundation.rotary.rotaryScrollable
-import androidx.wear.compose.material.ChipColors
 import androidx.wear.compose.material.ChipDefaults
 import androidx.wear.compose.material.CircularProgressIndicator
-import androidx.wear.compose.material.MaterialTheme
 import androidx.wear.compose.material.Text
 import com.google.android.horologist.annotations.ExperimentalHorologistApi
 import com.google.android.horologist.compose.layout.ScalingLazyColumnDefaults
@@ -84,7 +82,7 @@ fun IntroScreen() {
                 label = stringResource(R.string.showCaches), onClick = {
                 loader = true
                 scope.launch {
-                    CommunicationManager.sendDataToWatch(context, WatchRetrieveKeys.GET_DATA.key)
+                    CommunicationManager.sendDataToPhone(context, WatchRetrieveKeys.GET_DATA.key)
                 }
             })
             AnimatedVisibility(modifier = Modifier.fillMaxWidth().padding(top = 4.dp), visible = loader) {

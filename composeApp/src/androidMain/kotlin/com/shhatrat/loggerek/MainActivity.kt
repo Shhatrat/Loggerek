@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import com.shhatrat.base.BaseData
+import com.shhatrat.base.startValidService
 import com.shhatrat.loggerek.base.WindowSizeCallback
 import com.shhatrat.loggerek.manager.watch.GarminBackgroundService
 import com.shhatrat.loggerek.manager.watch.LocationService
@@ -25,7 +26,7 @@ class MainActivity : ComponentActivity() {
     private fun startServiceIfRequired(intent: Intent) {
         val baseData by inject<BaseData>(BaseData::class.java)
         if(intent.hasExtra(baseData.notificationKey())) {
-            startService(Intent(this, GarminBackgroundService::class.java))
+            startValidService(Intent(this, GarminBackgroundService::class.java))
         }
     }
 
