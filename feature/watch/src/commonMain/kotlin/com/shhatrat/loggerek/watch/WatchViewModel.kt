@@ -40,9 +40,7 @@ class WatchViewModel(
             )
         }
         viewModelScope.launch {
-            println("----->>>>")
-            println("----->>>> ${garminConfigManager.init()}")
-            println("----->>>>")
+            garminConfigManager.init()
             updateDevicesList()
             loadSavedDevice()
         }

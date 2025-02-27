@@ -47,6 +47,9 @@ kotlin {
     sourceSets {
         androidMain.dependencies {
             implementation(libs.koin.android)
+            implementation(projects.wearShared)
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.10.1")
+            api(libs.play.services.wearable)
         }
         commonMain.dependencies {
             implementation(libs.koin.compose)

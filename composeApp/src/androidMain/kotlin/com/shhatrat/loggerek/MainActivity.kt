@@ -9,8 +9,7 @@ import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import com.shhatrat.base.BaseData
 import com.shhatrat.base.startValidService
 import com.shhatrat.loggerek.base.WindowSizeCallback
-import com.shhatrat.loggerek.manager.watch.GarminBackgroundService
-import com.shhatrat.loggerek.manager.watch.LocationService
+import com.shhatrat.loggerek.manager.watch.service.GarminBackgroundService
 import org.koin.android.ext.koin.androidContext
 import org.koin.compose.getKoin
 import org.koin.dsl.module

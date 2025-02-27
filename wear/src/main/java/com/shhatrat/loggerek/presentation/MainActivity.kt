@@ -1,5 +1,6 @@
 package com.shhatrat.loggerek.presentation
 
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -19,6 +20,7 @@ import com.shhatrat.loggerek.presentation.screen.CacheListScreen
 import com.shhatrat.loggerek.presentation.screen.IntroScreen
 import com.shhatrat.loggerek.presentation.screen.LogListScreen
 import com.shhatrat.wearshared.CommunicationManager
+import kotlinx.serialization.json.Json
 
 
 class MainActivity : ComponentActivity() {
@@ -37,16 +39,8 @@ fun WearApp() {
     LaunchedEffect(Unit) {
         CommunicationManager.observeDataFromPhone(context).collect {
             if (it != null) {
-                val parsedData = WatchData(
-                    items = GeocacheType.entries
-                        .map { GeocacheMock().getByType(it) }
-                        .map { it.toWatchCache() },
-                    logs = listOf(
-                        WatchLog("OK", "1", "Found it"),
-                        WatchLog("Super skrzyneczka wszystko sie udalo", "2", "Found it"),
-                        WatchLog("Po trudach sie udalo", "2", "Found it")
-                    )
-                )
+
+                val parsedData = Json.decodeFromString<WatchData>(Uri.decode(it))
                 navController.navigate(NavigationScreen.CACHE_LIST.createRoute(parsedData))
             }
         }

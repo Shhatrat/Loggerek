@@ -3,6 +3,7 @@
 package com.shhatrat.loggerek.presentation.screen
 
 import android.content.Context
+import android.net.Uri
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -24,6 +25,8 @@ import com.shhatrat.loggerek.manager.watch.model.WatchRetrieveKeys
 import com.shhatrat.loggerek.presentation.WearPreviewDevices
 import com.shhatrat.wearshared.CommunicationManager
 import kotlinx.coroutines.launch
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 
 @Composable
@@ -67,7 +70,7 @@ fun LogListScreen(cacheId: String, logs: List<WatchLog>, moveToIntro: () -> Unit
 suspend fun sendData(context: Context, cacheId: String, log: WatchLog, moveToIntro: () -> Unit) {
     CommunicationManager.sendDataToPhone(
         context,
-        WatchRetrieveKeys.SET_LOG(cacheId, log.logId).toString()
+        Uri.encode(Json.encodeToString(WatchRetrieveKeys.SET_LOG(cacheId, log.logId)))
     )
     moveToIntro()
 }
