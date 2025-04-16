@@ -58,8 +58,8 @@ kotlin {
             implementation(libs.kotlinx.datetime)
             implementation(libs.koin.compose)
             implementation(compose.components.resources)
-            implementation("io.ktor:ktor-client-content-negotiation:3.0.0")
-            implementation("io.ktor:ktor-serialization-kotlinx-json:3.0.0")
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.serialization.kotlinx.json)
         }
         jvmMain.dependencies {
             implementation(libs.ktor.client.cio)
