@@ -1,6 +1,6 @@
 [versions]
 accompanistPermissions = "0.37.0"
-agp = "8.5.2"
+agp = "8.6.1"
 android-compileSdk = "35"
 android-minSdk = "24"
 android-targetSdk = "34"
@@ -26,7 +26,6 @@ playServicesWearable = "19.0.0"
 composeBom = "2025.04.00"
 wearToolingPreview = "1.0.0"
 tilesTooling = "1.4.1"
-androidGradlePlugin = "8.5.2"
 
 
 coreKtx = "1.16.0"
@@ -81,6 +80,7 @@ junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
