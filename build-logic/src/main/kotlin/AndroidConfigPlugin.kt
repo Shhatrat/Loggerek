@@ -9,20 +9,13 @@ import org.gradle.api.artifacts.VersionCatalogsExtension
 
 class AndroidConfigPlugin : Plugin<Project> {
 
-    fun Project.lib(name: String) = rootProject.extensions
-    .getByType<VersionCatalogsExtension>()
-    .named("libs")
-    .findVersion(name)
-    .get()
-    .toString()
-    .toInt()
 
     override fun apply(project: Project) {
         println("Hello from simplified build-logic!")
 
-        val minSdk = project.lib("android-minSdk")
-        val targetSdk = project.lib("android-targetSdk")
-        val compileSdk = project.lib("android-compileSdk")
+        val minSdk = project.libVersion("android-minSdk")
+        val targetSdk = project.libVersion("android-targetSdk")
+        val compileSdk = project.libVersion("android-compileSdk")
 
         project.pluginManager.withPlugin("com.android.application") {
             with(project.extensions.getByType<ApplicationExtension>()) {
@@ -30,6 +23,7 @@ class AndroidConfigPlugin : Plugin<Project> {
                     sourceCompatibility = JavaVersion.VERSION_11
                     targetCompatibility = JavaVersion.VERSION_11
                 }
+                println(project.name)
                 defaultConfig {
                     this.minSdk = minSdk
                     this.targetSdk = targetSdk

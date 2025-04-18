@@ -12,59 +12,15 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     id("android-config-plugin")
+    id("loggerek-plugin")
+    id("ktor-plugin")
 }
 
 kotlin {
-    androidTarget {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
-        }
-    }
-
-    iosX64()
-    iosArm64()
-    iosSimulatorArm64()
-
-    jvm()
-
-    @OptIn(ExperimentalWasmDsl::class)
-    wasmJs {
-        browser {
-            val rootDirPath = project.rootDir.path
-            val projectDirPath = project.projectDir.path
-            commonWebpackConfig {
-                devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
-                    static = (static ?: mutableListOf()).apply {
-                        // Serve sources to debug inside browser
-                        add(rootDirPath)
-                        add(projectDirPath)
-                    }
-                }
-            }
-        }
-    }
-
     sourceSets {
-        androidMain.dependencies {
-            implementation(libs.ktor.client.cio)
-        }
-        iosMain.dependencies {
-            implementation(libs.ktor.client.darwin)
-        }
         commonMain.dependencies {
-            implementation(libs.okio)
-            implementation(libs.ktor.client.auth)
-            implementation(libs.ktor.client.core)
-            implementation(libs.ktor.client.logging)
-            implementation(libs.kotlinx.datetime)
             implementation(libs.koin.compose)
             implementation(compose.components.resources)
-            implementation(libs.ktor.client.content.negotiation)
-            implementation(libs.ktor.serialization.kotlinx.json)
-        }
-        jvmMain.dependencies {
-            implementation(libs.ktor.client.cio)
         }
     }
 }
