@@ -11,8 +11,6 @@ class AndroidConfigPlugin : Plugin<Project> {
 
 
     override fun apply(project: Project) {
-        println("Hello from simplified build-logic!")
-
         val minSdk = project.libVersion("android-minSdk")
         val targetSdk = project.libVersion("android-targetSdk")
         val compileSdk = project.libVersion("android-compileSdk")
