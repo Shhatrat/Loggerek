@@ -8,5 +8,5 @@ package com.shhatrat.loggerek.api.oauth.model
  */
 data class OAuthAccessTokenResponse(
     val oauthToken: String,
-    val oauthTokenSecret: String
+    val oauthTokenSecret: String,
 )

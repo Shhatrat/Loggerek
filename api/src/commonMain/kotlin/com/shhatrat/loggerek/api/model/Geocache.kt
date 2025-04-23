@@ -58,41 +58,41 @@ data class LogUser(
     val uuid: String,
     val username: String,
     @SerialName("profile_url")
-    val profileUrl: String
+    val profileUrl: String,
 )
 
 enum class GeocacheType(val iconRes: DrawableResource, val logType: LogOptions) {
     Traditional(
         Res.drawable.Cache_traditional,
-        LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))
+        LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT)),
     ),
     Multi(
         Res.drawable.Cache_multi,
-        LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))
+        LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT)),
     ),
     Quiz(
         Res.drawable.Cache_quiz,
-        LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))
+        LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT)),
     ),
     Moving(
         Res.drawable.Cache_moving,
-        LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))
+        LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT)),
     ),
     Virtual(
         Res.drawable.Cache_virtual,
-        LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))
+        LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT)),
     ),
     Other(
         Res.drawable.Cache_unknown,
-        LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))
+        LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT)),
     ),
     Own(
         Res.drawable.Owncache,
-        LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))
+        LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT)),
     ),
     Webcam(
         Res.drawable.Cache_webcam,
-        LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT))
+        LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT)),
     ),
     Event(
         Res.drawable.Cache_event,
@@ -100,10 +100,10 @@ enum class GeocacheType(val iconRes: DrawableResource, val logType: LogOptions) 
             listOf(
                 LogType.PARTICIPATED_IN_EVENT,
                 LogType.WILL_PARTICIPATE_IN_EVENT,
-                LogType.COMMENT
-            )
-        )
-    )
+                LogType.COMMENT,
+            ),
+        ),
+    ),
 }
 
 @Serializable
@@ -112,7 +112,7 @@ enum class LogType(
     val textRes: StringResource,
     val canHasPassword: Boolean,
     val canRate: Boolean,
-    val canBeRecommended: Boolean
+    val canBeRecommended: Boolean,
 ) {
     @SerialName("Comment")
     COMMENT("Comment", Res.string.log_comment, false, false, false),
@@ -126,20 +126,19 @@ enum class LogType(
         Res.string.log_will_participated_in_event,
         false,
         false,
-        false
+        false,
     ),
 
     @SerialName("Found it")
     FOUND("Found it", Res.string.log_found, true, true, true),
 
     @SerialName("Didn't find it")
-    NOT_FOUND("Didn't find it", Res.string.log_not_found, false, false, false);
+    NOT_FOUND("Didn't find it", Res.string.log_not_found, false, false, false),
 }
 
 data class LogOptions(
     val logTypes: List<LogType>,
 )
-
 
 @Serializable
 enum class GeocacheStatus {
@@ -150,7 +149,7 @@ enum class GeocacheStatus {
     TEMPORARILY_UNAVAILABLE(),
 
     @SerialName(GEOCACHE_API_STATUS_ARCHIVED)
-    ARCHIVED()
+    ARCHIVED(),
 }
 
 @Serializable

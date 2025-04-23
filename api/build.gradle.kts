@@ -1,9 +1,3 @@
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
-import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
-import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
-
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidLibrary)
@@ -14,6 +8,16 @@ plugins {
     id("android-config-plugin")
     id("loggerek-plugin")
     id("ktor-plugin")
+    id("org.jlleitschuh.gradle.ktlint") version "12.2.0"
+}
+
+ktlint {
+    filter {
+        exclude { element ->
+            val path = element.file.path
+            path.contains("generated")
+        }
+    }
 }
 
 kotlin {
