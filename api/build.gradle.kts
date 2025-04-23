@@ -8,16 +8,7 @@ plugins {
     id("android-config-plugin")
     id("loggerek-plugin")
     id("ktor-plugin")
-    id("org.jlleitschuh.gradle.ktlint") version "12.2.0"
-}
-
-ktlint {
-    filter {
-        exclude { element ->
-            val path = element.file.path
-            path.contains("generated")
-        }
-    }
+    id("org.jlleitschuh.gradle.ktlint")
 }
 
 kotlin {
