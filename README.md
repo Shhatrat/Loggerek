@@ -11,7 +11,7 @@
 
 ## Features:
 
-- Authorization in (opencaching.pl)[www.opencaching.pl]
+- Authorization in [opencaching.pl](www.opencaching.pl)
 - Logging caches
 
 --- 
