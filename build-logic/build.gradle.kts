@@ -22,5 +22,13 @@ gradlePlugin {
             id = "ktor-plugin"
             implementationClass = "KtorPlugin"
         }
+        register("composePlugin") {
+            id = "compose-plugin"
+            implementationClass = "ComposePlugin"
+        }
+        register("coilPlugin") {
+            id = "coil-plugin"
+            implementationClass = "CoilPlugin"
+        }
     }
 }
