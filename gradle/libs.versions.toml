@@ -1,5 +1,6 @@
 [versions]
 accompanistPermissions = "0.37.0"
+adaptiveNavigation = "1.0.0-alpha03"
 agp = "8.6.1"
 android-compileSdk = "35"
 android-minSdk = "24"
@@ -42,6 +43,7 @@ material = "1.12.0"
 
 [libraries]
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
+adaptive-navigation = { module = "org.jetbrains.compose.material3.adaptive:adaptive-navigation", version.ref = "adaptiveNavigation" }
 androidx-ui-test-junit4-android = { module = "androidx.compose.ui:ui-test-junit4-android", version.ref = "uiTestJunit4Android" }
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilNetworkKtor3" }
 coil-network-ktor3 = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coilNetworkKtor3" }
