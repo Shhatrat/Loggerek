@@ -13,7 +13,6 @@ kotlin {
             implementation(libs.koin.compose)
             implementation(projects.repository)
             implementation(projects.api)
-//            implementation(libs.corotuines.core)
         }
     }
 }

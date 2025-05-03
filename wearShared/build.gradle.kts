@@ -33,7 +33,7 @@ android {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.10.1")
+    implementation(libs.kotlinx.coroutines.play.services)
     api(libs.play.services.wearable)
     implementation(projects.base)
     implementation(libs.koin.core)
