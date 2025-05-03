@@ -31,14 +31,6 @@ kotlin {
 }
 
 android {
-    namespace = "com.shhatrat.loggerek.profile"
-}
-
-
-
-
-
-android {
     namespace = "com.shhatrat.loggerek.settings"
 }
 
