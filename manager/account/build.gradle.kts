@@ -10,6 +10,7 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
+            implementation(libs.koin.compose)
             implementation(projects.repository)
             implementation(projects.api)
             implementation(projects.base.testing)

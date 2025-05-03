@@ -15,6 +15,7 @@ plugins {
 kotlin {
     sourceSets {
         commonMain.dependencies {
+            implementation(libs.koin.compose)
             implementation(projects.di)
             implementation(projects.base)
             implementation(libs.multiplatform.settings)
