@@ -25,6 +25,7 @@ robolectric = "4.14.1"
 espresso-core = "3.6.1"
 roborazzi = "1.39.0"
 roborazziComposeDesktop = "1.39.0"
+roborazziComposeIos = "1.39.0"
 uiTestJunit4Android = "1.7.6"
 uiTestManifest = "1.7.6"
 uiToolingPreview = "1.7.3"
@@ -75,6 +76,7 @@ okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
 roborazzi-compose-desktop = { module = "io.github.takahirom.roborazzi:roborazzi-compose-desktop", version.ref = "roborazziComposeDesktop" }
+roborazzi-compose-ios = { module = "io.github.takahirom.roborazzi:roborazzi-compose-ios", version.ref = "roborazziComposeIos" }
 ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 roborazzi = { module = "io.github.takahirom.roborazzi:roborazzi", version.ref = "roborazzi" }
 roborazziCompose = { module = "io.github.takahirom.roborazzi:roborazzi-compose", version.ref = "roborazzi" }
