@@ -8,4 +8,20 @@ plugins {
     alias(libs.plugins.kotlinJvm) apply false
     alias(libs.plugins.kotlinMultiplatform) apply false
     alias(libs.plugins.roborazzi) apply false
+    alias(libs.plugins.kotlinAndroid) apply false
+    id("org.jlleitschuh.gradle.ktlint") version "12.2.0"
+}
+
+subprojects {
+    afterEvaluate {
+        if (plugins.hasPlugin("org.jlleitschuh.gradle.ktlint")) {
+            extensions.configure<org.jlleitschuh.gradle.ktlint.KtlintExtension>("ktlint") {
+                filter {
+                    exclude { element ->
+                        element.file.path.contains("generated")
+                    }
+                }
+            }
+        }
+    }
 }

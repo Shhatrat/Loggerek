@@ -17,7 +17,6 @@ import kotlin.test.assertTrue
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class IntroViewModelTest {
-
     private lateinit var fakeAccountManager: FakeAccountManagerImpl
     private lateinit var viewModel: IntroViewModel
 
@@ -30,77 +29,85 @@ class IntroViewModelTest {
     fun setup() {
         Dispatchers.setMain(testDispatcher)
 
-        fakeAccountManager = FakeAccountManagerImpl(
-            isLogged = false
-        )
+        fakeAccountManager =
+            FakeAccountManagerImpl(
+                isLogged = false,
+            )
 
         navigateToMainScreenCalled = false
         navigateToAuthScreenCalled = false
 
-        viewModel = IntroViewModel(
-            navigateToMainScreen = { navigateToMainScreenCalled = true },
-            navigateToAuthScreen = { navigateToAuthScreenCalled = true },
-            accountManager = fakeAccountManager
-        )
+        viewModel =
+            IntroViewModel(
+                navigateToMainScreen = { navigateToMainScreenCalled = true },
+                navigateToAuthScreen = { navigateToAuthScreenCalled = true },
+                accountManager = fakeAccountManager,
+            )
     }
 
     @Test
-    fun `initial state should have loader active`() = runTest {
-        val state = viewModel.state.value
-        assertTrue(state.loader.active)
-        assertNull(state.buttonAction)
-    }
+    fun initialStateShouldHaveLoaderActive() =
+        runTest {
+            val state = viewModel.state.value
+            assertTrue(state.loader.active)
+            assertNull(state.buttonAction)
+        }
 
     @Test
-    fun `if user is logged in should navigate to main screen`() = runTest {
-        fakeAccountManager.isLogged = true
+    fun ifUserIsLoggedInShouldNavigateToMainScreen() =
+        runTest {
+            fakeAccountManager.isLogged = true
 
-        viewModel.onStart()
-        testDispatcher.scheduler.advanceUntilIdle()
+            viewModel.onStart()
+            testDispatcher.scheduler.advanceUntilIdle()
 
-        assertTrue(navigateToMainScreenCalled)
-        assertFalse(navigateToAuthScreenCalled)
-    }
-
-    @Test
-    fun `if user is not logged in should show login button`() = runTest {
-        fakeAccountManager.isLogged = false
-
-        viewModel.onStart()
-        testDispatcher.scheduler.advanceUntilIdle()
-
-        val state = viewModel.state.value
-        assertNotNull(state.buttonAction)
-        assertFalse(navigateToMainScreenCalled)
-        assertFalse(navigateToAuthScreenCalled)
-    }
+            assertTrue(navigateToMainScreenCalled)
+            assertFalse(navigateToAuthScreenCalled)
+        }
 
     @Test
-    fun `clicking login button should navigate to auth screen`() = runTest {
-        fakeAccountManager.isLogged = false
+    fun ifUserIsNotLoggedInShouldShowLoginButton() =
+        runTest {
+            fakeAccountManager.isLogged = false
 
-        viewModel.onStart()
-        testDispatcher.scheduler.advanceUntilIdle()
+            viewModel.onStart()
+            testDispatcher.scheduler.advanceUntilIdle()
 
-        viewModel.state.value.buttonAction?.invoke()
-
-        assertTrue(navigateToAuthScreenCalled)
-        assertFalse(navigateToMainScreenCalled)
-    }
+            val state = viewModel.state.value
+            assertNotNull(state.buttonAction)
+            assertFalse(navigateToMainScreenCalled)
+            assertFalse(navigateToAuthScreenCalled)
+        }
 
     @Test
-    fun `loader should be active while checking login state`() = runTest {
-        fakeAccountManager.isUserLoggedHelper.delay = 1000L
+    fun clickingLoginButtonShouldNavigateToAuthScreen() =
+        runTest {
+            fakeAccountManager.isLogged = false
 
-        viewModel.onStart()
-        testDispatcher.scheduler.advanceTimeBy(500)
+            viewModel.onStart()
+            testDispatcher.scheduler.advanceUntilIdle()
 
-        assertTrue(viewModel.state.value.loader.active)
+            viewModel.state.value.buttonAction
+                ?.invoke()
 
-        testDispatcher.scheduler.advanceUntilIdle()
+            assertTrue(navigateToAuthScreenCalled)
+            assertFalse(navigateToMainScreenCalled)
+        }
 
-        assertFalse(viewModel.state.value.loader.active)
-    }
+    @Test
+    fun loaderShouldBeActiveWhileCheckingLoginState() =
+        runTest {
+            fakeAccountManager.isUserLoggedHelper.delay = 1000L
+
+            viewModel.onStart()
+            testDispatcher.scheduler.advanceTimeBy(500)
+
+            assertTrue(viewModel.state.value.loader.active)
+
+            testDispatcher.scheduler.advanceUntilIdle()
+
+            assertFalse(viewModel.state.value.loader.active)
+        }
 
     @AfterTest
     fun tearDown() {

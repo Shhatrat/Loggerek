@@ -42,7 +42,7 @@ class ProfileScreenshotJvmTest {
             }
             onRoot().captureRoboImage(
                 DefaultFileNameGenerator.generateFilePath().addPackagePrefix(
-                    Type.ANDROID,
+                    Type.JVM,
                     this@ProfileScreenshotJvmTest::class.java.packageName
                 ), roborazziOptions = RoborazziOptions()
             )

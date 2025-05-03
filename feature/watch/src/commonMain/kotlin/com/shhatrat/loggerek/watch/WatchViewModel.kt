@@ -40,9 +40,7 @@ class WatchViewModel(
             )
         }
         viewModelScope.launch {
-            println("----->>>>")
-            println("----->>>> ${garminConfigManager.init()}")
-            println("----->>>>")
+            garminConfigManager.init()
             updateDevicesList()
             loadSavedDevice()
         }
@@ -110,45 +108,4 @@ class WatchViewModel(
             }
         }
     }
-//        updateUiState {
-//            copy(
-//                sendButton = {
-//
-////                    viewModelScope.launch {
-////                        watchManager.getListOfDevices().forEach {
-////                            println("${it.name} --> ${watchManager.isAppInstalled(it)}")
-////                        }
-////                    }
-//
-//
-//                    viewModelScope.launch(Dispatchers.Default) {
-//                        watchManager.selectDevice(watchManager.getListOfDevices().first())
-//                        watchManager.loadApp()
-//                        watchManager.getData().collect {
-//                            println(it)
-//                            viewModelScope.launch(Dispatchers.Unconfined) {
-//                                watchManager.sendData(
-//                                    WatchSendKeys.GET_DATA(
-//                                        watchData = WatchData(
-//                                            items = listOf(
-//                                                WatchCache("[OH] #6 Biblioteka", "OPE4EA"),
-//                                                WatchCache("Staw Schrödingera", "OPE40A"),
-//                                                WatchCache("Staw na ulicy Fiołkowej", "OPA00A"),
-//                                                WatchCache("GORUSZKA", "OPAEFA"),
-//                                                WatchCache("Cerkwiska i Cmentarze -Smerek", "OPA34D"),
-//                                            ),
-//                                            logs = listOf(
-//                                                WatchLog("Wszystko gra", "1", "found"),
-//                                                WatchLog("super skrzyneczka", "2", "found"),
-//                                                WatchLog("cos tam", "3", "comment"),
-//                                                WatchLog("ni ma", "4", "not found")
-//                                            )
-//                                        )
-//                                    )
-//                                )
-//                            }
-//                        }
-//                    }
-//                })
-//        }
 }

@@ -79,6 +79,7 @@ fun WatchScreen(calculateWindowSizeClass: WindowSizeCallback, watchUiState: Watc
                     SingleGarminDevice(item)
                 }
             }
+            WearOsView()
         }
     }
 }

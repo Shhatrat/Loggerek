@@ -2,6 +2,7 @@ rootProject.name = "Loggerek"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
+    includeBuild("build-logic")
     repositories {
         google {
             mavenContent {
@@ -47,3 +48,5 @@ include(":base:browser")
 include(":manager:account")
 include(":manager:watch")
 include(":manager:log")
+include(":wear")
+include(":wearShared")

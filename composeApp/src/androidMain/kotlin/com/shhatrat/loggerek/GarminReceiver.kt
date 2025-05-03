@@ -3,8 +3,9 @@ package com.shhatrat.loggerek
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import com.shhatrat.base.startValidService
 import com.shhatrat.loggerek.manager.watch.NotificationHelper.createNotificationForStartAppWithService
-import com.shhatrat.loggerek.manager.watch.GarminBackgroundService
+import com.shhatrat.loggerek.manager.watch.service.GarminBackgroundService
 import com.shhatrat.loggerek.manager.watch.model.WatchRetrieveKeys
 import okio.internal.commonToUtf8String
 
@@ -33,7 +34,7 @@ class GarminReceiver : BroadcastReceiver() {
         if (isGarminGetDataRequest(intent)) {
             if (!GarminBackgroundService.isServiceRunning(context)) {
                 if(AndroidApp.appState.value){
-                    context.startService(Intent(context, GarminBackgroundService::class.java))
+                    context.startValidService(Intent(context, GarminBackgroundService::class.java))
                 }else{
                     showNotificationToStartService(context)
                 }

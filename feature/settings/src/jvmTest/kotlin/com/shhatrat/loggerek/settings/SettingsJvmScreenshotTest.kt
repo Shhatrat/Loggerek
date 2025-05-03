@@ -44,7 +44,7 @@ class SettingsJvmScreenshotTest {
             }
             onRoot().captureRoboImage(
                 DefaultFileNameGenerator.generateFilePath().addPackagePrefix(
-                    Type.ANDROID,
+                    Type.JVM,
                     this@SettingsJvmScreenshotTest::class.java.packageName
                 ), roborazziOptions = RoborazziOptions()
             )

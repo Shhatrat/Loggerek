@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class SearchResponse(
     @SerialName("results") val results: List<String>,
-    @SerialName("more") val more: Boolean
+    @SerialName("more") val more: Boolean,
 )
