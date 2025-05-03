@@ -3,6 +3,8 @@ package com.shhatrat.loggerek
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -13,54 +15,41 @@ import com.shhatrat.loggerek.AppDestinations.AUTH
 import com.shhatrat.loggerek.AppDestinations.INTRO
 import com.shhatrat.loggerek.AppDestinations.MAIN
 import com.shhatrat.loggerek.AppDestinations.entries
-import com.shhatrat.loggerek.account.di.accountModule
-import com.shhatrat.loggerek.api.di.apiModule
 import com.shhatrat.loggerek.base.LoggerekTheme
 import com.shhatrat.loggerek.base.WindowSizeCallback
-import com.shhatrat.loggerek.base.browser.BrowserPlatformSpecificModule
-import com.shhatrat.loggerek.di.PlatformSpecificModule
-import com.shhatrat.loggerek.di.viewModelModule
+import com.shhatrat.loggerek.di.KoinHelper.setupBaseModules
+import com.shhatrat.loggerek.di.KoinHelper.setupWindowSizeModules
 import com.shhatrat.loggerek.intro.authorizate.AuthViewModel
 import com.shhatrat.loggerek.intro.authorizate.AuthorizeScreen
 import com.shhatrat.loggerek.intro.splash.IntroScreen
 import com.shhatrat.loggerek.intro.splash.IntroViewModel
 import com.shhatrat.loggerek.main.MainScreen
 import com.shhatrat.loggerek.main.MainViewModel
-import com.shhatrat.loggerek.manager.log.di.logManagerModule
-import com.shhatrat.loggerek.repository.di.repositoryModule
-import org.koin.compose.KoinApplication
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.KoinApplication
+import org.koin.core.context.startKoin
 import org.koin.core.parameter.parametersOf
-import org.koin.dsl.module
 
 @Composable
 fun App(
     calculateWindowSizeClass: WindowSizeCallback,
-    additionalKoinConfig: KoinApplication.() -> Unit = { }
+    additionalKoinConfig: KoinApplication.() -> Unit = { },
+    startKoin: Boolean = true
 ) {
     LoggerekTheme {
-        KoinApplication(application = {
-            additionalKoinConfig.invoke(this)
-            setupModules(calculateWindowSizeClass)
-        }
-        ) {
-            AppNavigation(modifier = Modifier)
-        }
-    }
-}
 
-private fun KoinApplication.setupModules(calculateWindowSizeClass: WindowSizeCallback) {
-    modules(repositoryModule, apiModule, accountModule, logManagerModule, viewModelModule).modules(
-        PlatformSpecificModule().getModules().plus(
-            BrowserPlatformSpecificModule().getModules()
-        )
-    ).modules(module {
-        single<WindowSizeCallback> {
-            { calculateWindowSizeClass() }
+        val shouldStartKoin = remember { mutableStateOf(startKoin) }
+        if(shouldStartKoin.value){
+            shouldStartKoin.value = false
+            startKoin {
+                additionalKoinConfig.invoke(this)
+                setupBaseModules()
+                setupWindowSizeModules(calculateWindowSizeClass)
+            }
         }
-    })
+        AppNavigation(modifier = Modifier)
+    }
 }
 
 @Composable

@@ -11,6 +11,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     id("io.gitlab.arturbosch.detekt") version "1.23.7"
+    id("android-config-plugin")
 }
 
 kotlin {
@@ -61,6 +62,7 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.koin.android)
+            implementation("androidx.lifecycle:lifecycle-process:2.8.7")
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -78,16 +80,19 @@ kotlin {
             implementation(libs.koin.compose)
             implementation(projects.repository)
             implementation(projects.api)
+            implementation(projects.manager.watch)
             implementation(libs.multiplatform.settings)
             implementation(projects.di)
             api(projects.feature.intro)
             implementation(projects.feature.main)
             implementation(projects.feature.profile)
             implementation(projects.feature.settings)
+            implementation(projects.feature.watch)
             implementation(projects.feature.log)
             implementation(projects.base)
             implementation(projects.base.browser)
             implementation(projects.manager.account)
+            implementation(projects.manager.watch)
             implementation(projects.manager.log)
             implementation(libs.navigation.compose)
             implementation(libs.koin.compose.viewmodel)
@@ -116,8 +121,6 @@ android {
 
     defaultConfig {
         applicationId = "com.shhatrat.loggerek"
-        minSdk = libs.versions.android.minSdk.get().toInt()
-        targetSdk = libs.versions.android.targetSdk.get().toInt()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         versionCode = 1
         versionName = "1.0"

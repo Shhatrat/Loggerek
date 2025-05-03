@@ -8,6 +8,8 @@ interface Repository {
     val tokenSecret: RepositoryItem<String?>
     val savePassword: RepositoryItem<Boolean>
     val tryMixedPassword: RepositoryItem<Boolean>
+    val garminIdentifier: RepositoryItem<Long?>
+    val logs: RepositoryItem<List<QuickLog>>
 
     fun safeTokenAndTokenSecret(): TokenData {
         try {

@@ -4,8 +4,6 @@ package com.shhatrat.loggerek.intro.authorizate
 
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.runComposeUiTest
@@ -18,26 +16,16 @@ class AuthScreenTest {
 
     @Test
     fun checkIntroLoaderNotExist() = runComposeUiTest {
-        val compactUiState = AuthUiState(
-            loader = Loader(false),
-        )
-
-        val windowSizeClass = mutableStateOf(WindowWidthSizeClass.Compact)
+        val compactUiState = AuthUiState(loader = Loader(false))
 
         setContent {
             AuthorizeScreen(
                 calculateWindowSizeClass = {
-                    WindowSizeClass.calculateFromSize(
-                        DpSize(
-                            200.dp,
-                            300.dp
-                        )
-                    )
+                    WindowSizeClass.calculateFromSize(DpSize(200.dp, 300.dp))
                 },
                 authUiState = compactUiState
             )
         }
         onNodeWithTag("loader").assertDoesNotExist()
     }
-
 }

@@ -10,5 +10,5 @@ package com.shhatrat.loggerek.api.oauth.model
 data class OAuthRequestTokenResponse(
     val token: String,
     val tokenSecret: String,
-    val url: String
+    val url: String,
 )

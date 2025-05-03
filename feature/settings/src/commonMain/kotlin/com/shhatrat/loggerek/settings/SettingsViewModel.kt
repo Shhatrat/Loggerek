@@ -5,19 +5,24 @@ import com.shhatrat.loggerek.base.BaseViewModel
 import com.shhatrat.loggerek.base.Error
 import com.shhatrat.loggerek.base.Loader
 import com.shhatrat.loggerek.base.MoveToIntro
+import com.shhatrat.loggerek.base.MoveToWatch
 import com.shhatrat.loggerek.base.error.ErrorHandlingUtil
 import com.shhatrat.loggerek.base.loader.LoaderHandlingUtil
+import com.shhatrat.loggerek.manager.watch.GarminWatch
+import com.shhatrat.loggerek.manager.watch.Watch
 import loggerek.feature.settings.generated.resources.Res
 import loggerek.feature.settings.generated.resources.accountTitle
 import loggerek.feature.settings.generated.resources.logout
 import loggerek.feature.settings.generated.resources.logsTitle
 import loggerek.feature.settings.generated.resources.savePasswordToMyNotes
 import loggerek.feature.settings.generated.resources.tryMixedPassword
+import loggerek.feature.settings.generated.resources.watchIntegration
 import org.jetbrains.compose.resources.StringResource
 
 data class SettingsUiState(
     val savePassword: SettingsItem.SettingsSwitch? = null,
     val mixedPassword: SettingsItem.SettingsSwitch? = null,
+    val watch: SettingsItem.SettingsButton? = null,
     val logout: SettingsItem.SettingsButton? = null,
     val loader: Loader = Loader(),
     val error: Error? = null,
@@ -26,6 +31,7 @@ data class SettingsUiState(
         SettingsItem.SettingsTitle(Res.string.logsTitle),
         savePassword,
         mixedPassword,
+        watch,
         SettingsItem.SettingsTitle(Res.string.accountTitle),
         logout
     )
@@ -52,7 +58,9 @@ sealed class SettingsItem(open val descriptionRes: StringResource) {
 
 class SettingsViewModel(
     private val moveToIntro: MoveToIntro,
-    private val accountManager: AccountManager
+    private val moveToWatch: MoveToWatch,
+    private val accountManager: AccountManager,
+    private val watchManager: GarminWatch?
 ) : BaseViewModel<SettingsUiState>(SettingsUiState()) {
 
     private val loaderHandlingUtil =
@@ -86,6 +94,12 @@ class SettingsViewModel(
                 logout = SettingsItem.SettingsButton(Res.string.logout, "drawable/logout.svg") {
                     accountManager.logout()
                     moveToIntro()
+                },
+                watch = if (watchManager == null) null else SettingsItem.SettingsButton(
+                    Res.string.watchIntegration,
+                    "drawable/watch.svg"
+                ) {
+                    moveToWatch()
                 }
             )
         }

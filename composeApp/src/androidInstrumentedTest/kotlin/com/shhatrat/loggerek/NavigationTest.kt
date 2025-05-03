@@ -2,6 +2,7 @@
 
 package com.shhatrat.loggerek
 
+import android.content.Context
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.ui.Modifier
@@ -13,6 +14,7 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.shhatrat.loggerek.account.AccountManager
 import com.shhatrat.loggerek.account.FakeAccountManagerImpl
@@ -20,9 +22,11 @@ import com.shhatrat.loggerek.account.di.fakeAccountModule
 import com.shhatrat.loggerek.api.di.fakeApiModule
 import com.shhatrat.loggerek.base.LoggerekTheme
 import com.shhatrat.loggerek.base.WindowSizeCallback
+import com.shhatrat.loggerek.base.browser.BrowserPlatformSpecificModule
 import com.shhatrat.loggerek.di.PlatformSpecificModule
 import com.shhatrat.loggerek.di.viewModelModule
 import com.shhatrat.loggerek.intro.splash.IntroScreenTestTag
+import com.shhatrat.loggerek.manager.log.di.fakeLogManagerModule
 import com.shhatrat.loggerek.repository.Repository
 import com.shhatrat.loggerek.repository.di.fakeRepositoryModule
 import org.junit.After
@@ -59,15 +63,22 @@ class NavigationTest {
 
     @Before
     fun before() {
+        stopKoin()
         startKoin {
             modules(
                 fakeRepositoryModule,
                 fakeApiModule,
                 fakeAccountModule,
+                fakeLogManagerModule,
                 viewModelModule
             ).modules(
-                PlatformSpecificModule().getModules()
+                PlatformSpecificModule().getModules(),
+            ).modules(
+                BrowserPlatformSpecificModule().getModules()
             ).modules(module {
+                single<Context>{
+                    ApplicationProvider.getApplicationContext()
+                }
                 single<WindowSizeCallback> {
                     { WindowSizeClass.calculateFromSize(DpSize(0.dp, 0.dp)) }
                 }

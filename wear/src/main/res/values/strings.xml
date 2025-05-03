@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Loggerek</string>
+    <string name="introTitle">Hello in Loggerek App</string>
+    <string name="showCaches">Show caches</string>
+    <string name="cache">Cache</string>
+</resources>

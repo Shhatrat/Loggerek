@@ -23,85 +23,95 @@ import io.ktor.client.request.headers
 import io.ktor.client.request.parameter
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
+import io.ktor.http.encodeURLParameter
 
-class ApiImpl(private val client: HttpClient) : Api {
-
+class ApiImpl(
+    private val client: HttpClient,
+) : Api {
     private suspend fun sendOAuthRequest(
         url: String,
         oauthParams: Map<String, String>,
-        tokenSecret: String? = ""
+        tokenSecret: String? = "",
     ): String {
-        val signature = generateSignature(
-            method = "GET",
-            url = url,
-            params = oauthParams,
-            consumerSecret = OpencachingApi.consumerSecret,
-            tokenSecret = tokenSecret
-        )
+        val signature =
+            generateSignature(
+                method = "GET",
+                url = url,
+                params = oauthParams,
+                consumerSecret = OpencachingApi.CONSUMER_SECRET,
+                tokenSecret = tokenSecret,
+            )
         val signedParams = oauthParams + ("oauth_signature" to signature)
-        val response: HttpResponse = client.get(url) {
-            headers {
-                append("Authorization", buildOAuthHeader(signedParams))
+        val response: HttpResponse =
+            client.get(url) {
+                headers {
+                    append("Authorization", buildOAuthHeader(signedParams))
+                }
             }
-        }
         return response.bodyAsText()
     }
 
     override suspend fun requestToken(): OAuthRequestTokenResponse {
         val oauthParams = getRequestTokenParams()
-        val responseBody = sendOAuthRequest(
-            url = OpencachingApi.Url.requestToken(),
-            oauthParams = oauthParams,
-        )
+        val responseBody =
+            sendOAuthRequest(
+                url = OpencachingApi.Url.requestToken(),
+                oauthParams = oauthParams,
+            )
         return OAuthLogic.parseRequestTokenResponse(responseBody)
     }
 
     override suspend fun accessToken(
         pin: String,
         token: String,
-        tokenSecret: String
+        tokenSecret: String,
     ): OAuthAccessTokenResponse {
         val oauthParams = OAuthParams.getAccessTokenParams(pin, token)
-        val responseBody = sendOAuthRequest(
-            url = OpencachingApi.Url.accessToken(),
-            oauthParams = oauthParams,
-            tokenSecret = tokenSecret
-        )
+        val responseBody =
+            sendOAuthRequest(
+                url = OpencachingApi.Url.accessToken(),
+                oauthParams = oauthParams,
+                tokenSecret = tokenSecret,
+            )
         return OAuthLogic.parseAccessTokenResponse(responseBody)
     }
 
     override suspend fun cache(cacheId: String): String {
-        val g = client.get(OpencachingApi.Url.geocache()) {
-            parameter("consumer_key", OpencachingApi.consumerKey)
-            parameter("cache_code", cacheId)
-            parameter("fields", parseForApiNotFormatted(OpencachingParam.Geocache.getAll()))
-        }.body<Geocache>()
+        val g =
+            client
+                .get(OpencachingApi.Url.geocache()) {
+                    parameter("consumer_key", OpencachingApi.CONSUMER_KEY)
+                    parameter("cache_code", cacheId)
+                    parameter("fields", parseForApiNotFormatted(OpencachingParam.Geocache.getAll()))
+                }.body<Geocache>()
         return g.name
     }
 
-    override suspend fun getLoggedUserNickname(token: String, tokenSecret: String): UserName {
+    override suspend fun getLoggedUserNickname(
+        token: String,
+        tokenSecret: String,
+    ): UserName {
         val params = listOf(OpencachingParam.User.USERNAME)
         return getUser(client, token, tokenSecret, params)
     }
 
-    override suspend fun getLoggedUserData(token: String, tokenSecret: String): FullUser {
-        return getUser(client, token, tokenSecret, OpencachingParam.User.getAll())
-    }
+    override suspend fun getLoggedUserData(
+        token: String,
+        tokenSecret: String,
+    ): FullUser = getUser(client, token, tokenSecret, OpencachingParam.User.getAll())
 
     override suspend fun getFullCache(
         cacheId: String,
         token: String,
-        tokenSecret: String
-    ): Geocache {
-        return getCache(client, token, tokenSecret, cacheId)
-    }
+        tokenSecret: String,
+    ): Geocache = getCache(client, token, tokenSecret, cacheId)
 
     override suspend fun saveNote(
         cacheId: String,
         token: String,
         tokenSecret: String,
         noteToSave: String,
-        oldValue: String
+        oldValue: String,
     ) {
         saveNoteToApi(client, token, tokenSecret, cacheId, noteToSave, oldValue)
     }
@@ -109,32 +119,31 @@ class ApiImpl(private val client: HttpClient) : Api {
     override suspend fun logCapabilities(
         cacheId: String,
         token: String,
-        tokenSecret: String
-    ): LogTypeResponse {
-        return logCapabilities(client, token, tokenSecret, cacheId)
-    }
+        tokenSecret: String,
+    ): LogTypeResponse = logCapabilities(client, token, tokenSecret, cacheId)
 
     override suspend fun submitLog(
         submitLogData: SubmitLogData,
         token: String,
-        tokenSecret: String
-    ): LogResponse {
-        return submitLog(client, token, tokenSecret, submitLogData)
-    }
+        tokenSecret: String,
+    ): LogResponse = submitLog(client, token, tokenSecret, submitLogData)
 
     override suspend fun searchByName(
         name: String,
         token: String,
-        tokenSecret: String
-    ): SearchResponse {
-        return searchByName(client, token, tokenSecret, name)
-    }
+        tokenSecret: String,
+    ): SearchResponse = searchByName(client, token, tokenSecret, name)
 
     override suspend fun geocaches(
         geocacheCodes: List<String>,
         token: String,
-        tokenSecret: String
-    ): List<Geocache> {
-        return getGeocaches(client, token, tokenSecret, geocacheCodes)
-    }
+        tokenSecret: String,
+    ): List<Geocache> = getGeocaches(client, token, tokenSecret, geocacheCodes)
+
+    override suspend fun nearestGeocaches(
+        center: String,
+        limit: Int,
+        token: String,
+        tokenSecret: String,
+    ): List<Geocache> = getNearest(client, token, tokenSecret, center.encodeURLParameter(), limit)
 }

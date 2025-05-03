@@ -11,7 +11,7 @@ class SettingsScreenshotTestSource {
     fun settingsScreen(): List<TestItem> {
         return getTestItems(
             { deviceScreen ->
-                SettinsScreen(
+                SettingsScreen(
                     calculateWindowSizeClass = { deviceScreen.getWindowSizeClass() },
                     settingsUiState = SettingsUiState(
                         mixedPassword = SettingsItem.SettingsSwitch(
@@ -32,11 +32,13 @@ class SettingsScreenshotTestSource {
         val fakeAccountManager = FakeAccountManagerImpl()
         val viewModel = SettingsViewModel(
             moveToIntro = { },
-            accountManager = fakeAccountManager
+            accountManager = fakeAccountManager,
+            moveToWatch = { },
+            watchManager = null
         )
         viewModel.onStart()
         return getTestItems({ deviceScreen ->
-            SettinsScreen(
+            SettingsScreen(
                 calculateWindowSizeClass = { deviceScreen.getWindowSizeClass() },
                 settingsUiState = viewModel.state.value
             )

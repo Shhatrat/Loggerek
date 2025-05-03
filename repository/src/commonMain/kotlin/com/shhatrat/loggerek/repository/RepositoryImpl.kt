@@ -10,4 +10,8 @@ class RepositoryImpl(settings: Settings) : Repository {
         BooleanSettingsDelegate(settings, "savePassword", true)
     override val tryMixedPassword: RepositoryItem<Boolean> =
         BooleanSettingsDelegate(settings, "tryMixedPassword", true)
+    override val garminIdentifier: RepositoryItem<Long?> =
+        LongSettingsDelegate(settings, "garminIdentifier", null)
+    override val logs: RepositoryItem<List<QuickLog>> = LogsSettingsDelegate(settings, "logs")
 }
+

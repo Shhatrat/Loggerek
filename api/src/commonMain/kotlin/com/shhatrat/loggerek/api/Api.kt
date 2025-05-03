@@ -14,7 +14,6 @@ import com.shhatrat.loggerek.api.oauth.model.OAuthRequestTokenResponse
  * Interface defining API operations for interacting with the OpenCaching system.
  */
 interface Api {
-
     /**
      * Requests an OAuth request token from the OpenCaching API.
      *
@@ -35,7 +34,7 @@ interface Api {
     suspend fun accessToken(
         pin: String,
         token: String,
-        tokenSecret: String
+        tokenSecret: String,
     ): OAuthAccessTokenResponse
 
     /**
@@ -47,41 +46,58 @@ interface Api {
      */
     suspend fun cache(cacheId: String): String
 
-    suspend fun getLoggedUserNickname(token: String, tokenSecret: String): UserName
+    suspend fun getLoggedUserNickname(
+        token: String,
+        tokenSecret: String,
+    ): UserName
 
-    suspend fun getLoggedUserData(token: String, tokenSecret: String): FullUser
+    suspend fun getLoggedUserData(
+        token: String,
+        tokenSecret: String,
+    ): FullUser
 
-    suspend fun getFullCache(cacheId: String, token: String, tokenSecret: String): Geocache
+    suspend fun getFullCache(
+        cacheId: String,
+        token: String,
+        tokenSecret: String,
+    ): Geocache
 
     suspend fun saveNote(
         cacheId: String,
         token: String,
         tokenSecret: String,
         noteToSave: String,
-        oldValue: String
+        oldValue: String,
     )
 
     suspend fun logCapabilities(
         cacheId: String,
         token: String,
-        tokenSecret: String
+        tokenSecret: String,
     ): LogTypeResponse
 
     suspend fun submitLog(
         submitLogData: SubmitLogData,
         token: String,
-        tokenSecret: String
+        tokenSecret: String,
     ): LogResponse
 
     suspend fun searchByName(
         name: String,
         token: String,
-        tokenSecret: String
+        tokenSecret: String,
     ): SearchResponse
 
     suspend fun geocaches(
         geocacheCodes: List<String>,
         token: String,
-        tokenSecret: String
+        tokenSecret: String,
+    ): List<Geocache>
+
+    suspend fun nearestGeocaches(
+        center: String,
+        limit: Int,
+        token: String,
+        tokenSecret: String,
     ): List<Geocache>
 }

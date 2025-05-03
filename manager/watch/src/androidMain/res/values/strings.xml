@@ -1,0 +1,7 @@
+<resources>
+    <string name="serviceTitle">Loggerek</string>
+    <string name="serviceDescription">Garmin service is running</string>
+    <string name="stopService">Stop service</string>
+    <string name="openAppTitle">Open App</string>
+    <string name="openAppDescription">for start garmin service</string>
+</resources>
