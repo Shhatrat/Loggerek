@@ -32,7 +32,9 @@ class SettingsViewModelTest {
         fakeAccountManager = FakeAccountManagerImpl()
         viewModel = SettingsViewModel(
             moveToIntro = { navigateToIntroCalled = true },
-            accountManager = fakeAccountManager
+            accountManager = fakeAccountManager,
+            moveToWatch = { },
+            watchManager = null
         )
     }
 

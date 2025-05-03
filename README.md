@@ -59,3 +59,8 @@ wasm
 
 You can open the web application by running the `:composeApp:wasmJsBrowserDevelopmentRun` Gradle
 task.
+
+
+### TODO
+
+- Loggerek:feature:settings [recordRoborazziJvm]
