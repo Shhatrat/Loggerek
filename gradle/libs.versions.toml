@@ -97,7 +97,6 @@ compose-material = { module = "org.jetbrains.compose.material:material", version
 compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "compose-multiplatform" }
 compose-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "compose-multiplatform" }
 compose-ui-test = { module = "org.jetbrains.compose.ui:ui-test", version.ref = "compose-multiplatform" }
-compose-desktop = { module = "org.jetbrains.compose.desktop:desktop", version.ref = "compose-multiplatform" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

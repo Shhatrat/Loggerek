@@ -28,5 +28,4 @@ class AuthScreenTest {
         }
         onNodeWithTag("loader").assertDoesNotExist()
     }
-
 }
