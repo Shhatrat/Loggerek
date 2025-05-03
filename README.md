@@ -64,3 +64,4 @@ task.
 ### TODO
 
 - Loggerek:feature:settings [recordRoborazziJvm]
+- Loggerek:feature:log [recordRoborazziJvm]
