@@ -17,7 +17,6 @@ roborazzi {
 }
 
 kotlin {
-
     sourceSets {
         commonMain.dependencies {
             implementation(projects.manager.account)
@@ -25,20 +24,9 @@ kotlin {
         jvmTest.dependencies {
             implementation(compose.desktop.currentOs)
         }
-        val androidInstrumentedTest by getting {
-            dependsOn(commonTest.get())
-        }
     }
 }
 
 android {
     namespace = "com.shhatrat.loggerek.intro"
-}
-
-dependencies {
-    androidTestImplementation(libs.androidx.ui.test.junit4.android)
-    debugImplementation(libs.ui.test.manifest)
-    implementation(libs.roborazzi)
-    api(libs.roborazziRule)
-    api(libs.roborazziCompose)
 }
