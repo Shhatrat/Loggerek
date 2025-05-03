@@ -30,5 +30,9 @@ gradlePlugin {
             id = "coil-plugin"
             implementationClass = "CoilPlugin"
         }
+        register("featurePlugin") {
+            id = "feature-plugin"
+            implementationClass = "FeaturePlugin"
+        }
     }
 }
