@@ -24,8 +24,6 @@ kotlin {
         }
         jvmTest.dependencies {
             implementation(compose.desktop.currentOs)
-            implementation("io.github.takahirom.roborazzi:roborazzi-compose-desktop:1.39.0")
-            implementation(kotlin("test"))
         }
     }
 }
@@ -33,4 +31,3 @@ kotlin {
 android {
     namespace = "com.shhatrat.loggerek.settings"
 }
-
