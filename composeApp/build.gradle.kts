@@ -11,6 +11,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     id("io.gitlab.arturbosch.detekt") version "1.23.7"
+    id("android-config-plugin")
 }
 
 kotlin {
@@ -120,8 +121,6 @@ android {
 
     defaultConfig {
         applicationId = "com.shhatrat.loggerek"
-        minSdk = libs.versions.android.minSdk.get().toInt()
-        targetSdk = libs.versions.android.targetSdk.get().toInt()
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         versionCode = 1
         versionName = "1.0"

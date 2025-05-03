@@ -7,36 +7,36 @@ import io.ktor.http.encodeURLParameter
 import okio.ByteString.Companion.encodeUtf8
 
 object OAuthLogic {
-
-    private fun parseOAuthResponse(response: String): Map<String, String> {
-        return response.split("&").associate {
+    private fun parseOAuthResponse(response: String): Map<String, String> =
+        response.split("&").associate {
             val (key, value) = it.split("=")
             key to value
         }
-    }
 
     internal fun parseRequestTokenResponse(response: String): OAuthRequestTokenResponse {
         val parsedResponse = parseOAuthResponse(response)
         val token = parsedResponse["oauth_token"]!!
         val tokenSecret = parsedResponse["oauth_token_secret"]!!
-        val url = "${OpencachingApi.baseUrl}apps/authorize?oauth_token=$token"
+        val url = "${OpencachingApi.BASE_URL}apps/authorize?oauth_token=$token"
         return OAuthRequestTokenResponse(
             token = token,
             tokenSecret = tokenSecret,
-            url = url
+            url = url,
         )
     }
 
-    internal fun buildOAuthHeader(params: Map<String, String>): String {
-        return "OAuth " + params.entries.joinToString(", ") { "${it.key}=\"${it.value.encodeURLParameter()}\"" }
-    }
+    internal fun buildOAuthHeader(params: Map<String, String>): String =
+        "OAuth " +
+            params.entries.joinToString(", ") {
+                "${it.key}=\"${it.value.encodeURLParameter()}\""
+            }
 
     internal fun generateSignature(
         method: String,
         url: String,
         params: Map<String, String>,
         consumerSecret: String,
-        tokenSecret: String? = ""
+        tokenSecret: String? = "",
     ): String {
         val sortedParams = params.entries.sortedBy { it.key }
         val paramString = sortedParams.joinToString("&") { "${it.key}=${it.value}" }
@@ -49,10 +49,9 @@ object OAuthLogic {
         return hmac.base64()
     }
 
-    fun parseAccessTokenResponse(body: String): OAuthAccessTokenResponse {
-        return OAuthAccessTokenResponse(
+    fun parseAccessTokenResponse(body: String): OAuthAccessTokenResponse =
+        OAuthAccessTokenResponse(
             oauthToken = parseOAuthResponse(body)["oauth_token"]!!,
-            oauthTokenSecret = parseOAuthResponse(body)["oauth_token_secret"]!!
+            oauthTokenSecret = parseOAuthResponse(body)["oauth_token_secret"]!!,
         )
-    }
 }

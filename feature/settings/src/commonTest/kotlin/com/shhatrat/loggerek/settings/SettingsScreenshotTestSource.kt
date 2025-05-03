@@ -32,7 +32,9 @@ class SettingsScreenshotTestSource {
         val fakeAccountManager = FakeAccountManagerImpl()
         val viewModel = SettingsViewModel(
             moveToIntro = { },
-            accountManager = fakeAccountManager
+            accountManager = fakeAccountManager,
+            moveToWatch = { },
+            watchManager = null
         )
         viewModel.onStart()
         return getTestItems({ deviceScreen ->

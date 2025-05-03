@@ -33,7 +33,7 @@ class ProfileViewModelTest {
     }
 
     @Test
-    fun `initial state is set correctly`() = runTest {
+    fun initialStateIsSetCorrectly() = runTest {
         val state = viewModel.state.value
 
         assertNull(state.user)
@@ -42,7 +42,7 @@ class ProfileViewModelTest {
     }
 
     @Test
-    fun `onStart fetches user data successfully`() = runTest {
+    fun onStartFetchesUserDataSuccessfully() = runTest {
         viewModel.onStart()
         testDispatcher.scheduler.advanceUntilIdle()
 
@@ -54,7 +54,7 @@ class ProfileViewModelTest {
     }
 
     @Test
-    fun `onStart handles error correctly`() = runTest {
+    fun onStartHandlesErrorCorrectly() = runTest {
         fakeAccountManager.getFullUserDataHelper.doAfterDelayBeforeLogic = { throw Exception() }
         viewModel.onStart()
         testDispatcher.scheduler.advanceUntilIdle()
@@ -66,7 +66,7 @@ class ProfileViewModelTest {
     }
 
     @Test
-    fun `loader activates during data fetch`() = runTest {
+    fun loaderActivatesDuringDataFetch() = runTest {
         fakeAccountManager.getFullUserDataHelper.delay = 1000L
         viewModel.onStart()
         testDispatcher.scheduler.advanceTimeBy(100)

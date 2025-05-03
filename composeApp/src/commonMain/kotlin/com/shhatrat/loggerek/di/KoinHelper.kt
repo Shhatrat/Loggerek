@@ -11,7 +11,6 @@ import org.koin.core.KoinApplication
 import org.koin.dsl.module
 
 object KoinHelper {
-
     fun KoinApplication.setupBaseModules() {
         modules(
             repositoryModule,
@@ -20,19 +19,23 @@ object KoinHelper {
             logManagerModule,
             viewModelModule,
         ).modules(
-            PlatformSpecificModule().getModules().plus(
-                BrowserPlatformSpecificModule().getModules()
-            ).plus(
-                WatchPlatformSpecificModule().getModules()
-            )
+            PlatformSpecificModule()
+                .getModules()
+                .plus(
+                    BrowserPlatformSpecificModule().getModules(),
+                ).plus(
+                    WatchPlatformSpecificModule().getModules(),
+                ),
         )
     }
 
     fun KoinApplication.setupWindowSizeModules(calculateWindowSizeClass: WindowSizeCallback) {
-        modules(module {
-            single<WindowSizeCallback> {
-                { calculateWindowSizeClass() }
-            }
-        })
+        modules(
+            module {
+                single<WindowSizeCallback> {
+                    { calculateWindowSizeClass() }
+                }
+            },
+        )
     }
 }

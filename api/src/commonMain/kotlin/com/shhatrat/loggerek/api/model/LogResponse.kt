@@ -8,5 +8,5 @@ data class LogResponse(
     @SerialName("success") val success: Boolean,
     @SerialName("message") val message: String,
     @SerialName("log_uuid") val logUuid: String? = null,
-    @SerialName("log_uuids") val logUuids: List<String> = emptyList()
+    @SerialName("log_uuids") val logUuids: List<String> = emptyList(),
 )
