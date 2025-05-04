@@ -20,7 +20,16 @@ open class BaseViewModel<T>(initialState: T) : ViewModel() {
     private val _state = MutableStateFlow(initialState)
     val state: StateFlow<T> = _state
 
-    open fun onStart() {}
+    open fun onStart() {
+        if(!onceInvoked){
+            onceInvoked = true
+            onStartOnceAction()
+        }
+    }
+
+    private var onceInvoked = false
+
+    var onStartOnceAction = {}
 
     suspend fun <T> actionWithLoader(
         loaderAction: (Boolean) -> Unit,

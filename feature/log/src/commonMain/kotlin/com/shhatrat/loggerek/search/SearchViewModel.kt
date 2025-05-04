@@ -28,22 +28,24 @@ class SearchViewModel(
         LoaderHandlingUtil { loaderAction -> updateUiState { copy(loader = Loader(loaderAction)) } }
 
     override fun onStart() {
-        super.onStart()
-        updateUiState { copy(move = moveToLogCache) }
-        viewModelScope.launch {
-            updateUiState {
-                copy(search = MultiTextFieldModel {
-                    viewModelScope.launch {
-                        updateUiState {
-                            copy(search = search.copy(text = it))
+        onStartOnceAction = {
+            updateUiState { copy(move = moveToLogCache) }
+            viewModelScope.launch {
+                updateUiState {
+                    copy(search = MultiTextFieldModel {
+                        viewModelScope.launch {
+                            updateUiState {
+                                copy(search = search.copy(text = it))
+                            }
+                            loaderHandlingUtil.withLoader {
+                                val results = logManager.searchByName(it)
+                                updateUiState { copy(caches = results) }
+                            }
                         }
-                        loaderHandlingUtil.withLoader {
-                            val results = logManager.searchByName(it)
-                            updateUiState { copy(caches = results) }
-                        }
-                    }
-                })
+                    })
+                }
             }
         }
+        super.onStart()
     }
 }
