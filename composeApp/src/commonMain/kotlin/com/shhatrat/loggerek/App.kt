@@ -64,16 +64,16 @@ fun AppNavigation(modifier: Modifier, navController: NavHostController = remembe
                 INTRO -> composable(it.name) {
                     PrepareIntroScreen(
                         navigateToMain = {
-                            navController.nav(MAIN)
+                            navController.navWithoutStack(MAIN)
                         },
                         navigateToAuth = {
-                            navController.nav(AUTH)
+                            navController.navWithoutStack(AUTH)
                         })
                 }
 
                 MAIN -> composable(it.name) {
                     PrepareMainScreen(navigateToIntro = {
-                        navController.nav(
+                        navController.navWithoutStack(
                             INTRO
                         )
                     })
@@ -81,15 +81,18 @@ fun AppNavigation(modifier: Modifier, navController: NavHostController = remembe
 
                 AUTH -> composable(it.name) {
                     PrepareAuthScreen(
-                        navigateToMain = { navController.nav(MAIN) })
+                        navigateToMain = { navController.navWithoutStack(MAIN) })
                 }
             }
         }
     }
 }
 
-private fun NavController.nav(appDestinations: AppDestinations) {
-    navigate(appDestinations.name)
+private fun NavController.navWithoutStack(appDestinations: AppDestinations) {
+    navigate(appDestinations.name){
+        popUpTo(0) { inclusive = true }
+        launchSingleTop = true
+    }
 }
 
 @Composable
