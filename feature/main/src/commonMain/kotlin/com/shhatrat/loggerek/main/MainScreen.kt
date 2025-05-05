@@ -107,7 +107,7 @@ fun MainScreen(calculateWindowSizeClass: WindowSizeCallback, mainUiState: MainUi
                     screenStack.add(it)
                 },
                 onBack = {
-                    screenStack.removeLast()
+                        screenStack.removeAt(screenStack.lastIndex)
                 }
             )
         }
