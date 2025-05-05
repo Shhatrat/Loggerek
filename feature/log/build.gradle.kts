@@ -22,6 +22,8 @@ kotlin {
             implementation(projects.api)
             implementation(projects.manager.account)
             implementation(projects.manager.log)
+            implementation(libs.datetime.wheel.picker)
+            implementation(libs.kotlinx.datetime)
         }
         jvmTest.dependencies {
             implementation(compose.desktop.currentOs)
