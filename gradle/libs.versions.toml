@@ -11,6 +11,7 @@ coilNetworkKtor3 = "3.0.4"
 compose-multiplatform = "1.7.3"
 composeNavigation = "1.4.1"
 compottie = "2.0.0-rc02"
+datetimeWheelPicker = "1.1.0-alpha01-compose1.7"
 horologistComposeLayout = "0.7.5-alpha"
 horologistComposeMaterial = "0.7.5-alpha"
 koinAndroid = "4.1.0-Beta1"
@@ -59,6 +60,7 @@ coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilNe
 coil-network-ktor3 = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coilNetworkKtor3" }
 coil-svg = { module = "io.coil-kt.coil3:coil-svg", version.ref = "coilNetworkKtor3" }
 compottie = { module = "io.github.alexzhirkevich:compottie", version.ref = "compottie" }
+datetime-wheel-picker = { module = "io.github.darkokoa:datetime-wheel-picker", version.ref = "datetimeWheelPicker" }
 horologist-compose-material = { module = "com.google.android.horologist:horologist-compose-material", version.ref = "horologistComposeMaterial" }
 horologist-compose-layout = { module = "com.google.android.horologist:horologist-compose-layout", version.ref = "horologistComposeLayout" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinAndroid" }
