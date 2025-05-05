@@ -49,6 +49,7 @@ import com.shhatrat.loggerek.base.composable.VerticalSegmentedButton
 import com.shhatrat.loggerek.base.get
 import com.shhatrat.loggerek.base.testing.TestingHelper.getWindowSizeExpanded
 import com.shhatrat.loggerek.search.TypeCircle
+import dev.darkokoa.datetimewheelpicker.WheelDatePicker
 import io.github.alexzhirkevich.compottie.LottieCompositionSpec
 import io.github.alexzhirkevich.compottie.animateLottieCompositionAsState
 import io.github.alexzhirkevich.compottie.rememberLottieComposition
@@ -144,6 +145,8 @@ fun LogScreen(calculateWindowSizeClass: WindowSizeCallback, logUiState: LogUiSta
                             }
                         }
                     }
+                    WheelDatePicker { snappedDate -> logUiState.geocacheData.date.onChange.invoke(snappedDate.toString()) }
+
                     MultiTextField(
                         multiTextFieldModel = it.description,
                         placeholder = {
@@ -253,7 +256,8 @@ fun LogScreenPreview() {
                 sendAction = {},
                 resetAction = {},
                 typeIcon = cache.type.iconRes,
-                isFound = cache.isFound()
+                isFound = cache.isFound(),
+                date = MultiTextFieldModel()
             )
         }
         LogScreen({ getWindowSizeExpanded() }, LogUiState(geocacheData = gd))

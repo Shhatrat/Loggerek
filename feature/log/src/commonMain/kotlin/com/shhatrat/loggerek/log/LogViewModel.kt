@@ -11,7 +11,6 @@ import com.shhatrat.loggerek.base.BaseViewModel
 import com.shhatrat.loggerek.base.ButtonAction
 import com.shhatrat.loggerek.base.Error
 import com.shhatrat.loggerek.base.Loader
-import com.shhatrat.loggerek.base.browser.BrowserUtil
 import com.shhatrat.loggerek.base.browser.IBrowserUtil
 import com.shhatrat.loggerek.base.composable.MultiTextFieldModel
 import com.shhatrat.loggerek.base.error.ErrorHandlingUtil
@@ -39,6 +38,7 @@ data class GeocacheData(
     val logTypeData: LogTypeData,
     val description: MultiTextFieldModel,
     val myNotes: MultiTextFieldModel,
+    val date: MultiTextFieldModel,
     val password: MultiTextFieldModel?,
     val sendAction: ButtonAction,
     val resetAction: ButtonAction,
@@ -111,6 +111,18 @@ class LogViewModel(
                                     )
                                 }
                             }),
+                        date = MultiTextFieldModel(
+                            text = "",
+                            onChange = { data ->
+                                updateUiState {
+                                    copy(
+                                        geocacheData = geocacheData?.copy(
+                                            date = geocacheData.date.copy(text = data)
+                                        )
+                                    )
+                                }
+                                setupPassword(cache)
+                            }),
                         logTypeData = LogTypeData(
                             selectedIndex = defaultLogTypeIndex,
                             types = cache.type.logType.logTypes.map { it.textRes },
@@ -157,12 +169,15 @@ class LogViewModel(
                                             state.value.geocacheData?.myNotes?.text ?: "",
                                             cache.myNotes ?: ""
                                         )
-                                        val logType: LogType = cache.type.logType.logTypes[state.value.geocacheData?.logTypeData?.selectedIndex
-                                            ?: defaultLogTypeIndex]
-                                        if(logType == LogType.FOUND && cache.requirePassword && accountManager.tryMixedPassword){
+                                        val logType: LogType =
+                                            cache.type.logType.logTypes[state.value.geocacheData?.logTypeData?.selectedIndex
+                                                ?: defaultLogTypeIndex]
+                                        if (logType == LogType.FOUND && cache.requirePassword && accountManager.tryMixedPassword) {
                                             var response: LogResponse? = null
-                                            for (alternative in PasswordHelper.getAlternatives(state.value.geocacheData?.password?.text ?: "")) {
-                                                response= logManager.submitLog(
+                                            for (alternative in PasswordHelper.getAlternatives(
+                                                state.value.geocacheData?.password?.text ?: ""
+                                            )) {
+                                                response = logManager.submitLog(
                                                     SubmitLogData(
                                                         cacheId = cacheId,
                                                         logType = logType,
@@ -171,17 +186,19 @@ class LogViewModel(
                                                             ?: "",
                                                         reccomend = state.value.geocacheData?.ratingData?.recommendation
                                                             ?: false,
-                                                        password = alternative
+                                                        password = alternative,
+                                                        date = state.value.geocacheData?.date?.text
                                                     )
                                                 )
-                                                if(response.success){
+                                                if (response.success) {
                                                     break
                                                 }
                                             }
-                                            if(accountManager.savePassword && cache.requirePassword && response!!.success){
+                                            if (accountManager.savePassword && cache.requirePassword && response!!.success) {
                                                 logManager.saveNote(
                                                     cacheId,
-                                                    (state.value.geocacheData?.myNotes?.text ?: "").plus("\n${state.value.geocacheData?.password?.text}"),
+                                                    (state.value.geocacheData?.myNotes?.text
+                                                        ?: "").plus("\n${state.value.geocacheData?.password?.text}"),
                                                     state.value.geocacheData?.myNotes?.text ?: ""
                                                 )
                                             }
@@ -194,7 +211,7 @@ class LogViewModel(
                                             } else {
                                                 updateUiState { copy(error = Error(response.message)) }
                                             }
-                                        }else{
+                                        } else {
                                             val response = logManager.submitLog(
                                                 SubmitLogData(
                                                     cacheId = cacheId,
@@ -205,7 +222,8 @@ class LogViewModel(
                                                         ?: "",
                                                     reccomend = state.value.geocacheData?.ratingData?.recommendation
                                                         ?: false,
-                                                    password = state.value.geocacheData?.password?.text
+                                                    password = state.value.geocacheData?.password?.text,
+                                                    date = state.value.geocacheData?.date?.text
                                                 )
                                             )
                                             if (response.success) {

@@ -48,7 +48,8 @@ abstract class BaseWatchLogicImpl(
             rating = null,
             comment = log.comment,
             reccomend = false,
-            password = null
+            password = null,
+            date = null
         )
         api.submitLog(logData, repository.token.get()!!, repository.tokenSecret.get()!!)
     }
