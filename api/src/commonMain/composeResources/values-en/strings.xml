@@ -6,4 +6,6 @@
     <string name="log_will_participated_in_event">Will participate in event</string>
     <string name="log_found">Found</string>
     <string name="log_not_found">Not found</string>
+    <string name="log_archived">Archived</string>
+    <string name="log_temp_unavailable">Temporary unavailable</string>
 </resources>

@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.shhatrat.loggerek.api.model.GeocacheMock
+import com.shhatrat.loggerek.api.model.LogType
 import com.shhatrat.loggerek.api.model.isFound
 import com.shhatrat.loggerek.base.LoggerekTheme
 import com.shhatrat.loggerek.base.WindowSizeCallback
@@ -68,6 +69,7 @@ import loggerek.feature.log.generated.resources.recommend
 import loggerek.feature.log.generated.resources.sendButton
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 
+@ExperimentalResourceApi
 @Composable
 fun LogScreen(calculateWindowSizeClass: WindowSizeCallback, logUiState: LogUiState) {
     Box(modifier = Modifier.fillMaxSize()) {
@@ -248,7 +250,7 @@ fun LogScreenPreview() {
                 ratingData = RatingData(true, 5, {}, false, true, {}),
                 logTypeData = LogTypeData(
                     0,
-                    cache.type.logType.logTypes.map { it.textRes },
+                    LogType.entries.map { it.textRes },
                     onChangedIndex = { }),
                 description = MultiTextFieldModel(),
                 myNotes = MultiTextFieldModel(),

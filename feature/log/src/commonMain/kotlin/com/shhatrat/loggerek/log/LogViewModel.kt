@@ -16,9 +16,11 @@ import com.shhatrat.loggerek.base.composable.MultiTextFieldModel
 import com.shhatrat.loggerek.base.error.ErrorHandlingUtil
 import com.shhatrat.loggerek.base.loader.LoaderHandlingUtil
 import com.shhatrat.loggerek.manager.log.LogManager
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
+import kotlin.math.log
 
 data class LogUiState(
     val loader: Loader = Loader(),
@@ -79,15 +81,18 @@ class LogViewModel(
     override fun onStart() {
         super.onStart()
         viewModelScope.launch {
-            val cache = logManager.getCache(cacheId)
-            logManager.logCapabilities(cacheId)
+            val cacheDeferred = async { logManager.getCache(cacheId) }
+            val logsDeferred = async { logManager.logCapabilities(cacheId) }
+
+            val cache = cacheDeferred.await()
+            val logs = logsDeferred.await()
             updateUiState {
                 copy(
                     geocacheData = GeocacheData(
                         title = cache.name,
                         onClick = { browserUtil.openWithUrl(cache.url) },
                         ratingData = RatingData(
-                            showRating = cache.type.logType.logTypes[defaultLogTypeIndex].canRate,
+                            showRating =  logs[defaultLogTypeIndex].canRate,
                             starsOnChanged = {
                                 updateUiState {
                                     copy(
@@ -99,7 +104,7 @@ class LogViewModel(
                                     )
                                 }
                             },
-                            recommendationPossible = cache.type.logType.logTypes[defaultLogTypeIndex].canBeRecommended,
+                            recommendationPossible = logs[defaultLogTypeIndex].canBeRecommended,
                             recommendationChanged = {
                                 updateUiState {
                                     copy(
@@ -121,17 +126,17 @@ class LogViewModel(
                                         )
                                     )
                                 }
-                                setupPassword(cache)
+                                setupPassword(cache, logs)
                             }),
                         logTypeData = LogTypeData(
                             selectedIndex = defaultLogTypeIndex,
-                            types = cache.type.logType.logTypes.map { it.textRes },
+                            types = logs.map { it.textRes },
                             onChangedIndex = { changed ->
                                 updateUiState {
                                     copy(
                                         geocacheData = geocacheData?.copy(
                                             ratingData = geocacheData.ratingData?.copy(
-                                                showRating = cache.type.logType.logTypes[changed].canRate,
+                                                showRating = logs[changed].canRate,
                                             ),
                                             logTypeData = geocacheData.logTypeData.copy(
                                                 selectedIndex = changed
@@ -139,7 +144,7 @@ class LogViewModel(
                                         )
                                     )
                                 }
-                                setupPassword(cache)
+                                setupPassword(cache, logs)
                             }),
                         description = MultiTextFieldModel { changedText ->
                             updateUiState {
@@ -170,7 +175,7 @@ class LogViewModel(
                                             cache.myNotes ?: ""
                                         )
                                         val logType: LogType =
-                                            cache.type.logType.logTypes[state.value.geocacheData?.logTypeData?.selectedIndex
+                                            logs[state.value.geocacheData?.logTypeData?.selectedIndex
                                                 ?: defaultLogTypeIndex]
                                         if (logType == LogType.FOUND && cache.requirePassword && accountManager.tryMixedPassword) {
                                             var response: LogResponse? = null
@@ -215,7 +220,7 @@ class LogViewModel(
                                             val response = logManager.submitLog(
                                                 SubmitLogData(
                                                     cacheId = cacheId,
-                                                    logType = cache.type.logType.logTypes[state.value.geocacheData?.logTypeData?.selectedIndex
+                                                    logType = logs[state.value.geocacheData?.logTypeData?.selectedIndex
                                                         ?: defaultLogTypeIndex],
                                                     rating = state.value.geocacheData?.ratingData?.rating,
                                                     comment = state.value.geocacheData?.description?.text
@@ -249,13 +254,12 @@ class LogViewModel(
                     )
                 )
             }
-            setupPassword(cache)
+            setupPassword(cache, logs)
         }
     }
 
-    private fun setupPassword(cache: Geocache) {
-        val shouldShow =
-            cache.requirePassword && cache.type.logType.logTypes[state.value.geocacheData?.logTypeData?.selectedIndex
+    private fun setupPassword(cache: Geocache, logs: List<LogType>) {
+        val shouldShow = cache.requirePassword && logs[state.value.geocacheData?.logTypeData?.selectedIndex
                 ?: defaultLogTypeIndex].canHasPassword
         if (shouldShow) {
             updateUiState {
