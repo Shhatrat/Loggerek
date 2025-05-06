@@ -37,15 +37,22 @@ class SearchViewModel(
                             updateUiState {
                                 copy(search = search.copy(text = it))
                             }
-                            loaderHandlingUtil.withLoader {
-                                val results = logManager.searchByName(it)
-                                updateUiState { copy(caches = results) }
-                            }
+                            downloadCaches(it)
                         }
                     })
                 }
             }
+            downloadCaches("")
         }
         super.onStart()
+    }
+
+    private fun downloadCaches(name: String) {
+        viewModelScope.launch {
+            loaderHandlingUtil.withLoader {
+                val results = logManager.searchByName(name)
+                updateUiState { copy(caches = results) }
+            }
+        }
     }
 }
