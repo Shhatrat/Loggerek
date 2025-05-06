@@ -25,6 +25,7 @@ import com.shhatrat.loggerek.intro.splash.IntroScreen
 import com.shhatrat.loggerek.intro.splash.IntroViewModel
 import com.shhatrat.loggerek.main.MainScreen
 import com.shhatrat.loggerek.main.MainViewModel
+import kotlinx.coroutines.flow.SharedFlow
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.KoinApplication
@@ -35,10 +36,10 @@ import org.koin.core.parameter.parametersOf
 fun App(
     calculateWindowSizeClass: WindowSizeCallback,
     additionalKoinConfig: KoinApplication.() -> Unit = { },
+    backPressedFlow: SharedFlow<Unit>,
     startKoin: Boolean = true
 ) {
     LoggerekTheme {
-
         val shouldStartKoin = remember { mutableStateOf(startKoin) }
         if(shouldStartKoin.value){
             shouldStartKoin.value = false
@@ -48,12 +49,14 @@ fun App(
                 setupWindowSizeModules(calculateWindowSizeClass)
             }
         }
-        AppNavigation(modifier = Modifier)
+        AppNavigation(modifier = Modifier, backPressedFlow)
     }
 }
 
 @Composable
-fun AppNavigation(modifier: Modifier, navController: NavHostController = rememberNavController()) {
+fun AppNavigation(modifier: Modifier,
+                  backPressedFlow: SharedFlow<Unit>,
+                  navController: NavHostController = rememberNavController()) {
     NavHost(
         navController = navController,
         startDestination = INTRO.name,
@@ -64,16 +67,18 @@ fun AppNavigation(modifier: Modifier, navController: NavHostController = remembe
                 INTRO -> composable(it.name) {
                     PrepareIntroScreen(
                         navigateToMain = {
-                            navController.nav(MAIN)
+                            navController.navWithoutStack(MAIN)
                         },
                         navigateToAuth = {
-                            navController.nav(AUTH)
+                            navController.navWithoutStack(AUTH)
                         })
                 }
 
                 MAIN -> composable(it.name) {
-                    PrepareMainScreen(navigateToIntro = {
-                        navController.nav(
+                    PrepareMainScreen(
+                        backPressedFlow = backPressedFlow,
+                        navigateToIntro = {
+                        navController.navWithoutStack(
                             INTRO
                         )
                     })
@@ -81,15 +86,18 @@ fun AppNavigation(modifier: Modifier, navController: NavHostController = remembe
 
                 AUTH -> composable(it.name) {
                     PrepareAuthScreen(
-                        navigateToMain = { navController.nav(MAIN) })
+                        navigateToMain = { navController.navWithoutStack(MAIN) })
                 }
             }
         }
     }
 }
 
-private fun NavController.nav(appDestinations: AppDestinations) {
-    navigate(appDestinations.name)
+private fun NavController.navWithoutStack(appDestinations: AppDestinations) {
+    navigate(appDestinations.name){
+        popUpTo(0) { inclusive = true }
+        launchSingleTop = true
+    }
 }
 
 @Composable
@@ -100,10 +108,10 @@ fun PrepareIntroScreen(navigateToMain: () -> Unit, navigateToAuth: () -> Unit) {
 }
 
 @Composable
-fun PrepareMainScreen(navigateToIntro: () -> Unit) {
+fun PrepareMainScreen(backPressedFlow: SharedFlow<Unit>, navigateToIntro: () -> Unit) {
     val vm: MainViewModel = koinViewModel { parametersOf(navigateToIntro) }
     LaunchedEffect(Unit) { vm.onStart() }
-    MainScreen(koinInject<WindowSizeCallback>(), vm.state.collectAsState().value)
+    MainScreen(koinInject<WindowSizeCallback>(), backPressedFlow, vm.state.collectAsState().value)
 }
 
 @Composable

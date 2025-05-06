@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.shhatrat.loggerek.api.model.GeocacheMock
+import com.shhatrat.loggerek.api.model.LogType
 import com.shhatrat.loggerek.api.model.isFound
 import com.shhatrat.loggerek.base.LoggerekTheme
 import com.shhatrat.loggerek.base.WindowSizeCallback
@@ -49,6 +50,7 @@ import com.shhatrat.loggerek.base.composable.VerticalSegmentedButton
 import com.shhatrat.loggerek.base.get
 import com.shhatrat.loggerek.base.testing.TestingHelper.getWindowSizeExpanded
 import com.shhatrat.loggerek.search.TypeCircle
+import dev.darkokoa.datetimewheelpicker.WheelDatePicker
 import io.github.alexzhirkevich.compottie.LottieCompositionSpec
 import io.github.alexzhirkevich.compottie.animateLottieCompositionAsState
 import io.github.alexzhirkevich.compottie.rememberLottieComposition
@@ -67,6 +69,7 @@ import loggerek.feature.log.generated.resources.recommend
 import loggerek.feature.log.generated.resources.sendButton
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 
+@ExperimentalResourceApi
 @Composable
 fun LogScreen(calculateWindowSizeClass: WindowSizeCallback, logUiState: LogUiState) {
     Box(modifier = Modifier.fillMaxSize()) {
@@ -144,6 +147,8 @@ fun LogScreen(calculateWindowSizeClass: WindowSizeCallback, logUiState: LogUiSta
                             }
                         }
                     }
+                    WheelDatePicker { snappedDate -> logUiState.geocacheData.date.onChange.invoke(snappedDate.toString()) }
+
                     MultiTextField(
                         multiTextFieldModel = it.description,
                         placeholder = {
@@ -245,7 +250,7 @@ fun LogScreenPreview() {
                 ratingData = RatingData(true, 5, {}, false, true, {}),
                 logTypeData = LogTypeData(
                     0,
-                    cache.type.logType.logTypes.map { it.textRes },
+                    LogType.entries.map { it.textRes },
                     onChangedIndex = { }),
                 description = MultiTextFieldModel(),
                 myNotes = MultiTextFieldModel(),
@@ -253,7 +258,8 @@ fun LogScreenPreview() {
                 sendAction = {},
                 resetAction = {},
                 typeIcon = cache.type.iconRes,
-                isFound = cache.isFound()
+                isFound = cache.isFound(),
+                date = MultiTextFieldModel()
             )
         }
         LogScreen({ getWindowSizeExpanded() }, LogUiState(geocacheData = gd))

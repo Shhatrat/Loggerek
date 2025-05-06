@@ -186,6 +186,7 @@ internal suspend inline fun ApiImpl.submitLog(
             Pair("logtype", logData.logType.apiKey),
             Pair("comment", logData.comment),
             Pair("recommend", logData.reccomend.toString()),
+            Pair("when", logData.date?:""),
         ).plus(additionalParams).mapValues { it.value.encodeURLParameter() },
     )
 }

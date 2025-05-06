@@ -6,4 +6,6 @@
     <string name="log_will_participated_in_event">Weźmie udział w wydarzeniu</string>
     <string name="log_found">Znaleziono</string>
     <string name="log_not_found">Nie znaleziono</string>
+    <string name="log_archived">Archiwizuj</string>
+    <string name="log_temp_unavailable">Tymczasowo niedostępna</string>
 </resources>

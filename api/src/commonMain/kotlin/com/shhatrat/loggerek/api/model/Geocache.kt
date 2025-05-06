@@ -18,10 +18,12 @@ import loggerek.api.generated.resources.Cache_virtual
 import loggerek.api.generated.resources.Cache_webcam
 import loggerek.api.generated.resources.Owncache
 import loggerek.api.generated.resources.Res
+import loggerek.api.generated.resources.log_archived
 import loggerek.api.generated.resources.log_comment
 import loggerek.api.generated.resources.log_found
 import loggerek.api.generated.resources.log_not_found
 import loggerek.api.generated.resources.log_participated_in_event
+import loggerek.api.generated.resources.log_temp_unavailable
 import loggerek.api.generated.resources.log_will_participated_in_event
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
@@ -61,49 +63,16 @@ data class LogUser(
     val profileUrl: String,
 )
 
-enum class GeocacheType(val iconRes: DrawableResource, val logType: LogOptions) {
-    Traditional(
-        Res.drawable.Cache_traditional,
-        LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT)),
-    ),
-    Multi(
-        Res.drawable.Cache_multi,
-        LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT)),
-    ),
-    Quiz(
-        Res.drawable.Cache_quiz,
-        LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT)),
-    ),
-    Moving(
-        Res.drawable.Cache_moving,
-        LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT)),
-    ),
-    Virtual(
-        Res.drawable.Cache_virtual,
-        LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT)),
-    ),
-    Other(
-        Res.drawable.Cache_unknown,
-        LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT)),
-    ),
-    Own(
-        Res.drawable.Owncache,
-        LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT)),
-    ),
-    Webcam(
-        Res.drawable.Cache_webcam,
-        LogOptions(listOf(LogType.FOUND, LogType.NOT_FOUND, LogType.COMMENT)),
-    ),
-    Event(
-        Res.drawable.Cache_event,
-        LogOptions(
-            listOf(
-                LogType.PARTICIPATED_IN_EVENT,
-                LogType.WILL_PARTICIPATE_IN_EVENT,
-                LogType.COMMENT,
-            ),
-        ),
-    ),
+enum class GeocacheType(val iconRes: DrawableResource) {
+    Traditional(Res.drawable.Cache_traditional),
+    Multi(Res.drawable.Cache_multi),
+    Quiz(Res.drawable.Cache_quiz),
+    Moving(Res.drawable.Cache_moving),
+    Virtual(Res.drawable.Cache_virtual),
+    Other(Res.drawable.Cache_unknown),
+    Own(Res.drawable.Owncache),
+    Webcam(Res.drawable.Cache_webcam),
+    Event(Res.drawable.Cache_event),
 }
 
 @Serializable
@@ -134,6 +103,12 @@ enum class LogType(
 
     @SerialName("Didn't find it")
     NOT_FOUND("Didn't find it", Res.string.log_not_found, false, false, false),
+
+    @SerialName("Archived")
+    ARCHIVED("Archived", Res.string.log_archived, false, false, false),
+
+    @SerialName("Temporarily unavailable")
+    TEMPORARILY_UNAVAILABLE("Temporarily unavailable", Res.string.log_temp_unavailable, false, false, false),
 }
 
 data class LogOptions(
