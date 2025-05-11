@@ -5,6 +5,7 @@ plugins {
     id("io.gitlab.arturbosch.detekt") version "1.23.7"
     id("io.github.takahirom.roborazzi")
     id("feature-plugin")
+    alias(libs.plugins.mokkery)
 }
 
 roborazzi {
