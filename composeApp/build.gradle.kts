@@ -62,7 +62,13 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.koin.android)
-            implementation("androidx.lifecycle:lifecycle-process:2.8.7")
+            implementation(libs.androidx.lifecycle.process)
+
+            implementation(libs.filekit.core)
+            implementation(libs.filekit.dialogs)
+            implementation(libs.filekit.dialogs.compose)
+            implementation(libs.filekit.coil)
+            implementation(libs.androidx.startup.runtime)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -76,7 +82,7 @@ kotlin {
             implementation(libs.coil.compose)
             implementation(libs.coil.svg)
             implementation(libs.coil.network.ktor3)
-            implementation("org.jetbrains.compose.material3:material3-window-size-class:1.7.3")
+            implementation(libs.material3.window.size.class1)
             implementation(libs.koin.compose)
             implementation(projects.repository)
             implementation(projects.api)
@@ -88,6 +94,7 @@ kotlin {
             implementation(projects.feature.profile)
             implementation(projects.feature.settings)
             implementation(projects.feature.watch)
+            implementation(projects.feature.fieldNotes)
             implementation(projects.feature.log)
             implementation(projects.base)
             implementation(projects.base.browser)
@@ -102,9 +109,6 @@ kotlin {
             @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.uiTest)
             implementation(kotlin("test"))
-//            implementation(libs.androidx.navigation.testing)
-//            implementation("androidx.navigation:navigation-testing:2.8.0-alpha10")
-
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
