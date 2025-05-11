@@ -19,6 +19,7 @@ kotlin {
             implementation(projects.base.color)
             implementation(projects.base.browser)
             implementation(projects.base.testing)
+            implementation(projects.base.cache)
             implementation(projects.api)
             implementation(projects.manager.account)
             implementation(projects.manager.log)

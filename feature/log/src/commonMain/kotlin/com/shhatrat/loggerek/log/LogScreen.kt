@@ -37,6 +37,7 @@ import com.shhatrat.loggerek.api.model.LogType
 import com.shhatrat.loggerek.api.model.isFound
 import com.shhatrat.loggerek.base.LoggerekTheme
 import com.shhatrat.loggerek.base.WindowSizeCallback
+import com.shhatrat.loggerek.base.cache.TypeCircle
 import com.shhatrat.loggerek.base.composable.CircularIndeterminateProgressBar
 import com.shhatrat.loggerek.base.composable.Header
 import com.shhatrat.loggerek.base.composable.MultiTextField
@@ -49,7 +50,6 @@ import com.shhatrat.loggerek.base.composable.StarSwitch
 import com.shhatrat.loggerek.base.composable.VerticalSegmentedButton
 import com.shhatrat.loggerek.base.get
 import com.shhatrat.loggerek.base.testing.TestingHelper.getWindowSizeExpanded
-import com.shhatrat.loggerek.search.TypeCircle
 import dev.darkokoa.datetimewheelpicker.WheelDatePicker
 import io.github.alexzhirkevich.compottie.LottieCompositionSpec
 import io.github.alexzhirkevich.compottie.animateLottieCompositionAsState
@@ -232,8 +232,6 @@ fun LogScreen(calculateWindowSizeClass: WindowSizeCallback, logUiState: LogUiSta
                 }
             }
         }
-
-
         ProvideSnackBar(snackBarHostState)
     }
 }

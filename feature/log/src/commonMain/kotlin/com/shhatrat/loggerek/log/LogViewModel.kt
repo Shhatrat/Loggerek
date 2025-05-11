@@ -35,7 +35,7 @@ data class GeocacheData(
     val title: String,
     val typeIcon: DrawableResource,
     val isFound: Boolean,
-    val onClick: () -> Unit,
+    val onClick: ButtonAction,
     val ratingData: RatingData? = null,
     val logTypeData: LogTypeData,
     val description: MultiTextFieldModel,

@@ -21,11 +21,11 @@ fun MultiTextField(
     placeholder: @Composable () -> Unit = {}
 ) {
     MultiTextField(
-        modifier,
-        multiTextFieldModel.text,
-        multiTextFieldModel.onChange,
-        lines,
-        placeholder
+        modifier = modifier,
+        text = multiTextFieldModel.text,
+        onChange = multiTextFieldModel.onChange,
+        lines = lines,
+        placeholder = placeholder
     )
 }
 
@@ -35,6 +35,7 @@ fun MultiTextField(
     text: String = "",
     onChange: (String) -> Unit = {},
     lines: Int = 5,
+    maxLines: Int = Int.MAX_VALUE,
     placeholder: @Composable () -> Unit = {}
 ) {
     Box(
@@ -47,7 +48,6 @@ fun MultiTextField(
             modifier = Modifier.fillMaxSize(),
             placeholder = { placeholder() },
             minLines = lines,
-            maxLines = Int.MAX_VALUE,
             singleLine = false
         )
     }
