@@ -31,6 +31,11 @@ class LogManagerImpl(private val api: Api, private val repository: Repository) :
         return api.submitLog(logData, t.token, t.tokenSecret)
     }
 
+    override suspend fun getCachesByCodes(codes: List<String>): List<Geocache> {
+        val t = repository.safeTokenAndTokenSecret()
+        return api.geocaches(codes, t.token, t.tokenSecret)
+    }
+
     override suspend fun searchByName(name: String): List<Geocache> {
         val t = repository.safeTokenAndTokenSecret()
         val res = api.searchByName("*${name.replace(" ", "*")}*", t.token, t.tokenSecret)

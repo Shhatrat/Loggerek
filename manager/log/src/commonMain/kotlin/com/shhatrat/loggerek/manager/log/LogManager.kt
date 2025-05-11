@@ -10,6 +10,8 @@ interface LogManager {
 
     suspend fun getCache(id: String): Geocache
 
+    suspend fun getCachesByCodes(codes: List<String>): List<Geocache>
+
     suspend fun saveNote(id: String, note: String, oldValue: String)
 
     suspend fun logCapabilities(id: String): List<LogType>
