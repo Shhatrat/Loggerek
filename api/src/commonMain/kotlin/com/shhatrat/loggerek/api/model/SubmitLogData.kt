@@ -1,7 +1,5 @@
 package com.shhatrat.loggerek.api.model
 
-import kotlinx.serialization.SerialName
-
 data class SubmitLogData(
     val cacheId: String,
     val logType: LogType,
