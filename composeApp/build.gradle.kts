@@ -94,7 +94,6 @@ kotlin {
             implementation(projects.feature.profile)
             implementation(projects.feature.settings)
             implementation(projects.feature.watch)
-            implementation(projects.feature.fieldNotes)
             implementation(projects.feature.log)
             implementation(projects.base)
             implementation(projects.base.browser)
