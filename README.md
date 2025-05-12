@@ -65,3 +65,5 @@ task.
 
 - Loggerek:feature:settings [recordRoborazziJvm]
 - Loggerek:feature:log [recordRoborazziJvm]
+
+- SettingsScreen with RoborazziPreview
